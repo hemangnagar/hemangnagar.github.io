@@ -112,18 +112,37 @@
   .ledger .pass { color: var(--ledger-accent); font-weight: 500; }
   .caption { color: var(--muted); font-size: 0.9rem; margin-top: 12px; max-width: 40em; }
 
-  .proof { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 8px; }
-  .item { border-top: 1px solid var(--line); padding: 18px 0 6px; display: grid; grid-template-columns: 1fr; gap: 6px; }
-  .item h3 { margin: 0; font-size: 1.05rem; font-weight: 600; }
-  .item h3 a { color: var(--ink); text-decoration: none; }
-  .item h3 a:hover { color: var(--accent); }
-  .item p { color: var(--muted); font-size: 0.98rem; }
   .facts {
     display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 4px;
     font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.78rem; color: var(--muted);
     font-variant-numeric: tabular-nums;
   }
   .facts b { color: var(--ink); font-weight: 500; }
+
+  /* Work section */
+  .project { border-top: 1px solid var(--line); padding: 26px 0 8px; display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .project h3 { margin: 0; font-size: 1.12rem; font-weight: 600; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .project h3 a { color: var(--ink); text-decoration: none; }
+  .project h3 a:hover { color: var(--accent); }
+  .project h3 .tag { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .project p { color: var(--muted); font-size: 0.98rem; }
+  .project .body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+  .shots figure { margin: 0; }
+  .shots img { width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(22, 33, 58, 0.10); }
+  .shots figcaption { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; color: var(--muted); margin-top: 8px; letter-spacing: 0.02em; }
+  .check {
+    background: var(--ledger); color: var(--ledger-ink); border-radius: 6px; padding: 16px 18px;
+    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.72rem; line-height: 1.6;
+    white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; min-width: 0;
+  }
+  .check .ok { color: var(--ledger-accent); font-weight: 500; }
+  .check .dim { color: var(--ledger-muted); }
+  @media (min-width: 720px) {
+    .project.two { grid-template-columns: minmax(0, 1fr) 300px; gap: 16px 36px; align-items: start; }
+    .project.two .shots { grid-template-columns: 1fr 1fr; }
+    .project.tracer { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 36px; align-items: start; }
+  }
 
   .offers { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 8px; }
   .offer { border-top: 1px solid var(--line); padding: 20px 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
@@ -197,10 +216,12 @@
 
   <section id="work" aria-labelledby="work-h">
     <h2 id="work-h">Work in the open</h2>
-    <div class="proof">
-      <div class="item">
-        <h3><a href="https://github.com/hemangnagar/grocery_optimizer">grocery_optimizer</a></h3>
-        <p>A weekly grocery-price pipeline for the DC metro that picks the one store that wins a household's whole list. Bronze/silver/gold on DuckDB, five chains with five different acquisition patterns, LLMs at three gated judgment points, and a phone-first verdict app. Runs on a $300 mini PC; no Spark, no orchestrator, no vector store.</p>
+    <p>Three public projects, three different domains, one habit: every number a person sees traces back to something that can be checked.</p>
+
+    <div class="project two">
+      <div class="body">
+        <h3><a href="https://github.com/hemangnagar/grocery_optimizer">grocery_optimizer</a> <span class="tag">data pipeline · LLM gates</span></h3>
+        <p>A weekly grocery-price pipeline for the DC metro that picks the one store that wins a household's whole list. Bronze/silver/gold on DuckDB; five chains with five different acquisition patterns; LLMs at three gated judgment points; a phone-first verdict app. Runs on a $300 mini PC with no Spark, no orchestrator, no vector store.</p>
         <div class="facts">
           <span><b>MIT</b> licensed</span>
           <span><b>ODCS v3</b> contract, enforced by tests</span>
@@ -208,7 +229,39 @@
           <span>CI on <b>Windows + Linux</b></span>
         </div>
       </div>
-      <div class="item">
+      <div class="shots">
+        <figure><img src="assets/grocery-verdict-light.png" alt="The verdict app: Harris Teeter wins this week at $123.17, covering all 26 items; other stores ranked with coverage flags." width="780" height="1688" loading="lazy"><figcaption>flexible · store brands OK</figcaption></figure>
+        <figure><img src="assets/grocery-verdict-exact.png" alt="The same list in exact-brands mode: Whole Foods becomes the only full-coverage store at $169.27." width="780" height="1688" loading="lazy"><figcaption>exact brands · the modes disagree</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="project tracer">
+      <div class="body">
+        <h3><a href="https://github.com/hemangnagar/bitcoin-fifo-taint-tracer">bitcoin-fifo-taint-tracer</a> <span class="tag">provenance · finance</span></h3>
+        <p>A deterministic, offline Bitcoin taint-tracing engine that reproduces the 2021 Colonial Pipeline ransom flow from the FBI seizure affidavit — and independently lands on the address the FBI seized. Taint is tracked as positional satoshi intervals, not a scalar, so change, dust, and fees fall out of arithmetic instead of heuristics. Value is conserved to the satoshi: what escaped is flagged, never dropped.</p>
+        <p>Byte-identical output given the same inputs, a validation harness that fails the build if the court-documented result isn't reproduced, and no cloud dependency — pure Python standard library.</p>
+      </div>
+      <pre class="check" aria-label="Validation harness output"><span class="dim">Subject Address : bc1qq2euq8pw950klpjcawuy4uj39ym43hs6cfsegq
+Seized (tainted): 63.70000000 BTC
+Escaped taint   : 11.30000000 BTC (tracked)</span>
+
+  <span class="ok">[PASS]</span> Subject Address matches seized address
+  <span class="ok">[PASS]</span> Seized amount at Subject Address
+  <span class="ok">[PASS]</span> Hop 3 developer cut flagged tainted-but-escaped
+  <span class="ok">[PASS]</span> 85/15 split reconciles to pre-fork taint
+  <span class="ok">[PASS]</span> Taint conservation (nothing dropped)
+<span class="ok">RESULT: ALL CHECKS PASSED</span></pre>
+    </div>
+
+    <div class="project">
+      <div class="body">
+        <h3><a href="https://github.com/hemangnagar/sanbuddy">Chat Buddy</a> <span class="tag">assistive · free for families</span></h3>
+        <p>A texting companion that helps kids with communication challenges practice conversation around the things they love. Built as a parent, given away free: a parent setup wizard, a PIN-protected dashboard with full transcripts, and an installable PWA for an iPad. The model talks through a server-side proxy so the key never reaches the browser, and the bot keeps pointing the child back toward real people.</p>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="body">
         <h3>Standards I work in</h3>
         <p>Open Data Contract Standard (ODCS), OpenLineage, DataHub, Great Expectations — and the unglamorous discipline underneath them: raw preservation before parsing, canonical units, provenance keys on every row, and refusals that explain themselves.</p>
       </div>
