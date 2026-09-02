@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hemang Nagar</title>
+<meta name="description" content="Hemang Nagar builds governed data systems: platforms where every model output passes a deterministic gate before it touches a number anyone acts on. Data contracts, lineage, LLMs behind gates. Washington, DC.">
+<meta property="og:title" content="Hemang Nagar — governed data systems">
+<meta property="og:description" content="The LLM proposes. The pipeline disposes. Data contracts, lineage, and LLMs behind deterministic gates.">
+<meta property="og:url" content="https://hemangnagar.dev/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://raw.githubusercontent.com/hemangnagar/grocery_optimizer/main/docs/screenshots/verdict-flexible-light.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316213A'/%3E%3Cpath d='M8 22V10h3v4.5h10V10h3v12h-3v-5H11v5z' fill='%23E8964A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #F4F5F7;
+    --card: #FFFFFF;
+    --ink: #16213A;
+    --muted: #5B6478;
+    --line: #D9DDE5;
+    --accent: #B4560A;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #FBEBD9;
+    --ledger: #1A2236;
+    --ledger-ink: #E7EAF0;
+    --ledger-muted: #8C97AD;
+    --ledger-accent: #E8964A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10141D; --card: #171C28; --ink: #E7EAF0; --muted: #97A0B3;
+      --line: #2A3142; --accent: #E8964A; --accent-ink: #1A1206; --accent-soft: #2E2116;
+      --ledger: #0B0E15; --ledger-ink: #E7EAF0; --ledger-muted: #7E889C; --ledger-accent: #E8964A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #10141D; --card: #171C28; --ink: #E7EAF0; --muted: #97A0B3;
+    --line: #2A3142; --accent: #E8964A; --accent-ink: #1A1206; --accent-soft: #2E2116;
+    --ledger: #0B0E15; --ledger-ink: #E7EAF0; --ledger-muted: #7E889C; --ledger-accent: #E8964A;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap { max-width: 840px; margin: 0 auto; padding: 0 22px; }
+  main.wrap { display: flex; flex-direction: column; gap: 72px; padding-bottom: 96px; }
+
+  header.wrap {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    padding-top: 26px; padding-bottom: 60px;
+    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.82rem;
+  }
+  header .who { color: var(--ink); font-weight: 500; letter-spacing: 0.02em; }
+  header .who span { color: var(--muted); font-weight: 400; }
+  header nav { display: flex; gap: 18px; }
+  header nav a { color: var(--muted); text-decoration: none; }
+  header nav a:hover { color: var(--accent); }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+    font-size: 0.74rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 14px;
+  }
+  h1 {
+    font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif;
+    font-weight: 800; font-size: clamp(2.4rem, 6.2vw, 4.1rem); line-height: 1.02;
+    letter-spacing: -0.028em; margin: 0 0 26px; text-wrap: balance; max-width: 15ch;
+  }
+  h1 .seal { color: var(--accent); }
+  .lede { font-size: 1.22rem; line-height: 1.5; max-width: 34em; margin: 0; }
+  .lede + .lede { margin-top: 14px; color: var(--muted); font-size: 1.05rem; }
+
+  h2 {
+    font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif;
+    font-weight: 800; font-size: 1.55rem; letter-spacing: -0.015em; line-height: 1.2;
+    margin: 0 0 18px; text-wrap: balance;
+  }
+  p { margin: 0; max-width: 36em; }
+  p + p { margin-top: 12px; }
+  section > p { color: var(--ink); }
+
+  /* The gate ledger — the page's signature object. */
+  .ledger {
+    background: var(--ledger); color: var(--ledger-ink);
+    border-radius: 6px; padding: 22px 24px 20px; margin-top: 26px;
+    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.86rem; line-height: 1.55;
+    overflow-x: auto;
+  }
+  .ledger .row { display: grid; grid-template-columns: 8.5ch 1fr; gap: 18px; padding: 12px 0; }
+  .ledger .row + .row { border-top: 1px solid rgba(255,255,255,0.09); }
+  .ledger .k { color: var(--ledger-accent); font-weight: 500; letter-spacing: 0.06em; }
+  .ledger .v { color: var(--ledger-ink); }
+  .ledger .v .dim { color: var(--ledger-muted); }
+  .ledger .verdict { display: grid; grid-template-columns: 8.5ch 1fr; gap: 18px; padding-top: 14px; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.09); }
+  .ledger .verdict .k { color: var(--ledger-muted); }
+  .ledger .pass { color: var(--ledger-accent); font-weight: 500; }
+  .caption { color: var(--muted); font-size: 0.9rem; margin-top: 12px; max-width: 40em; }
+
+  .proof { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 8px; }
+  .item { border-top: 1px solid var(--line); padding: 18px 0 6px; display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .item h3 { margin: 0; font-size: 1.05rem; font-weight: 600; }
+  .item h3 a { color: var(--ink); text-decoration: none; }
+  .item h3 a:hover { color: var(--accent); }
+  .item p { color: var(--muted); font-size: 0.98rem; }
+  .facts {
+    display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 4px;
+    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.78rem; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .facts b { color: var(--ink); font-weight: 500; }
+
+  .offers { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 8px; }
+  .offer { border-top: 1px solid var(--line); padding: 20px 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .offer:last-child { border-bottom: 1px solid var(--line); }
+  .offer h3 { margin: 0; font-size: 1.1rem; font-weight: 600; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .offer h3 .scope { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.06em; color: var(--muted); }
+  .offer p { color: var(--muted); font-size: 0.98rem; }
+  .offer ul { margin: 6px 0 0; padding-left: 18px; color: var(--ink); font-size: 0.96rem; }
+  .offer li + li { margin-top: 4px; }
+  @media (min-width: 680px) {
+    .offer { grid-template-columns: 220px minmax(0, 1fr); gap: 8px 32px; }
+    .offer h3 { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .offer p { grid-column: 2; }
+    .offer ul { grid-column: 2; }
+  }
+
+  .cta {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .cta h2 { margin: 0; }
+  .cta p { color: var(--muted); }
+  .cta .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 4px; }
+  .button {
+    display: inline-block; background: var(--accent); color: var(--accent-ink);
+    font-weight: 600; text-decoration: none; padding: 11px 18px; border-radius: 6px; font-size: 0.98rem;
+  }
+  .button:hover { filter: brightness(1.06); }
+  .cta .mail { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.9rem; }
+
+  footer.wrap {
+    border-top: 1px solid var(--line); padding-top: 22px; padding-bottom: 40px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.78rem; color: var(--muted);
+  }
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="who">Hemang Nagar <span>· Washington, DC</span></div>
+  <nav aria-label="Site">
+    <a href="#work">Work</a>
+    <a href="#engage">Engage</a>
+    <a href="https://github.com/hemangnagar">GitHub</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="thesis">
+    <p class="eyebrow">Governed data systems</p>
+    <h1 id="thesis">The LLM proposes. <span class="seal">The pipeline disposes.</span></h1>
+    <p class="lede">I build data platforms where every model output passes a deterministic gate before it touches a number anyone acts on — product matches, parser repairs, written summaries alike.</p>
+    <p class="lede">Standards-first: data contracts that tests enforce, lineage that is emitted on every run, provenance from any user-facing figure back to the raw bytes it came from.</p>
+  </section>
+
+  <section aria-labelledby="gate">
+    <h2 id="gate">What a gate looks like</h2>
+    <p>Models are allowed to be wrong. The pipeline is not. So a model never writes to the trusted layer; it proposes, and a deterministic check decides. Here is one gate from a system I run every week — the one that repairs a parser after an upstream site changes its payload.</p>
+    <div class="ledger" role="figure" aria-label="A parser-repair gate, step by step">
+      <div class="row"><span class="k">DETECT</span><span class="v">A raw payload the current parser cannot read — it raises, or returns zero records while carrying structure the last known-good payload never had.</span></div>
+      <div class="row"><span class="k">PROPOSE</span><span class="v">An agent reads the old parser, a structural diff of old vs. new payload, and a sample — and proposes a replacement <span class="dim">parse(raw)</span>.</span></div>
+      <div class="row"><span class="k">GATE</span><span class="v">The patch must reproduce the current parser <span class="dim">byte-for-byte</span> on the last known-good raw file, and emit schema-exact, non-empty records on the drifted one. No imports. No I/O.</span></div>
+      <div class="row"><span class="k">DISPOSE</span><span class="v">Pass: promoted, content-addressed, with the original kept as fallback. Fail: recorded and rejected — the agent never retries the same drift silently.</span></div>
+      <div class="verdict"><span class="k">RESULT</span><span class="v"><span class="pass">Every run replays identically.</span> <span class="dim">The model wrote the code; the gate decided whether it ships.</span></span></div>
+    </div>
+    <p class="caption">The same shape governs entity matching (verdicts cached once, read forever, humans review the low-confidence tail) and narration (any number not in the precomputed fact pack is a hard reject).</p>
+  </section>
+
+  <section id="work" aria-labelledby="work-h">
+    <h2 id="work-h">Work in the open</h2>
+    <div class="proof">
+      <div class="item">
+        <h3><a href="https://github.com/hemangnagar/grocery_optimizer">grocery_optimizer</a></h3>
+        <p>A weekly grocery-price pipeline for the DC metro that picks the one store that wins a household's whole list. Bronze/silver/gold on DuckDB, five chains with five different acquisition patterns, LLMs at three gated judgment points, and a phone-first verdict app. Runs on a $300 mini PC; no Spark, no orchestrator, no vector store.</p>
+        <div class="facts">
+          <span><b>MIT</b> licensed</span>
+          <span><b>ODCS v3</b> contract, enforced by tests</span>
+          <span><b>OpenLineage</b> event per run</span>
+          <span>CI on <b>Windows + Linux</b></span>
+        </div>
+      </div>
+      <div class="item">
+        <h3>Standards I work in</h3>
+        <p>Open Data Contract Standard (ODCS), OpenLineage, DataHub, Great Expectations — and the unglamorous discipline underneath them: raw preservation before parsing, canonical units, provenance keys on every row, and refusals that explain themselves.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="engage" aria-labelledby="engage-h">
+    <h2 id="engage-h">A first engagement</h2>
+    <p>Fixed scope, fixed fee, written deliverables. Most relationships start with the first one.</p>
+    <div class="offers">
+      <div class="offer">
+        <h3>Governance readiness assessment <span class="scope">2–3 WEEKS</span></h3>
+        <p>For teams putting models into data pipelines and wondering what could go wrong quietly.</p>
+        <ul>
+          <li>An inventory of every point where model output reaches a decision, and whether a gate stands in front of it</li>
+          <li>Data-contract and lineage gaps against ODCS and OpenLineage, with the provenance you can and cannot currently prove</li>
+          <li>A prioritized remediation plan your own engineers can execute</li>
+        </ul>
+      </div>
+      <div class="offer">
+        <h3>Contracts and lineage, implemented <span class="scope">4–8 WEEKS</span></h3>
+        <p>Data contracts that fail the build when the schema drifts, lineage emitted on every run, and provenance keys from the trusted layer back to raw.</p>
+      </div>
+      <div class="offer">
+        <h3>LLM-in-the-pipeline design review <span class="scope">1–2 WEEKS</span></h3>
+        <p>Where models belong in your pipeline and where they don't: verdict caching for deterministic replay, evaluation gates, human-review queues, and the audit trail that lets you defend a number.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-h">
+    <h2 id="cta-h">Start with a 20-minute conversation</h2>
+    <p>Tell me what your pipeline does and where a model touches it. I'll tell you honestly whether a first engagement makes sense — and if it does, what it would cost.</p>
+    <div class="actions">
+      <a class="button" href="mailto:hi@hemangnagar.dev?subject=20-minute%20conversation">Email hi@hemangnagar.dev</a>
+      <span class="mail"><a href="https://github.com/hemangnagar">github.com/hemangnagar</a></span>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Hemang Nagar</span>
+  <span>The code is open. The data is the moat.</span>
+</footer>
+
+</body>
+</html>
