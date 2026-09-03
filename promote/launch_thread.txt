@@ -1,20 +1,22 @@
-# Grocery optimizer launch thread — post with: python promote.py launch_thread.txt --send
-# Tweets are separated by lines containing only ---
+# Launch thread — AI-first framing; the grocery bill is the test bed, not the headline.
+# Post with: python promote.py launch_thread.txt --send   (tweets separated by ---)
 
-1/ I built a pipeline that answers one question every week: which ONE grocery store wins my family's whole list?
+Most AI pipelines let the model write the answer. Mine doesn't.
 
-"Harris Teeter wins at $123.17 — Whole Foods would've been $169.27."
+The LLM proposes; a deterministic pipeline disposes — every model output passes a gate before it touches a number anyone acts on.
 
-Open source, runs on a $300 mini PC. 🧵
+Test bed: my family's weekly grocery bill. Open source. 🧵
 ---
-2/ Architecture rule: the LLM proposes, the deterministic pipeline disposes.
+Three places a model earns its keep, three gates:
 
-Fuzzy matching once matched "chicken" → chicken crackers. So: hard category guards first (zero tokens), LLM adjudication only for survivors, and every verdict lands in a cache.
----
-3/ The verdict cache is the trick. Each ambiguous (list item, product) pair costs one LLM call EVER. Gold reads only cached verdicts → the pipeline replays byte-identically. Low-confidence verdicts go to a human queue, never silently into results.
----
-4/ Even the self-healing part is gated: when a site changes its payload, an agent proposes a patched parser — promoted only if it reproduces the old parser byte-for-byte on known-good raw files.
----
-5/ DuckDB + files + Task Scheduler. No Spark, no orchestrator, no vector store. MIT licensed, synthetic demo runs with zero credentials:
+• Entity matching → verdicts cached in DuckDB; gold reads ONLY the cache. One LLM call per pair, ever; runs replay byte-identically.
 
-https://github.com/hemangnagar/grocery_optimizer
+• Narration → any number not in the fact pack = hard reject.
+
+• Parser repair → 3/
+---
+Self-healing parsers, gated. When a site changes its payload, the model proposes a patched parser. Promoted only if it reproduces the old parser byte-for-byte on known-good raw files and yields schema-exact records from the new one. Fail = rejected and logged, no silent retry.
+---
+Why groceries? Because the failure modes are visible. Fuzzy matching once matched "chicken" to chicken crackers. The fix wasn't more AI — it was deterministic category guards BEFORE any model is consulted, then LLM adjudication only for the survivors.
+---
+The result: a phone app that says "Harris Teeter wins this week at $123.17 — Whole Foods would've been $169.27." Every number traces back to raw bytes. DuckDB + files + Task Scheduler on a $300 mini PC; no Spark, no vector store. MIT: https://github.com/hemangnagar/grocery_optimizer
