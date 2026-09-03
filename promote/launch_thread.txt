@@ -1,0 +1,20 @@
+# Grocery optimizer launch thread — post with: python promote.py launch_thread.txt --send
+# Tweets are separated by lines containing only ---
+
+1/ I built a pipeline that answers one question every week: which ONE grocery store wins my family's whole list?
+
+"Harris Teeter wins at $123.17 — Whole Foods would've been $169.27."
+
+Open source, runs on a $300 mini PC. 🧵
+---
+2/ Architecture rule: the LLM proposes, the deterministic pipeline disposes.
+
+Fuzzy matching once matched "chicken" → chicken crackers. So: hard category guards first (zero tokens), LLM adjudication only for survivors, and every verdict lands in a cache.
+---
+3/ The verdict cache is the trick. Each ambiguous (list item, product) pair costs one LLM call EVER. Gold reads only cached verdicts → the pipeline replays byte-identically. Low-confidence verdicts go to a human queue, never silently into results.
+---
+4/ Even the self-healing part is gated: when a site changes its payload, an agent proposes a patched parser — promoted only if it reproduces the old parser byte-for-byte on known-good raw files.
+---
+5/ DuckDB + files + Task Scheduler. No Spark, no orchestrator, no vector store. MIT licensed, synthetic demo runs with zero credentials:
+
+https://github.com/hemangnagar/grocery_optimizer
