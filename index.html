@@ -218,31 +218,7 @@
 
   <section id="work" aria-labelledby="work-h">
     <h2 id="work-h">Work in the open</h2>
-    <p>Four public projects, four different domains, one habit: every number a person sees traces back to something that can be checked.</p>
-
-    <div class="project tracer">
-      <div class="body">
-        <h3><a href="https://github.com/hemangnagar/rxguard">RxGuard</a> <span class="tag">pharmacy · evidence-gated AI</span></h3>
-        <p>A synthetic pharmacy exception workbench that surfaces fills likely to lose money, explains why, and preserves the evidence behind every dollar. The margin engine is deterministic; an optional LLM may narrate only the computed fact pack, and its answer is rejected if it invents an amount or cites evidence that does not exist.</p>
-        <p>Built without proprietary NCPDP message formats. The prototype uses a documented internal event model, validates FHIR R4B ExplanationOfBenefit output, references the CARIN pharmacy profile without claiming conformance, and keeps NADAC explicitly labeled as a public benchmark—not an invoice cost.</p>
-        <div class="facts">
-          <span><b>6</b> adversarial scenarios</span>
-          <span><b>FHIR R4B</b> validation</span>
-          <span><b>CycloneDX</b> SBOM</span>
-          <span>CI on <b>Windows + Linux</b></span>
-        </div>
-      </div>
-      <pre class="check" aria-label="RxGuard verification result"><span class="dim">Scenario            : retroactive-loss
-Initial margin       : +$15.90
-Post-settlement adj. : -$21.75
-Actual margin        :  -$5.85</span>
-
-  <span class="ok">[PASS]</span> each computed amount has an evidence reference
-  <span class="ok">[PASS]</span> unsupported dollar claims are rejected
-  <span class="ok">[PASS]</span> FHIR R4B resource validates
-  <span class="ok">[PASS]</span> NADAC remains a labeled benchmark
-<span class="ok">RESULT: 19 TESTS PASSED</span></pre>
-    </div>
+    <p>Three public projects, three different domains, one habit: every number a person sees traces back to something that can be checked.</p>
 
     <div class="project two">
       <div class="body">
