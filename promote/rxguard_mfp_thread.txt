@@ -1,0 +1,19 @@
+# RxGuard MFP Refund Ledger thread — post with: python promote.py rxguard_mfp_thread.txt --send
+# Suggested timing: AFTER the pharmacist-lawyer demo validates the product read.
+# Tweets are separated by lines containing only ---
+
+1/ Since Jan 1, pharmacies buy the 10 Medicare-negotiated drugs at list price and wait for the manufacturer to refund the gap. The refund is due in 14 days; NCPA says it averages ~21 — about $43K/yr of float per store.
+
+I built a ledger that proves what a pharmacy is owed. 🧵
+---
+2/ RxGuard MFP Refund Ledger: every fill computes the expected refund (WAC − MFP), matches the bank deposit, and ages what's late.
+
+Every dollar resolves to a source record — invoice line, adjudication ID, MTF transmission, ACH trace. No number without a receipt.
+---
+3/ Click any overdue claim → a dispute-ready evidence pack and an escalation letter generated ONLY from those facts.
+
+A hard gate rejects any letter carrying a dollar amount that isn't in the fact pack. The model narrates; the pipeline is the only thing that calculates.
+---
+4/ Synthetic data, real mechanics: CMS's actual published 2026 negotiated prices, the real 14-day standard, fabricated transactions — and a provenance panel that says exactly which is which.
+
+Try it (2-min tour): https://hemangnagar.dev/rxguard-mfp/
