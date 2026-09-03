@@ -4,16 +4,28 @@
 Zero dependencies (Python 3.10+ stdlib only). Dry-run by default; nothing is
 posted unless you pass --send.
 
-ONE-TIME SETUP (~10 minutes, no phone needed if your X account is verified by email):
-  1. Sign in to https://developer.x.com with your X account -> Free tier.
-  2. Create a Project + App. In the app's "User authentication settings":
-     enable OAuth 1.0a, App permissions = "Read and write".
-  3. From "Keys and tokens", copy 4 values into a .env file (or your shell):
-       X_API_KEY=...            (a.k.a. consumer key)
-       X_API_SECRET=...         (consumer secret)
-       X_ACCESS_TOKEN=...       (your account's access token)
-       X_ACCESS_SECRET=...      (access token secret)
-     Regenerate the access token AFTER setting permissions to Read and write.
+ONE-TIME SETUP (~10 minutes). In the X Developer Console, open your app ->
+"User authentication settings" -> Set up: App permissions = "Read and write".
+Then pick whichever credentials the console gives you; put them in a .env file
+in this folder (it is gitignored):
+
+  MODE A - OAuth 1.0a (preferred: the token never expires)
+    "OAuth 1.0 Keys" section, after permissions are Read and write:
+       X_API_KEY=...            (Consumer Key)
+       X_API_SECRET=...         (Consumer Secret)
+       X_ACCESS_TOKEN=...       (Access Token  - generate AFTER setting Read and write)
+       X_ACCESS_SECRET=...      (Access Token Secret)
+
+  MODE B - OAuth 2.0 (the console shows a 2-hour access token + 6-month refresh token)
+    "OAuth 2.0 Keys" section:
+       X_CLIENT_ID=...
+       X_CLIENT_SECRET=...      (leave empty if your app is a public client)
+       X_REFRESH_TOKEN=...      (the 6-month one; the 2-hour token is NOT needed)
+    On every run the script exchanges the refresh token for a fresh access token
+    and writes the rotated refresh token back to .env, so you never touch it again.
+    Required scopes on the app: tweet.read tweet.write users.read offline.access
+
+The script picks Mode A if all four OAuth 1.0a values are present, else Mode B.
 
 THREAD FILE FORMAT: plain text; tweets separated by a line containing only
 "---". Lines starting with "#" are comments and are skipped.
@@ -42,11 +54,13 @@ import urllib.request
 from pathlib import Path
 
 POST_URL = "https://api.x.com/2/tweets"
+TOKEN_URL = "https://api.x.com/2/oauth2/token"
+ENV_PATH = Path(__file__).resolve().parent / ".env"
 TWEET_LIMIT = 280  # URLs count as 23 regardless of length
 
 
-def load_env_file(path: Path = Path(".env")) -> None:
-    """Minimal .env loader so the four keys can live next to the script."""
+def load_env_file(path: Path = ENV_PATH) -> None:
+    """Minimal .env loader so the keys can live next to the script."""
     if not path.exists():
         return
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -54,6 +68,67 @@ def load_env_file(path: Path = Path(".env")) -> None:
         if line and not line.startswith("#") and "=" in line:
             key, _, value = line.partition("=")
             os.environ.setdefault(key.strip(), value.strip())
+
+
+def save_env_value(key: str, value: str, path: Path = ENV_PATH) -> None:
+    """Rewrite one KEY=value line in .env (refresh tokens rotate on every use)."""
+    lines = path.read_text(encoding="utf-8").splitlines() if path.exists() else []
+    out, done = [], False
+    for line in lines:
+        if line.split("=", 1)[0].strip() == key:
+            out.append(f"{key}={value}")
+            done = True
+        else:
+            out.append(line)
+    if not done:
+        out.append(f"{key}={value}")
+    path.write_text("\n".join(out) + "\n", encoding="utf-8")
+    os.environ[key] = value
+
+
+def auth_mode() -> str:
+    oauth1 = all(os.environ.get(k) for k in
+                 ("X_API_KEY", "X_API_SECRET", "X_ACCESS_TOKEN", "X_ACCESS_SECRET"))
+    if oauth1:
+        return "oauth1"
+    if os.environ.get("X_CLIENT_ID") and os.environ.get("X_REFRESH_TOKEN"):
+        return "oauth2"
+    sys.exit(
+        "No usable credentials in .env. Provide either\n"
+        "  X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET   (OAuth 1.0a), or\n"
+        "  X_CLIENT_ID, X_CLIENT_SECRET (optional), X_REFRESH_TOKEN  (OAuth 2.0).\n"
+        "See the setup notes at the top of promote.py."
+    )
+
+
+def oauth2_bearer() -> str:
+    """Trade the long-lived refresh token for a 2-hour access token; persist the
+    rotated refresh token so the next run keeps working."""
+    client_id = os.environ["X_CLIENT_ID"]
+    client_secret = os.environ.get("X_CLIENT_SECRET", "")
+    body = {"grant_type": "refresh_token", "refresh_token": os.environ["X_REFRESH_TOKEN"]}
+    headers = {"Content-Type": "application/x-www-form-urlencoded"}
+    if client_secret:
+        basic = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
+        headers["Authorization"] = f"Basic {basic}"
+    else:
+        body["client_id"] = client_id  # public client: id goes in the body
+    request = urllib.request.Request(
+        TOKEN_URL, data=urllib.parse.urlencode(body).encode(), method="POST", headers=headers
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=30) as resp:
+            data = json.load(resp)
+    except urllib.error.HTTPError as err:
+        detail = err.read().decode(errors="replace")[:400]
+        sys.exit(
+            f"Token refresh failed ({err.code}): {detail}\n"
+            "If the refresh token was already used elsewhere or has expired, generate a "
+            "new one in the Developer Console and update X_REFRESH_TOKEN in .env."
+        )
+    if data.get("refresh_token"):
+        save_env_value("X_REFRESH_TOKEN", data["refresh_token"])
+    return data["access_token"]
 
 
 def read_thread(path: Path) -> list[str]:
@@ -105,19 +180,17 @@ def oauth1_header(method: str, url: str, body: bytes) -> str:
     return f"OAuth {header}"
 
 
-def post_tweet(text: str, reply_to: str | None) -> str:
+def post_tweet(text: str, reply_to: str | None, bearer: str | None) -> str:
     payload: dict = {"text": text}
     if reply_to:
         payload["reply"] = {"in_reply_to_tweet_id": reply_to}
     body = json.dumps(payload).encode()
+    auth = f"Bearer {bearer}" if bearer else oauth1_header("POST", POST_URL, body)
     request = urllib.request.Request(
         POST_URL,
         data=body,
         method="POST",
-        headers={
-            "Authorization": oauth1_header("POST", POST_URL, body),
-            "Content-Type": "application/json",
-        },
+        headers={"Authorization": auth, "Content-Type": "application/json"},
     )
     try:
         with urllib.request.urlopen(request, timeout=30) as resp:
@@ -151,12 +224,17 @@ def main() -> None:
         print(tweet)
 
     if not args.send:
-        print(f"\nDry run only. Re-run with --send to post {len(tweets)} tweets.")
+        mode = auth_mode()
+        print(f"\nDry run only (auth: {mode}). Re-run with --send to post {len(tweets)} tweets.")
         return
+
+    mode = auth_mode()
+    bearer = oauth2_bearer() if mode == "oauth2" else None
+    print(f"\nauth: {mode}")
 
     reply_to = None
     for i, tweet in enumerate(tweets, 1):
-        reply_to = post_tweet(tweet, reply_to)
+        reply_to = post_tweet(tweet, reply_to, bearer)
         print(f"posted {i}/{len(tweets)}: https://x.com/i/web/status/{reply_to}")
         if i < len(tweets):
             time.sleep(args.delay)
