@@ -1,4 +1,4 @@
-# LinkedIn post — paste as-is. Attach assets/decision-gate-abandon.png. Put the links in the FIRST COMMENT, not the post body.
+# LinkedIn post — paste as-is. Attach assets/decision-gate-linkedin.png (the 1200x1200 graphic). Put the links in the FIRST COMMENT, not the post body.
 
 
 A decision gate for trigger-happy developers who build first and ask questions later.
