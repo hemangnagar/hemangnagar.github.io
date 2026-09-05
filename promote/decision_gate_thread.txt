@@ -20,7 +20,7 @@ That line separates "the framing is wrong" from "we need more evidence." It's co
 ---
 4/ The Spark→DuckDB migration came back WAIT. WAIT isn't no.
 
-9 blocking challenges, each with the measurement that retires it: replay the 5 heaviest jobs at real concurrency, measure bytes actually read, cost a tuned-Spark baseline, plot the thread-scaling curve.
+9 blocking challenges, each with the measurement that retires it: replay the 5 heaviest jobs at real concurrency, measure bytes actually read, cost a tuned-Spark baseline.
 
 Do them → ACT, carrying 13 named risks.
 ---
