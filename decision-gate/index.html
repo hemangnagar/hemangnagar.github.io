@@ -4,99 +4,102 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Decision Gate — Hemang Nagar</title>
-<meta name="description" content="Decision Gate is an open-source adversarial decision system that converts model-generated challenges into an auditable, deterministic ACT / WAIT / ABANDON decision.">
-<meta property="og:title" content="Decision Gate — adversarial review with a deterministic stop">
-<meta property="og:description" content="Models generate claims and challenges. Fixed rules decide ACT, WAIT, or ABANDON. Closed decisions reopen only when material evidence changes.">
+<meta name="description" content="Decision Gate turns AI-assisted debate into a bounded, auditable decision: models find problems; fixed rules decide ACT, WAIT, or ABANDON.">
+<meta property="og:title" content="Decision Gate — from argument to decision">
+<meta property="og:description" content="Two real decisions show the point: one idea was rejected before coding; one survived the review and was built.">
 <meta property="og:url" content="https://hemangnagar.dev/decision-gate/">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-:root{--ground:#F4F5F7;--card:#fff;--ink:#16213A;--muted:#5B6478;--line:#D9DDE5;--accent:#B4560A;--ledger:#1A2236;--ledgerInk:#E7EAF0;--ledgerMuted:#8C97AD;--ledgerAccent:#E8964A;--fatal:#A33A2B;--blocking:#B4560A;--material:#8A6410;--soft:#FBEBD9}
+:root{--ground:#F4F5F7;--card:#fff;--ink:#16213A;--muted:#5B6478;--line:#D9DDE5;--accent:#B4560A;--ledger:#1A2236;--ledgerInk:#E7EAF0;--ledgerMuted:#8C97AD;--good:#4F6B32;--bad:#A33A2B;--warn:#9A6810;--soft:#FBEBD9}
 @media(prefers-color-scheme:dark){:root{--ground:#10141D;--card:#171C28;--ink:#E7EAF0;--muted:#97A0B3;--line:#2A3142;--accent:#E8964A;--ledger:#0B0E15;--ledgerInk:#E7EAF0;--ledgerMuted:#7E889C;--soft:#2E2116}}
-*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}a{color:var(--accent);text-underline-offset:3px}.wrap{max-width:920px;margin:auto;padding:0 22px}header{display:flex;justify-content:space-between;gap:20px;padding-top:26px;padding-bottom:58px;font:500 .82rem "IBM Plex Mono",monospace}header a{text-decoration:none;color:var(--muted)}header a:hover{color:var(--accent)}main{padding-bottom:92px}.eyebrow{font:500 .74rem "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}h1,h2{font-family:"Archivo",sans-serif;font-weight:800;letter-spacing:-.025em}h1{font-size:clamp(2.7rem,7vw,4.9rem);line-height:1.01;max-width:15ch;margin:0 0 24px}h1 span{color:var(--accent)}h2{font-size:1.7rem;margin:0 0 16px}.lede{font-size:1.18rem;max-width:39em;margin:0}.lede+.lede{font-size:1rem;color:var(--muted);margin-top:12px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.button{display:inline-block;padding:11px 17px;border-radius:6px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600}.button.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}section+section{margin-top:72px}.value{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px}.card .k{font:500 .7rem "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.card h3{margin:5px 0 8px;font-size:1.05rem}.card p{margin:0;color:var(--muted);font-size:.95rem}@media(min-width:720px){.value{grid-template-columns:repeat(3,1fr)}}.flow{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-top:22px;overflow:auto}.flow svg{display:block;width:100%;min-width:760px;height:auto}.flow text{font-family:"IBM Plex Mono",monospace;fill:var(--ink)}.flow .muted{fill:var(--muted)}.flow .white{fill:#fff}.flow .accent{fill:var(--accent)}.flow .fatalfill{fill:#A33A2B}.flow .blockingfill{fill:#B4560A}.flow .actfill{fill:#596B34}.flow .box{fill:var(--ground);stroke:var(--line);stroke-width:1.4}.flow .model{fill:var(--soft);stroke:var(--accent);stroke-width:1.6}.flow .gate{fill:var(--ledger);stroke:var(--ledger);stroke-width:1.4}.flow .arrow{stroke:var(--muted);stroke-width:1.5;fill:none;marker-end:url(#arrow)}.flowcap{margin-top:10px;color:var(--muted);font-size:.9rem}.worked{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:22px}.worked .row{display:grid;grid-template-columns:150px 1fr;border-top:1px solid var(--line)}.worked .row:first-child{border-top:0}.worked .label{padding:15px 16px;background:var(--ground);font:500 .72rem "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.worked .body{padding:15px 18px}.worked .fatal{color:var(--fatal);font-weight:600}.worked .code{font-family:"IBM Plex Mono",monospace;font-size:.88rem}.worked .verdict{background:var(--ledger);color:var(--ledgerInk)}.worked .verdict .label{background:transparent;color:var(--ledgerMuted)}.worked .verdict .body{font-family:"IBM Plex Mono",monospace}.worked .verdict strong{display:block;color:var(--ledgerAccent);font:800 2.5rem "Archivo",sans-serif;letter-spacing:-.03em;line-height:1.05;margin-bottom:5px}@media(max-width:620px){.worked .row{grid-template-columns:1fr}.worked .label{padding-bottom:6px}.worked .body{padding-top:6px}}.rules{background:var(--ledger);color:var(--ledgerInk);border-radius:8px;padding:22px;font:400 .84rem/1.8 "IBM Plex Mono",monospace;margin-top:22px;overflow:auto}.rules .f{color:#FF8A78}.rules .b{color:var(--ledgerAccent)}.rules .a{color:#BFD68D}.rules .d{color:var(--ledgerMuted)}.note{border-left:4px solid var(--accent);padding:14px 18px;background:var(--card);margin-top:18px}.note strong{display:block;margin-bottom:4px}.architecture{background:var(--ledger);color:var(--ledgerInk);border-radius:8px;padding:22px;font:400 .8rem/1.75 "IBM Plex Mono",monospace;overflow:auto}.architecture .a{color:var(--ledgerAccent)}.architecture .d{color:var(--ledgerMuted)}footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font:.78rem "IBM Plex Mono",monospace;margin-top:80px}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:17px;line-height:1.58;-webkit-font-smoothing:antialiased}a{color:var(--accent);text-underline-offset:3px}.wrap{max-width:940px;margin:auto;padding:0 22px}header{display:flex;justify-content:space-between;gap:20px;padding-top:26px;padding-bottom:58px;font:500 .82rem "IBM Plex Mono",monospace}header a{text-decoration:none;color:var(--muted)}header a:hover{color:var(--accent)}main{padding-bottom:92px}.eyebrow{font:500 .74rem "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}h1,h2,h3{font-family:"Archivo",sans-serif}h1{font-weight:800;font-size:clamp(2.7rem,7vw,4.9rem);line-height:1.01;letter-spacing:-.03em;max-width:15ch;margin:0 0 24px}h1 span{color:var(--accent)}h2{font-size:1.75rem;letter-spacing:-.02em;margin:0 0 16px}h3{margin:0}.lede{font-size:1.18rem;max-width:40em;margin:0}.lede+.lede{font-size:1rem;color:var(--muted);margin-top:12px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.button{display:inline-block;padding:11px 17px;border-radius:6px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600}.button.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}section+section{margin-top:76px}.flow{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-top:22px;overflow:auto}.flow svg{display:block;width:100%;min-width:760px;height:auto}.flow text{font-family:"IBM Plex Mono",monospace;fill:var(--ink)}.flow .muted{fill:var(--muted)}.flow .white{fill:#fff}.flow .box{fill:var(--ground);stroke:var(--line);stroke-width:1.4}.flow .model{fill:var(--soft);stroke:var(--accent);stroke-width:1.6}.flow .gate{fill:var(--ledger);stroke:var(--ledger)}.flow .abandon{fill:#A33A2B}.flow .wait{fill:#B4560A}.flow .act{fill:#596B34}.flow .arrow{stroke:#7A8396;stroke-width:1.5;fill:none;marker-end:url(#arrow)}.case{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:24px}.case-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding:22px 24px;border-bottom:1px solid var(--line)}.case-head .num{font:500 .72rem "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.case-head h3{font-size:1.3rem;margin-top:4px}.badge{font:800 1.25rem "Archivo",sans-serif;white-space:nowrap}.badge.abandon{color:var(--bad)}.badge.act{color:var(--good)}.rows{display:grid}.row{display:grid;grid-template-columns:165px 1fr;border-top:1px solid var(--line)}.row:first-child{border-top:0}.label{background:var(--ground);padding:15px 16px;font:500 .72rem "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.body{padding:15px 18px}.body p{margin:0}.body p+p{margin-top:8px}.fatal{color:var(--bad);font-weight:600}.material{color:var(--warn);font-weight:600}.good{color:var(--good);font-weight:600}.code{font-family:"IBM Plex Mono",monospace;font-size:.88rem}.verdict{background:var(--ledger);color:var(--ledgerInk)}.verdict .label{background:transparent;color:var(--ledgerMuted)}.verdict strong{font:800 2.5rem "Archivo",sans-serif;display:block;margin-bottom:4px}.verdict.abandon strong{color:#FF8A78}.verdict.act strong{color:#BFD68D}.sources{margin-top:12px;color:var(--muted);font-size:.9rem}.sources a{margin-right:12px}@media(max-width:650px){.row{grid-template-columns:1fr}.label{padding-bottom:6px}.body{padding-top:6px}.case-head{display:block}.badge{display:block;margin-top:8px}}.rules{background:var(--ledger);color:var(--ledgerInk);border-radius:8px;padding:22px;font:400 .84rem/1.85 "IBM Plex Mono",monospace;overflow:auto}.rules .bad{color:#FF8A78}.rules .wait{color:#F2B06E}.rules .good{color:#BFD68D}.rules .dim{color:var(--ledgerMuted)}.why{display:grid;grid-template-columns:1fr;gap:14px;margin-top:22px}.why .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px}.why .card .k{font:500 .7rem "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.why .card h3{font-size:1.05rem;margin:5px 0 8px}.why .card p{margin:0;color:var(--muted);font-size:.95rem}@media(min-width:720px){.why{grid-template-columns:repeat(3,1fr)}}.note{border-left:4px solid var(--accent);padding:14px 18px;background:var(--card);margin-top:18px}.architecture{background:var(--ledger);color:var(--ledgerInk);border-radius:8px;padding:22px;font:400 .8rem/1.75 "IBM Plex Mono",monospace;overflow:auto}.architecture .a{color:#E8964A}.architecture .d{color:var(--ledgerMuted)}footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font:.78rem "IBM Plex Mono",monospace;margin-top:80px}
 </style>
 </head>
 <body>
-<header class="wrap"><a href="/">← Hemang Nagar</a><div><a href="https://github.com/hemangnagar/decision_gate">GitHub repo</a></div></header>
+<header class="wrap"><a href="/">← Hemang Nagar</a><a href="https://github.com/hemangnagar/decision_gate">GitHub repo</a></header>
 <main class="wrap">
 <section>
 <p class="eyebrow">Open source · adversarial AI · deterministic control</p>
 <h1>AI can argue forever. <span>Decisions cannot.</span></h1>
-<p class="lede">Decision Gate turns open-ended adversarial reasoning into an auditable decision protocol. Models identify claims and attack assumptions; fixed rules decide whether the result is ACT, WAIT, or ABANDON.</p>
-<p class="lede">The value is not “three options.” The value is that the final action is mechanically traceable to unresolved evidence instead of being another model opinion.</p>
-<div class="actions"><a class="button" href="https://github.com/hemangnagar/decision_gate">View source</a><a class="button secondary" href="#worked">See the worked decision</a></div>
+<p class="lede">Decision Gate takes an idea, identifies what must be true, tries to break those assumptions, and then stops. The models generate the arguments; a fixed rule turns the remaining problems into ACT, WAIT, or ABANDON.</p>
+<p class="lede">The easiest way to see the value is through two decisions we actually made.</p>
+<div class="actions"><a class="button" href="#cases">See the two decisions</a><a class="button secondary" href="https://github.com/hemangnagar/decision_gate">View source</a></div>
 </section>
 
 <section>
-<h2>What the system adds</h2>
-<div class="value">
-<div class="card"><div class="k">01 · structure</div><h3>Turns debate into state</h3><p>Claims, dependencies, challenges, severity, resolution conditions, accepted risks, and the stop reason are stored in a ledger instead of disappearing into chat history.</p></div>
-<div class="card"><div class="k">02 · control</div><h3>The model cannot move the goalposts</h3><p>Models may propose reasoning. They cannot override the gate. An unresolved FATAL challenge is an ABANDON, every time.</p></div>
-<div class="card"><div class="k">03 · closure</div><h3>Reasoning has a stopping condition</h3><p>Once the decision is closed, another model objection does not restart the argument. Reopening requires a declared material trigger.</p></div>
-</div>
-</section>
-
-<section>
-<h2>The control flow</h2>
-<div class="flow" role="figure" aria-label="Decision Gate deterministic control flow">
-<svg viewBox="0 0 880 620" aria-hidden="true">
+<h2>How it works</h2>
+<div class="flow" role="figure" aria-label="Decision Gate control flow">
+<svg viewBox="0 0 880 560" aria-hidden="true">
 <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7A8396"/></marker></defs>
-<rect class="box" x="290" y="20" width="300" height="64" rx="9"/><text x="440" y="47" text-anchor="middle" font-size="14" font-weight="500">USER DECISION</text><text class="muted" x="440" y="68" text-anchor="middle" font-size="11">the action being considered</text>
-<path class="arrow" d="M440 84 L440 114"/>
-<rect class="model" x="80" y="114" width="300" height="78" rx="9"/><text x="230" y="142" text-anchor="middle" font-size="14" font-weight="500">BUILDER MODEL</text><text class="muted" x="230" y="164" text-anchor="middle" font-size="11">extract claims + dependencies</text><text class="muted" x="230" y="180" text-anchor="middle" font-size="11">no final recommendation</text>
-<rect class="model" x="500" y="114" width="300" height="78" rx="9"/><text x="650" y="142" text-anchor="middle" font-size="14" font-weight="500">ADVERSARY MODEL</text><text class="muted" x="650" y="164" text-anchor="middle" font-size="11">attack consequential assumptions</text><text class="muted" x="650" y="180" text-anchor="middle" font-size="11">classify materiality</text>
-<path class="arrow" d="M380 153 L500 153"/>
-<path class="arrow" d="M440 192 L440 230"/>
-<rect class="box" x="240" y="230" width="400" height="82" rx="9"/><text x="440" y="258" text-anchor="middle" font-size="14" font-weight="500">BOUNDED REVIEW</text><text class="muted" x="440" y="281" text-anchor="middle" font-size="11">stop at max rounds OR when no new consequential challenge appears</text><text class="muted" x="440" y="298" text-anchor="middle" font-size="11">unresolved challenges keep explicit resolution recipes</text>
-<path class="arrow" d="M440 312 L440 350"/>
-<rect class="gate" x="250" y="350" width="380" height="86" rx="9"/><text class="white" x="440" y="380" text-anchor="middle" font-size="15" font-weight="500">DETERMINISTIC SUFFICIENCY GATE</text><text x="440" y="405" text-anchor="middle" font-size="11" fill="#8C97AD">reads ledger state; no model call</text><text x="440" y="422" text-anchor="middle" font-size="11" fill="#8C97AD">the matched rule is recorded with the action</text>
-<path class="arrow" d="M330 436 L180 486"/><path class="arrow" d="M440 436 L440 486"/><path class="arrow" d="M550 436 L700 486"/>
-<rect class="fatalfill" x="70" y="486" width="220" height="64" rx="9"/><text class="white" x="180" y="513" text-anchor="middle" font-size="14" font-weight="500">ABANDON</text><text class="white" x="180" y="534" text-anchor="middle" font-size="11">unresolved FATAL</text>
-<rect class="blockingfill" x="330" y="486" width="220" height="64" rx="9"/><text class="white" x="440" y="513" text-anchor="middle" font-size="14" font-weight="500">WAIT</text><text class="white" x="440" y="534" text-anchor="middle" font-size="11">unresolved BLOCKING</text>
-<rect class="actfill" x="590" y="486" width="220" height="64" rx="9"/><text class="white" x="700" y="513" text-anchor="middle" font-size="14" font-weight="500">ACT</text><text class="white" x="700" y="534" text-anchor="middle" font-size="11">no fatal/blocking issue</text>
-<path class="arrow" d="M440 550 L440 585"/><text x="440" y="609" text-anchor="middle" font-size="12" font-weight="500">COMMIT LEDGER → reopen only on declared trigger → score against reality later</text>
+<rect class="box" x="290" y="20" width="300" height="62" rx="9"/><text x="440" y="47" text-anchor="middle" font-size="14" font-weight="500">DECISION</text><text class="muted" x="440" y="67" text-anchor="middle" font-size="11">what are we actually considering?</text>
+<path class="arrow" d="M440 82 L440 112"/>
+<rect class="model" x="80" y="112" width="300" height="76" rx="9"/><text x="230" y="140" text-anchor="middle" font-size="14" font-weight="500">BUILDER</text><text class="muted" x="230" y="162" text-anchor="middle" font-size="11">what must be true?</text><text class="muted" x="230" y="178" text-anchor="middle" font-size="11">claims + dependencies</text>
+<rect class="model" x="500" y="112" width="300" height="76" rx="9"/><text x="650" y="140" text-anchor="middle" font-size="14" font-weight="500">ADVERSARY</text><text class="muted" x="650" y="162" text-anchor="middle" font-size="11">what could make this a bad decision?</text><text class="muted" x="650" y="178" text-anchor="middle" font-size="11">problems + evidence needed</text>
+<path class="arrow" d="M380 150 L500 150"/>
+<path class="arrow" d="M440 188 L440 226"/>
+<rect class="box" x="240" y="226" width="400" height="76" rx="9"/><text x="440" y="255" text-anchor="middle" font-size="14" font-weight="500">STOP WHEN MORE REVIEW STOPS HELPING</text><text class="muted" x="440" y="278" text-anchor="middle" font-size="11">maximum rounds OR no new important problem</text><text class="muted" x="440" y="294" text-anchor="middle" font-size="11">remaining problems stay visible in the ledger</text>
+<path class="arrow" d="M440 302 L440 338"/>
+<rect class="gate" x="250" y="338" width="380" height="80" rx="9"/><text class="white" x="440" y="368" text-anchor="middle" font-size="15" font-weight="500">FIXED DECISION RULE</text><text x="440" y="392" text-anchor="middle" font-size="11" fill="#8C97AD">no model chooses the final action</text><text x="440" y="408" text-anchor="middle" font-size="11" fill="#8C97AD">the exact rule and problem IDs are recorded</text>
+<path class="arrow" d="M330 418 L180 466"/><path class="arrow" d="M440 418 L440 466"/><path class="arrow" d="M550 418 L700 466"/>
+<rect class="abandon" x="70" y="466" width="220" height="62" rx="9"/><text class="white" x="180" y="493" text-anchor="middle" font-size="14" font-weight="500">ABANDON</text><text class="white" x="180" y="514" text-anchor="middle" font-size="11">idea has a fatal unresolved problem</text>
+<rect class="wait" x="330" y="466" width="220" height="62" rx="9"/><text class="white" x="440" y="493" text-anchor="middle" font-size="14" font-weight="500">WAIT</text><text class="white" x="440" y="514" text-anchor="middle" font-size="11">a fixable blocker remains</text>
+<rect class="act" x="590" y="466" width="220" height="62" rx="9"/><text class="white" x="700" y="493" text-anchor="middle" font-size="14" font-weight="500">ACT</text><text class="white" x="700" y="514" text-anchor="middle" font-size="11">no fatal or blocking problem remains</text>
 </svg>
 </div>
-<p class="flowcap">There is no “judge model” hidden after the adversary. The last reasoning step is a rule evaluation over ledger state.</p>
 </section>
 
-<section id="worked">
-<h2>A worked decision: the original idea gets rejected</h2>
-<p class="lede" style="font-size:1rem;color:var(--muted)">This is the important distinction the earlier page obscured. A FATAL challenge does not magically turn into “build the MVP.” The original decision is rejected. A materially different proposal must be submitted as a new decision.</p>
-<div class="worked">
-<div class="row"><div class="label">Decision</div><div class="body"><strong>Build a generic multi-agent adversarial debate framework.</strong></div></div>
-<div class="row"><div class="label">Builder claim</div><div class="body"><span class="code">CL-001</span> — Generic multi-agent debate is differentiated enough to justify a new open-source project.</div></div>
-<div class="row"><div class="label">Adversary</div><div class="body"><span class="fatal">FATAL · CH-001</span><br>Direct prior art already covers multi-agent debate, critic/reflection loops, and adversarial orchestration. The core thesis is not differentiated.</div></div>
-<div class="row"><div class="label">Resolution state</div><div class="body"><span class="code">UNRESOLVED</span><br><span class="code">resolves_if:</span> demonstrate a materially different lifecycle or control mechanism that existing debate/orchestration systems do not provide.</div></div>
-<div class="row"><div class="label">Gate trace</div><div class="body code">unresolved = [CH-001]<br>CH-001.materiality = FATAL<br>matched_rule = unresolved FATAL → ABANDON</div></div>
-<div class="row verdict"><div class="label">Final action</div><div class="body"><strong>ABANDON</strong>The generic debate-framework decision is closed. No model gets to override this result.</div></div>
+<section id="cases">
+<h2>Decision 1 — we did not build the healthcare idea</h2>
+<div class="case">
+<div class="case-head"><div><div class="num">Real decision · healthcare</div><h3>Build a cardiology-first agent for orders → authorization → scheduling → prep → procedure → results → follow-up.</h3></div><div class="badge abandon">ABANDON</div></div>
+<div class="rows">
+<div class="row"><div class="label">Why it looked good</div><div class="body"><p>The workflow is painful, fragmented, expensive, and full of manual handoffs. A focused AI agent sounded like a strong product opportunity.</p></div></div>
+<div class="row"><div class="label">What the review found</div><div class="body"><p><span class="fatal">Fatal problem:</span> companies already sell much of the core workflow we were proposing.</p><p>Tennr already moves patients through referrals, insurance requirements, authorizations, diagnostics and scheduling. Honey Health already automates prior authorization for procedures, imaging and diagnostics from requirement detection through submission and follow-up. Silna also automates prior-authorization submission and follow-up.</p><div class="sources"><a href="https://www.tennr.com/">Tennr</a><a href="https://www.honeyhealth.ai/platform/medical-prior-authorizations">Honey Health</a><a href="https://www.silnahealth.com/prior-authorization/">Silna</a></div></div></div>
+<div class="row"><div class="label">Why that matters</div><div class="body"><p>The problem is real, but <strong>“the problem exists” is not the same as “we have a differentiated product.”</strong> We had not shown a clear capability customers could not already buy.</p></div></div>
+<div class="row"><div class="label">Rule trace</div><div class="body code">problem = “core workflow already exists in market; differentiation not established”<br>severity = FATAL<br>status = UNRESOLVED<br>matched rule = unresolved FATAL → ABANDON</div></div>
+<div class="row verdict abandon"><div class="label">Decision</div><div class="body"><strong>ABANDON</strong>Do not spend engineering time building this product as proposed. A future healthcare idea would need a clearly different wedge and should be treated as a new decision.</div></div>
 </div>
-<div class="note"><strong>So why does Decision Gate itself exist?</strong>The later proposal was not “try the same idea again.” It was a new decision: build a bounded adversarial decision ledger with deterministic stopping, controlled reopening, and outcome scoring. That proposal went through its own review. The ledger keeps those pivots separate so a failed thesis cannot be retroactively rewritten as a success.</div>
+</div>
 </section>
 
 <section>
-<h2>The gate is intentionally boring</h2>
-<div class="rules"><span class="f">IF</span> any unresolved challenge is FATAL       → <span class="f">ABANDON</span>
-<span class="b">ELSE IF</span> any unresolved challenge is BLOCKING → <span class="b">WAIT</span>
-<span class="a">ELSE</span>                                           → <span class="a">ACT</span>
+<h2>Decision 2 — why we did build Decision Gate</h2>
+<div class="case">
+<div class="case-head"><div><div class="num">Real decision · this project</div><h3>Build a small open-source control layer that turns AI-assisted analysis into a bounded, auditable decision.</h3></div><div class="badge act">ACT</div></div>
+<div class="rows">
+<div class="row"><div class="label">What we rejected first</div><div class="body"><p>We did <strong>not</strong> decide to build “another multi-agent debate framework.” Systems for agents debating, critiquing, reflecting and orchestrating already exist. That alone was not interesting enough.</p></div></div>
+<div class="row"><div class="label">What remained useful</div><div class="body"><p>The narrower problem survived the challenge: AI can keep generating objections without ever telling the user when enough analysis is enough. We wanted a control layer that:</p><p>1. records the claims and important objections,<br>2. stops review using an explicit policy,<br>3. maps unresolved problems to ACT / WAIT / ABANDON with fixed rules,<br>4. records exactly why the decision was made,<br>5. reopens only when something materially changes,<br>6. later compares the reasoning with what actually happened.</p></div></div>
+<div class="row"><div class="label">Remaining risk</div><div class="body"><p><span class="material">Material but not fatal:</span> the outcome-scoring idea only becomes truly useful after we accumulate enough real decisions and later observe what happened.</p><p>That is a reason to measure the project, not a reason to block the MVP.</p></div></div>
+<div class="row"><div class="label">Rule trace</div><div class="body code">fatal unresolved problems = 0<br>blocking unresolved problems = 0<br>material accepted risk = “needs enough real decisions to score usefulness”<br>matched rule = no unresolved fatal/blocking problem → ACT</div></div>
+<div class="row verdict act"><div class="label">Decision</div><div class="body"><strong>ACT</strong>Build the smallest MVP, use it on real decisions, and let later outcomes tell us whether the reasoning process is actually useful.</div></div>
+</div>
+</div>
+<div class="note"><strong>The important difference:</strong> healthcare failed because the proposed product itself did not have enough differentiation. Decision Gate survived only after we removed the generic “agents debate” idea and narrowed the project to explicit stopping, deterministic action rules, decision history, controlled reopening, and outcome scoring.</div>
+</section>
 
-<span class="d"># MATERIAL and NON_BLOCKING items are preserved as accepted risk.
-# The matched rule, unresolved IDs, and stop reason are written to the ledger.</span></div>
-<p class="flowcap">The sophistication belongs in how claims are challenged and evidenced. The final control rule should be simple enough to audit in seconds.</p>
+<section>
+<h2>The final rule is deliberately simple</h2>
+<div class="rules"><span class="bad">IF</span> an unresolved problem would make the idea fundamentally wrong → <span class="bad">ABANDON</span>
+<span class="wait">ELSE IF</span> an unresolved problem must be fixed before acting         → <span class="wait">WAIT</span>
+<span class="good">ELSE</span>                                                             → <span class="good">ACT</span>
+
+<span class="dim">Important but non-blocking uncertainty is recorded as accepted risk.
+The matched rule and the problems that triggered it are written into the ledger.</span></div>
 </section>
 
 <section>
 <h2>Run the actual system</h2>
-<p class="lede" style="font-size:1rem;color:var(--muted)">This page is documentation and a worked example, not a fake frontend. The executable UI and model runner live in the repository.</p>
+<p class="lede" style="font-size:1rem;color:var(--muted)">This website is a static explanation of the project. It does not pretend to run the Python/model backend. The executable UI and model runner are in the repository.</p>
 <div class="architecture"><span class="a">git clone</span> https://github.com/hemangnagar/decision_gate.git
 <span class="a">cd</span> decision_gate
 <span class="a">python -m venv</span> .venv
 <span class="a">pip install</span> -e .
 <span class="a">decision-gate-web</span>
 
-<span class="d"># For live cross-provider models:</span>
+<span class="d"># optional live model providers</span>
 <span class="a">pip install</span> -e '.[llm]'</div>
 <div class="actions"><a class="button" href="https://github.com/hemangnagar/decision_gate">README + source</a></div>
 </section>
