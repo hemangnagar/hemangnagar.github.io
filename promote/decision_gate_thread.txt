@@ -2,9 +2,9 @@
 # Attach assets/decision-gate-abandon.png to tweet 1 if posting manually (the API path posts text only).
 # Tweets are separated by lines containing only ---
 
-1/ I asked Claude to argue against four decisions, then didn't let it decide any of them.
+1/ A decision gate for trigger-happy developers who build first and ask questions later. I'm one of them.
 
-Decision Gate: one model states what a decision rests on, a second attacks each claim, and three lines of deterministic code return ACT / WAIT / ABANDON.
+Two models argue about the decision. Three lines of deterministic code return ACT / WAIT / ABANDON. Neither model picks the action.
 
 Open source. 🧵
 ---

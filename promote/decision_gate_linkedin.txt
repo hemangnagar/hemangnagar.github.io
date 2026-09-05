@@ -1,16 +1,17 @@
 # LinkedIn post — paste as-is. Attach assets/decision-gate-abandon.png. Put the links in the FIRST COMMENT, not the post body.
 
-Every AI decision tool I have seen has the same flaw: the model that argues the case also declares the verdict.
 
-That fails in two ways. A model can always produce one more objection, so a review never ends on its own. And when a model says "proceed", nobody can say afterward which objection it weighed, which it ignored, or whether the same inputs would give the same answer tomorrow. You get a recommendation with no record.
+A decision gate for trigger-happy developers who build first and ask questions later.
 
-Decision Gate is my answer. Two models argue, a rule decides. The Builder states what would have to be true for the decision to hold. The Adversary attacks each claim and rates how badly it hurts if it stays unresolved. Then three lines of deterministic code read those ratings and return ACT, WAIT, or ABANDON. The review stops by rule, the action is chosen by rule, and the ledger records which rule fired, which challenges fired it, and what would flip it. Neither model touches any of that.
+I am one of them. Now that AI writes the code, "let's just build it" costs an afternoon, so the question of whether to build it at all gets asked less than ever. The first decision I ran through this tool was my own idea for it, a generic AI debate framework. It came back ABANDON. The reframed version, where a fixed rule decides instead of the models, came back ACT. That is the project you are looking at, and both ledgers are in the repo.
 
-The right question is not "have we answered every objection?" It is "do we know enough to take the next action responsibly?" A rule can answer that consistently. A model cannot.
+The flaw in every AI decision tool I have seen is that the model that argues the case also declares the verdict. A model can always produce one more objection, so the review never ends on its own. And when it says "proceed", nobody can say afterward which objection it weighed, which it ignored, or whether the same inputs would give the same answer tomorrow.
 
-I ran it on four decisions with Claude Opus 5 in both roles. A hospital replacing pagers came back ABANDON on a structural argument: pagers are the out-of-band channel, and an app that replaces them removes the fallback for exactly the outages where the app is down. A Spark-to-DuckDB migration came back WAIT with nine blocking challenges, each carrying the measurement that retires it. Do those nine and the ledger already says ACT, with thirteen named risks carried forward. WAIT is a work plan, not a no.
+So in Decision Gate, two models argue and a rule decides. The Builder states what would have to be true for the decision to hold. The Adversary attacks each claim and rates how badly it hurts if it stays unresolved. Three lines of deterministic code read those ratings and return ACT, WAIT, or ABANDON. The review stops by rule, the action is chosen by rule, and the ledger records which rule fired, which challenges fired it, and what would flip it. The question it answers is not "have we answered every objection?" but "do we know enough to take the next action responsibly?"
 
-Two findings I am publishing rather than hiding. In three rounds the adversary never ran out of objections, so the round budget stopped the review, not convergence. And across 92 challenges it rated zero as non-blocking. The model is one step back from the decision, not removed from it. The ledger makes that visible.
+Four live runs with Claude Opus 5 in both roles. A hospital replacing pagers came back ABANDON on a structural argument: pagers are the out-of-band channel, and an app that replaces them removes the fallback for exactly the outages where the app is down. A Spark-to-DuckDB migration came back WAIT with nine blocking challenges, each carrying the measurement that retires it. Do those nine and the ledger already says ACT, with thirteen named risks carried forward. WAIT is a work plan, not a no.
+
+Two findings I am publishing rather than hiding. In three rounds the adversary never ran out of objections, so the round budget stopped the review, not convergence. And across 92 challenges it rated zero as non-blocking. The model is one step back from the decision, not removed from it.
 
 Open source, MIT. Every ledger is unedited and re-gateable from the file without calling a model. This is the pattern I build for clients: models propose, rules dispose, every output traces to something that can be checked.
 
