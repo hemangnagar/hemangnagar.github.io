@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decision Gate — Hemang Nagar</title>
+<meta name="description" content="Decision Gate is an open-source adversarial decision system: challenge assumptions, stop when more analysis stops helping, commit to ACT, WAIT, or ABANDON, and let outcomes score the reasoning.">
+<meta property="og:title" content="Decision Gate — Challenge the decision. Then make one.">
+<meta property="og:description" content="A model-agnostic adversarial decision system with bounded review, deterministic ACT/WAIT/ABANDON gates, controlled reopening, and outcome scoring.">
+<meta property="og:url" content="https://hemangnagar.dev/decision-gate/">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--ground:#F4F5F7;--card:#fff;--ink:#16213A;--muted:#5B6478;--line:#D9DDE5;--accent:#B4560A;--soft:#FBEBD9;--ledger:#1A2236;--ledgerInk:#E7EAF0;--ledgerMuted:#8C97AD;--ledgerAccent:#E8964A;--fatal:#A33A2B;--blocking:#B4560A;--material:#8A6410}
+@media(prefers-color-scheme:dark){:root{--ground:#10141D;--card:#171C28;--ink:#E7EAF0;--muted:#97A0B3;--line:#2A3142;--accent:#E8964A;--soft:#2E2116;--ledger:#0B0E15}}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:17px;line-height:1.6}a{color:var(--accent);text-underline-offset:3px}.wrap{max-width:900px;margin:auto;padding:0 22px}header{display:flex;justify-content:space-between;gap:20px;padding-top:26px;padding-bottom:62px;font:500 .82rem "IBM Plex Mono",monospace}header a{text-decoration:none;color:var(--muted)}header a:hover{color:var(--accent)}main{padding-bottom:90px}.eyebrow{font:500 .74rem "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}h1,h2{font-family:"Archivo",sans-serif;font-weight:800;letter-spacing:-.025em}h1{font-size:clamp(2.7rem,7vw,4.8rem);line-height:1.01;max-width:14ch;margin:0 0 24px}h1 span{color:var(--accent)}h2{font-size:1.65rem;margin:0 0 18px}.lede{font-size:1.2rem;max-width:38em;margin:0}.lede+.lede{font-size:1rem;color:var(--muted);margin-top:12px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.button{display:inline-block;padding:11px 17px;border-radius:6px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600}.button.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}section+section{margin-top:72px}.decision-input{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;box-shadow:0 12px 36px rgba(22,33,58,.07)}textarea{width:100%;min-height:94px;border:0;background:transparent;color:var(--ink);resize:vertical;font:500 1rem "IBM Plex Sans",sans-serif;outline:none}.samples{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.sample{border:1px solid var(--line);background:transparent;color:var(--muted);padding:7px 10px;border-radius:999px;cursor:pointer;font:500 .76rem "IBM Plex Mono",monospace}.sample:hover{border-color:var(--accent);color:var(--accent)}.map{margin-top:22px}.node{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px 22px}.label{font:500 .7rem "IBM Plex Mono",monospace;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}.node h3{font-size:1.15rem;margin:6px 0 0}.arrow{text-align:center;color:var(--muted);padding:8px}.claims{display:grid;gap:10px;margin-top:12px}.claim{padding:10px 12px;border-left:3px solid var(--line);background:var(--ground);font-size:.95rem}.challenge{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--line)}.challenge:first-of-type{margin-top:10px}.severity{font:500 .72rem "IBM Plex Mono",monospace}.fatal{color:var(--fatal)}.blocking{color:var(--blocking)}.material{color:var(--material)}.stop{background:var(--ledger);color:var(--ledgerInk);padding:18px 22px;border-radius:8px;font-family:"IBM Plex Mono",monospace}.stop b{color:var(--ledgerAccent)}.stop small{display:block;color:var(--ledgerMuted);margin-top:4px}.verdict{text-align:center;border:2px solid var(--ink);padding:24px;border-radius:10px;background:var(--card)}.verdict strong{display:block;font:800 clamp(3rem,9vw,5.8rem) "Archivo",sans-serif;line-height:1;color:var(--accent);margin:8px 0}.architecture{background:var(--ledger);color:var(--ledgerInk);border-radius:8px;padding:22px;font:400 .8rem/1.7 "IBM Plex Mono",monospace;overflow:auto}.architecture .a{color:var(--ledgerAccent)}.architecture .d{color:var(--ledgerMuted)}.grid{display:grid;grid-template-columns:1fr;gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px}.card h3{margin:0 0 8px;font-size:1rem}.card p{margin:0;color:var(--muted);font-size:.94rem}@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}.grid .wide{grid-column:1/-1}}footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font:.78rem "IBM Plex Mono",monospace;margin-top:80px}@media(max-width:600px){header{padding-bottom:40px}.challenge{grid-template-columns:1fr;gap:2px}}
+</style>
+</head>
+<body>
+<header class="wrap"><a href="/">← Hemang Nagar</a><div><a href="https://github.com/hemangnagar/decision_gate">GitHub repo</a></div></header>
+<main class="wrap">
+<section>
+<p class="eyebrow">Open-source · adversarial AI · deterministic control</p>
+<h1>Challenge the decision. <span>Then make one.</span></h1>
+<p class="lede">Decision Gate turns an AI argument into a bounded decision process: identify what must be true, attack the load-bearing assumptions, stop when further review has low value, and force an ACT / WAIT / ABANDON call.</p>
+<p class="lede">The models generate reasoning. They do not control the final gate.</p>
+<div class="actions"><a class="button" href="https://github.com/hemangnagar/decision_gate">View source</a><a class="button secondary" href="#demo">See the 30-second demo</a></div>
+</section>
+
+<section id="demo">
+<h2>One decision. A bounded review.</h2>
+<p class="lede" style="font-size:1rem;color:var(--muted)">This hosted demo illustrates the real ledger and gate semantics without pretending GitHub Pages can run the Python/model backend. Pick a sample decision to see how the review surface changes.</p>
+<div class="decision-input">
+<textarea id="decision">Should we build an open-source adversarial decision ledger?</textarea>
+<div class="samples">
+<button class="sample" data-kind="build">Build this project</button>
+<button class="sample" data-kind="health">Healthcare agent thesis</button>
+<button class="sample" data-kind="launch">Launch with unresolved dependency</button>
+</div>
+</div>
+<div class="map">
+<div class="node"><div class="label">Your decision</div><h3 id="decisionText">Should we build an open-source adversarial decision ledger?</h3></div>
+<div class="arrow">↓</div>
+<div class="node"><div class="label">Load-bearing assumptions</div><div class="claims" id="claims"></div></div>
+<div class="arrow">↓</div>
+<div class="node"><div class="label">Adversarial review</div><div id="challenges"></div></div>
+<div class="arrow">↓</div>
+<div class="stop"><b>STOP REVIEW</b><small id="stopReason">No new MATERIAL, BLOCKING, or FATAL challenge appeared in the final bounded round.</small></div>
+<div class="arrow">↓</div>
+<div class="verdict"><div class="label">Decision sufficient</div><strong id="verdict">ACT</strong><div id="nextAction">Build the smallest MVP. Preserve the remaining uncertainty as accepted risk.</div></div>
+</div>
+</section>
+
+<section>
+<h2>The control boundary is the point.</h2>
+<div class="architecture"><span class="d">USER DECISION</span>
+      ↓
+<span class="a">BUILDER MODEL</span>       extracts claims / dependencies
+      ↓
+<span class="a">ADVERSARY MODEL</span>     challenges only consequential assumptions
+      ↓
+<span class="d">BOUNDED REVIEW</span>      max rounds OR no new material challenge
+      ↓
+<span class="a">DETERMINISTIC GATE</span>  unresolved FATAL → ABANDON
+                    unresolved BLOCKING → WAIT
+                    otherwise → ACT + accepted risks
+      ↓
+<span class="d">COMMIT LEDGER</span>       timestamp + stopping reason + resolution recipes
+      ↓
+<span class="d">REOPEN / OUTCOME</span>    only declared triggers reopen; reality scores reasoning</div>
+</section>
+
+<section>
+<h2>What is implemented</h2>
+<div class="grid">
+<div class="card"><h3>Cross-model adversarial runner</h3><p>Builder and adversary roles are provider-neutral through LiteLLM. The model strings are user-selected rather than hard-coded.</p></div>
+<div class="card"><h3>Deterministic sufficiency gate</h3><p>Final ACT / WAIT / ABANDON is computed from unresolved challenge materiality, not generated by another model.</p></div>
+<div class="card"><h3>Controlled reopening</h3><p>A closed review does not restart because another model found another objection. Reopening requires a declared trigger tied to the ledger.</p></div>
+<div class="card"><h3>Outcome scoring</h3><p>Later observations are recorded against original claims and accepted risks so decision quality can eventually be judged by reality.</p></div>
+<div class="card wide"><h3>Why it exists</h3><p>Adversarial agents can argue forever. Decision Gate treats termination as a first-class part of reasoning: challenge enough to act intelligently, commit, and then stop talking until something material changes.</p></div>
+</div>
+</section>
+
+<section>
+<h2>Run the actual system</h2>
+<div class="architecture"><span class="a">git clone</span> https://github.com/hemangnagar/decision_gate.git
+<span class="a">cd</span> decision_gate
+<span class="a">python -m venv</span> .venv
+<span class="a">pip install</span> -e .
+<span class="a">decision-gate-web</span>
+
+<span class="d"># For live cross-provider models:</span>
+<span class="a">pip install</span> -e '.[llm]'</div>
+<div class="actions"><a class="button" href="https://github.com/hemangnagar/decision_gate">README + source</a></div>
+</section>
+
+<footer>Decision Gate · open source · built by Hemang Nagar</footer>
+</main>
+<script>
+const scenarios={
+build:{decision:'Should we build an open-source adversarial decision ledger?',claims:['Generic multi-agent debate alone is not differentiated.','A claim/evidence specification alone is not enough.','A bounded lifecycle with explicit stopping and outcome scoring remains meaningfully useful.'],challenges:[['FATAL','Direct prior art makes the original generic debate thesis non-differentiated.'],['FATAL','AIF / PROV / telemetry overlap makes a new “reasoning standard” a weak thesis.'],['MATERIAL','Prospective scoring only becomes meaningful after enough real decisions resolve.']],stop:'Final bounded review produced no new consequential challenge; marginal value of more design review is negligible.',verdict:'ACT',next:'Build the smallest MVP. Track the unresolved prospective-scoring issue as accepted risk.'},
+health:{decision:'Should we build a cardiology-first procedure operations agent?',claims:['Specialty workflow pain is large enough to justify a focused product.','Existing vendors leave a material workflow gap.','Cardiology provides a narrow enough initial wedge.'],challenges:[['BLOCKING','Current vendors already cover much of order → authorization → scheduling → outreach.'],['MATERIAL','The remaining differentiation may depend on specialty-specific workflow depth rather than generic orchestration.']],stop:'A blocking market-gap question remains unresolved.',verdict:'WAIT',next:'Do not build yet. Resolve the competitive workflow gap with primary evidence before committing engineering effort.'},
+launch:{decision:'Should we launch this system while a critical data dependency is still unverified?',claims:['The system behaves correctly on known inputs.','The missing dependency is not required for the launch path.','Rollback is available if the dependency fails.'],challenges:[['BLOCKING','The unverified dependency sits on the launch-critical path.'],['NON_BLOCKING','Documentation still needs cleanup but does not change launch safety.']],stop:'Review is sufficient to know what must happen next; more argument will not remove the dependency.',verdict:'WAIT',next:'Verify the blocking dependency. Reopen only when that evidence exists.'}
+};
+function render(s){document.getElementById('decision').value=s.decision;document.getElementById('decisionText').textContent=s.decision;document.getElementById('claims').innerHTML='';s.claims.forEach(x=>{const d=document.createElement('div');d.className='claim';d.textContent=x;document.getElementById('claims').appendChild(d)});document.getElementById('challenges').innerHTML='';s.challenges.forEach(([sev,text])=>{const d=document.createElement('div');d.className='challenge';const a=document.createElement('div');a.className='severity '+sev.toLowerCase();a.textContent=sev;const b=document.createElement('div');b.textContent=text;d.append(a,b);document.getElementById('challenges').appendChild(d)});document.getElementById('stopReason').textContent=s.stop;document.getElementById('verdict').textContent=s.verdict;document.getElementById('nextAction').textContent=s.next}
+document.querySelectorAll('.sample').forEach(b=>b.addEventListener('click',()=>render(scenarios[b.dataset.kind])));document.getElementById('decision').addEventListener('input',e=>document.getElementById('decisionText').textContent=e.target.value||'Your decision');render(scenarios.build);
+</script>
+</body>
+</html>
