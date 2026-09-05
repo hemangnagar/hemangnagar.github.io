@@ -1,20 +1,18 @@
-# LinkedIn post — paste as-is. Attach assets/decision-gate-abandon.png. Put the link in the FIRST COMMENT, not the post body.
+# LinkedIn post — paste as-is. Attach assets/decision-gate-abandon.png. Put the links in the FIRST COMMENT, not the post body.
 
-I asked Claude to argue against four decisions: a hospital replacing pagers, a Spark-to-DuckDB migration, a congestion-pricing pilot, and a bakery opening a third store.
+Every AI decision tool I have seen has the same flaw: the model that argues the case also declares the verdict.
 
-Then I did not let it decide anything.
+That fails in two ways. A model can always produce one more objection, so a review never ends on its own. And when a model says "proceed", nobody can say afterward which objection it weighed, which it ignored, or whether the same inputs would give the same answer tomorrow. You get a recommendation with no record.
 
-The tool I built, Decision Gate, splits the work. One model states what would have to be true for the decision to hold. A second attacks each claim and rates how badly it hurts if it stays unresolved. Then three lines of deterministic code read those ratings and return ACT, WAIT, or ABANDON, name the rule that fired, and state what would change the answer.
+Decision Gate is my answer. Two models argue, a rule decides. The Builder states what would have to be true for the decision to hold. The Adversary attacks each claim and rates how badly it hurts if it stays unresolved. Then three lines of deterministic code read those ratings and return ACT, WAIT, or ABANDON. The review stops by rule, the action is chosen by rule, and the ledger records which rule fired, which challenges fired it, and what would flip it. Neither model touches any of that.
 
-The hospital case came back ABANDON on one argument: pagers run on a separate radio network, so an app that replaces them removes the fallback for exactly the outages where the app is down. Resolve that and the gate still says WAIT. Ten more blocking problems remain.
+The right question is not "have we answered every objection?" It is "do we know enough to take the next action responsibly?" A rule can answer that consistently. A model cannot.
 
-The Spark-to-DuckDB migration came back WAIT, and WAIT is not no. Nine blocking challenges, each with the measurement that retires it: replay the five heaviest jobs at real concurrency, measure bytes actually read rather than logical volume, cost a tuned-Spark baseline, plot the thread-scaling curve. Do those nine and the gate returns ACT, carrying thirteen named risks. That is a due-diligence plan, produced in four minutes.
+I ran it on four decisions with Claude Opus 5 in both roles. A hospital replacing pagers came back ABANDON on a structural argument: pagers are the out-of-band channel, and an app that replaces them removes the fallback for exactly the outages where the app is down. A Spark-to-DuckDB migration came back WAIT with nine blocking challenges, each carrying the measurement that retires it. Do those nine and the ledger already says ACT, with thirteen named risks carried forward. WAIT is a work plan, not a no.
 
-Two findings I am publishing rather than hiding. The adversary never ran out of objections in three rounds, so the round budget stopped the review, not convergence. And across 92 challenges it rated zero as non-blocking. The model is one step back from the decision, not removed from it. The ledger makes that visible.
+Two findings I am publishing rather than hiding. In three rounds the adversary never ran out of objections, so the round budget stopped the review, not convergence. And across 92 challenges it rated zero as non-blocking. The model is one step back from the decision, not removed from it. The ledger makes that visible.
 
-Open source, MIT. Every ledger in the repo is unedited and re-gateable from the file without calling a model.
-
-This is the pattern I build for clients: models propose, rules dispose, every output traces to something that can be checked.
+Open source, MIT. Every ledger is unedited and re-gateable from the file without calling a model. This is the pattern I build for clients: models propose, rules dispose, every output traces to something that can be checked.
 
 # --- first comment ---
 Write-up with all four runs and the screenshots: https://hemangnagar.dev/decision-gate/
