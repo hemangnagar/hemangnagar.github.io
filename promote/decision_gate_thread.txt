@@ -8,7 +8,7 @@ Decision Gate: one model states what a decision rests on, a second attacks each 
 
 Open source. 🧵
 ---
-2/ The hospital case (replace pagers with a messaging app in 12 months) came back ABANDON on one argument:
+2/ The hospital case, replacing pagers with a messaging app, came back ABANDON on one argument:
 
 Pagers run on a separate radio network. An app that *replaces* them removes the fallback for exactly the outages where the app is down.
 
@@ -18,7 +18,7 @@ Pagers run on a separate radio network. An app that *replaces* them removes the 
 
 That line separates "the framing is wrong" from "we need more evidence." It's computed by a rule, not narrated by a model.
 ---
-4/ Two findings I'm publishing rather than hiding:
+4/ Two findings I'm publishing, not hiding:
 
 • In 3 rounds the adversary never ran out of objections. The round budget stopped the review, not convergence.
 • Across 92 challenges it rated ZERO as non-blocking.
