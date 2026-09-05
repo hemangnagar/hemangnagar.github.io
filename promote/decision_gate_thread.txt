@@ -1,0 +1,32 @@
+# Decision Gate launch thread — post with: python promote.py decision_gate_thread.txt --send
+# Attach assets/decision-gate-abandon.png to tweet 1 if posting manually (the API path posts text only).
+# Tweets are separated by lines containing only ---
+
+1/ I asked Claude to argue against four decisions, then didn't let it decide any of them.
+
+Decision Gate: one model states what a decision rests on, a second attacks each claim, and three lines of deterministic code return ACT / WAIT / ABANDON.
+
+Open source. 🧵
+---
+2/ The hospital case (replace pagers with a messaging app in 12 months) came back ABANDON on one argument:
+
+Pagers run on a separate radio network. An app that *replaces* them removes the fallback for exactly the outages where the app is down.
+
+"Replace" is a different decision from "add."
+---
+3/ Then the ledger computes the counterfactual: resolve that FATAL argument and the gate still says WAIT. Ten BLOCKING problems remain.
+
+That line separates "the framing is wrong" from "we need more evidence." It's computed by a rule, not narrated by a model.
+---
+4/ Two findings I'm publishing rather than hiding:
+
+• In 3 rounds the adversary never ran out of objections. The round budget stopped the review, not convergence.
+• Across 92 challenges it rated ZERO as non-blocking.
+
+The model is one step back from the decision, not removed from it.
+---
+5/ Every ledger in the repo is unedited and re-gates from the file: `decision-gate gate ledger.json` recomputes the action without calling a model.
+
+MIT. Demo mode needs no API key. Write-up with the four runs:
+
+https://hemangnagar.dev/decision-gate/

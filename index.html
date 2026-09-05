@@ -9,7 +9,7 @@
 <meta property="og:description" content="The LLM proposes. The pipeline disposes. Data contracts, lineage, and LLMs behind deterministic gates.">
 <meta property="og:url" content="https://hemangnagar.dev/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://raw.githubusercontent.com/hemangnagar/grocery_optimizer/main/docs/screenshots/verdict-flexible-light.png">
+<meta property="og:image" content="https://hemangnagar.dev/assets/decision-gate-abandon.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@hnagar_dev">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316213A'/%3E%3Cpath d='M8 22V10h3v4.5h10V10h3v12h-3v-5H11v5z' fill='%23E8964A'/%3E%3C/svg%3E">
@@ -86,13 +86,15 @@
   .project p { color: var(--muted); font-size: 0.98rem; }
   .project .body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
   .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+  .shots.one { grid-template-columns: 1fr; }
   .shots figure { margin: 0; }
   .shots img { width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(22, 33, 58, 0.10); }
   .shots figcaption { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; color: var(--muted); margin-top: 8px; letter-spacing: 0.02em; }
   .check { background: var(--ledger); color: var(--ledger-ink); border-radius: 6px; padding: 16px 18px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.72rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; min-width: 0; }
   .check .ok { color: var(--ledger-accent); font-weight: 500; }
   .check .dim { color: var(--ledger-muted); }
-  @media (min-width: 720px) { .project.two { grid-template-columns: minmax(0, 1fr) 300px; gap: 16px 36px; align-items: start; } .project.two .shots { grid-template-columns: 1fr 1fr; } .project.tracer { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 36px; align-items: start; } }
+  @media (min-width: 720px) { .project.two { grid-template-columns: minmax(0, 1fr) 300px; gap: 16px 36px; align-items: start; } .project.two .shots { grid-template-columns: 1fr 1fr; }
+    .project.two .shots.one { grid-template-columns: 1fr; } .project.tracer { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 36px; align-items: start; } }
   .offers { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 8px; }
   .offer { border-top: 1px solid var(--line); padding: 20px 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .offer:last-child { border-bottom: 1px solid var(--line); }
@@ -117,13 +119,13 @@
 <body>
 <header class="wrap">
   <div class="who">Hemang Nagar <span>· Washington, DC</span></div>
-  <nav aria-label="Site"><a href="#work">Work</a><a href="#engage">Engage</a><a href="https://github.com/hemangnagar">GitHub</a><a href="https://x.com/hnagar_dev">X</a></nav>
+  <nav aria-label="Site"><a href="/decision-gate/">Decision Gate</a><a href="#work">Work</a><a href="#engage">Engage</a><a href="https://github.com/hemangnagar">GitHub</a><a href="https://x.com/hnagar_dev">X</a></nav>
 </header>
 <main class="wrap">
   <section aria-labelledby="thesis">
     <p class="eyebrow">Governed data systems</p>
     <h1 id="thesis">The LLM proposes. <span class="seal">The pipeline disposes.</span></h1>
-    <p class="lede">I build data platforms where every model output passes a deterministic gate before it touches a number anyone acts on — product matches, parser repairs, written summaries alike.</p>
+    <p class="lede">I build data platforms where every model output passes a deterministic gate before it touches a number anyone acts on — product matches, parser repairs, written summaries, and the decision itself.</p>
     <p class="lede">Standards-first: data contracts that tests enforce, lineage that is emitted on every run, provenance from any user-facing figure back to the raw bytes it came from.</p>
   </section>
   <section aria-labelledby="gate">
@@ -141,17 +143,18 @@
   <section id="work" aria-labelledby="work-h">
     <h2 id="work-h">Work in the open</h2>
     <p>Four public projects, four different domains, one habit: every important model output or number a person acts on has a checkable boundary.</p>
-    <div class="project">
+    <div class="project two">
       <div class="body">
         <h3><a href="/decision-gate/">Decision Gate</a> <span class="tag">adversarial AI · deterministic gates</span></h3>
-        <p>A model-agnostic adversarial decision system that converts AI-generated claims and challenges into an auditable decision. Builder and adversary models populate a ledger; fixed policy maps unresolved FATAL issues to ABANDON, BLOCKING issues to WAIT, and everything else to ACT with accepted risk. The matched rule and reasons are preserved with the decision.</p>
+        <p>Two models argue about a decision; a fixed rule decides. The Builder states what must be true, the Adversary attacks each claim and rates the damage, and three lines of code return ACT, WAIT, or ABANDON with the rule that fired and what would flip it. No model chooses the action. Four unedited live runs are annotated in the repo, including the findings that don't flatter it: the stop rule never fired before the round limit, and the Adversary never rated a challenge non-blocking.</p>
         <div class="facts">
-          <span><b>bounded</b> adversarial review</span>
           <span><b>deterministic</b> ACT / WAIT / ABANDON</span>
+          <span><b>4</b> live ledgers · <b>92</b> challenges</span>
           <span><b>controlled</b> reopen + outcome scoring</span>
-          <span><a href="https://github.com/hemangnagar/decision_gate">source</a> · <a href="/decision-gate/">worked decision</a></span>
+          <span><a href="https://github.com/hemangnagar/decision_gate">source</a> · <a href="/decision-gate/">worked decisions</a></span>
         </div>
       </div>
+      <div class="shots one"><figure><img src="assets/decision-gate-abandon.png" alt="The gate on the hospital-messaging run: ABANDON, triggered by CH-001, pagers are the out-of-band channel; resolving it would return WAIT." width="1752" height="1186" loading="lazy"><figcaption>ledger 003 · one FATAL · resolve it and the answer is still WAIT</figcaption></figure></div>
     </div>
     <div class="project two">
       <div class="body">
