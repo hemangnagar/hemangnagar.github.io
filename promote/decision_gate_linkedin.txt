@@ -8,6 +8,8 @@ The tool I built, Decision Gate, splits the work. One model states what would ha
 
 The hospital case came back ABANDON on one argument: pagers run on a separate radio network, so an app that replaces them removes the fallback for exactly the outages where the app is down. Resolve that and the gate still says WAIT. Ten more blocking problems remain.
 
+The Spark-to-DuckDB migration came back WAIT, and WAIT is not no. Nine blocking challenges, each with the measurement that retires it: replay the five heaviest jobs at real concurrency, measure bytes actually read rather than logical volume, cost a tuned-Spark baseline, plot the thread-scaling curve. Do those nine and the gate returns ACT, carrying thirteen named risks. That is a due-diligence plan, produced in four minutes.
+
 Two findings I am publishing rather than hiding. The adversary never ran out of objections in three rounds, so the round budget stopped the review, not convergence. And across 92 challenges it rated zero as non-blocking. The model is one step back from the decision, not removed from it. The ledger makes that visible.
 
 Open source, MIT. Every ledger in the repo is unedited and re-gateable from the file without calling a model.

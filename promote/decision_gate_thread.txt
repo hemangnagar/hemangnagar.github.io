@@ -18,14 +18,20 @@ Pagers run on a separate radio network. An app that *replaces* them removes the 
 
 That line separates "the framing is wrong" from "we need more evidence." It's computed by a rule, not narrated by a model.
 ---
-4/ Two findings I'm publishing, not hiding:
+4/ The Spark→DuckDB migration came back WAIT. WAIT isn't no.
+
+9 blocking challenges, each with the measurement that retires it: replay the 5 heaviest jobs at real concurrency, measure bytes actually read, cost a tuned-Spark baseline, plot the thread-scaling curve.
+
+Do them → ACT, carrying 13 named risks.
+---
+5/ Two findings I'm publishing, not hiding:
 
 • In 3 rounds the adversary never ran out of objections. The round budget stopped the review, not convergence.
 • Across 92 challenges it rated ZERO as non-blocking.
 
 The model is one step back from the decision, not removed from it.
 ---
-5/ Every ledger in the repo is unedited and re-gates from the file: `decision-gate gate ledger.json` recomputes the action without calling a model.
+6/ Every ledger in the repo is unedited and re-gates from the file: `decision-gate gate ledger.json` recomputes the action without calling a model.
 
 MIT. Demo mode needs no API key. Write-up with the four runs:
 

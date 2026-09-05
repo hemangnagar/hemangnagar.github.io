@@ -12,6 +12,8 @@ I ran it on four decisions with Claude Opus 5 in both roles, three-round limit, 
 - Mid-size city pilots congestion pricing for 18 months → **WAIT**, 13 BLOCKING (federal-aid tolling rules, anti-diversion clauses, parking price already dominates the toll).
 - Two-location bakery opens a third before hiring a GM → **WAIT**, 12 BLOCKING.
 
+WAIT is not a refusal. Each blocking challenge carries a `resolves_if`, and on the Spark case the nine of them read as the migration's due-diligence plan: replay the five heaviest jobs at real concurrency, measure bytes actually read from the source store, inventory UDFs and prototype the hardest, cost a tuned-Spark baseline over three years, plot the thread-scaling curve, map the DAG against DuckDB's single-writer model. Resolve them and the ledger says ACT, carrying thirteen named accepted risks.
+
 What I found interesting, and what I'd like opinions on:
 
 1. **The stop rule never fired.** The review is supposed to end when a round adds nothing consequential. All four ran to the round limit. Opus never ran out of objections.
