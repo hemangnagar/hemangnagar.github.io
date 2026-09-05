@@ -43,66 +43,30 @@
     --line: #2A3142; --accent: #E8964A; --accent-ink: #1A1206; --accent-soft: #2E2116;
     --ledger: #0B0E15; --ledger-ink: #E7EAF0; --ledger-muted: #7E889C; --ledger-accent: #E8964A;
   }
-
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body {
-    margin: 0;
-    background: var(--ground);
-    color: var(--ink);
-    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    font-size: 17px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
   a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
   .wrap { max-width: 840px; margin: 0 auto; padding: 0 22px; }
   main.wrap { display: flex; flex-direction: column; gap: 72px; padding-bottom: 96px; }
-
-  header.wrap {
-    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
-    padding-top: 26px; padding-bottom: 60px;
-    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.82rem;
-  }
+  header.wrap { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 26px; padding-bottom: 60px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.82rem; }
   header .who { color: var(--ink); font-weight: 500; letter-spacing: 0.02em; }
   header .who span { color: var(--muted); font-weight: 400; }
   header nav { display: flex; gap: 18px; }
   header nav a { color: var(--muted); text-decoration: none; }
   header nav a:hover { color: var(--accent); }
-
-  .eyebrow {
-    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-    font-size: 0.74rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted); margin: 0 0 14px;
-  }
-  h1 {
-    font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif;
-    font-weight: 800; font-size: clamp(2.4rem, 6.2vw, 4.1rem); line-height: 1.02;
-    letter-spacing: -0.028em; margin: 0 0 26px; text-wrap: balance; max-width: 15ch;
-  }
+  .eyebrow { font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
+  h1 { font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif; font-weight: 800; font-size: clamp(2.4rem, 6.2vw, 4.1rem); line-height: 1.02; letter-spacing: -0.028em; margin: 0 0 26px; text-wrap: balance; max-width: 15ch; }
   h1 .seal { color: var(--accent); }
   .lede { font-size: 1.22rem; line-height: 1.5; max-width: 34em; margin: 0; }
   .lede + .lede { margin-top: 14px; color: var(--muted); font-size: 1.05rem; }
-
-  h2 {
-    font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif;
-    font-weight: 800; font-size: 1.55rem; letter-spacing: -0.015em; line-height: 1.2;
-    margin: 0 0 18px; text-wrap: balance;
-  }
+  h2 { font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif; font-weight: 800; font-size: 1.55rem; letter-spacing: -0.015em; line-height: 1.2; margin: 0 0 18px; text-wrap: balance; }
   p { margin: 0; max-width: 36em; }
   p + p { margin-top: 12px; }
   section > p { color: var(--ink); }
-
-  /* The gate ledger — the page's signature object. */
-  .ledger {
-    background: var(--ledger); color: var(--ledger-ink);
-    border-radius: 6px; padding: 22px 24px 20px; margin-top: 26px;
-    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.86rem; line-height: 1.55;
-    overflow-x: auto;
-  }
+  .ledger { background: var(--ledger); color: var(--ledger-ink); border-radius: 6px; padding: 22px 24px 20px; margin-top: 26px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.86rem; line-height: 1.55; overflow-x: auto; }
   .ledger .row { display: grid; grid-template-columns: 8.5ch 1fr; gap: 18px; padding: 12px 0; }
   .ledger .row + .row { border-top: 1px solid rgba(255,255,255,0.09); }
   .ledger .k { color: var(--ledger-accent); font-weight: 500; letter-spacing: 0.06em; }
@@ -112,15 +76,8 @@
   .ledger .verdict .k { color: var(--ledger-muted); }
   .ledger .pass { color: var(--ledger-accent); font-weight: 500; }
   .caption { color: var(--muted); font-size: 0.9rem; margin-top: 12px; max-width: 40em; }
-
-  .facts {
-    display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 4px;
-    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.78rem; color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 4px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
   .facts b { color: var(--ink); font-weight: 500; }
-
-  /* Work section */
   .project { border-top: 1px solid var(--line); padding: 26px 0 8px; display: grid; grid-template-columns: 1fr; gap: 16px; }
   .project h3 { margin: 0; font-size: 1.12rem; font-weight: 600; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
   .project h3 a { color: var(--ink); text-decoration: none; }
@@ -132,19 +89,10 @@
   .shots figure { margin: 0; }
   .shots img { width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(22, 33, 58, 0.10); }
   .shots figcaption { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; color: var(--muted); margin-top: 8px; letter-spacing: 0.02em; }
-  .check {
-    background: var(--ledger); color: var(--ledger-ink); border-radius: 6px; padding: 16px 18px;
-    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.72rem; line-height: 1.6;
-    white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; min-width: 0;
-  }
+  .check { background: var(--ledger); color: var(--ledger-ink); border-radius: 6px; padding: 16px 18px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.72rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; min-width: 0; }
   .check .ok { color: var(--ledger-accent); font-weight: 500; }
   .check .dim { color: var(--ledger-muted); }
-  @media (min-width: 720px) {
-    .project.two { grid-template-columns: minmax(0, 1fr) 300px; gap: 16px 36px; align-items: start; }
-    .project.two .shots { grid-template-columns: 1fr 1fr; }
-    .project.tracer { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 36px; align-items: start; }
-  }
-
+  @media (min-width: 720px) { .project.two { grid-template-columns: minmax(0, 1fr) 300px; gap: 16px 36px; align-items: start; } .project.two .shots { grid-template-columns: 1fr 1fr; } .project.tracer { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 36px; align-items: start; } }
   .offers { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 8px; }
   .offer { border-top: 1px solid var(--line); padding: 20px 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .offer:last-child { border-bottom: 1px solid var(--line); }
@@ -153,48 +101,24 @@
   .offer p { color: var(--muted); font-size: 0.98rem; }
   .offer ul { margin: 6px 0 0; padding-left: 18px; color: var(--ink); font-size: 0.96rem; }
   .offer li + li { margin-top: 4px; }
-  @media (min-width: 680px) {
-    .offer { grid-template-columns: 220px minmax(0, 1fr); gap: 8px 32px; }
-    .offer h3 { flex-direction: column; align-items: flex-start; gap: 6px; }
-    .offer p { grid-column: 2; }
-    .offer ul { grid-column: 2; }
-  }
-
-  .cta {
-    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
-    padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 14px;
-  }
+  @media (min-width: 680px) { .offer { grid-template-columns: 220px minmax(0, 1fr); gap: 8px 32px; } .offer h3 { flex-direction: column; align-items: flex-start; gap: 6px; } .offer p { grid-column: 2; } .offer ul { grid-column: 2; } }
+  .cta { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 14px; }
   .cta h2 { margin: 0; }
   .cta p { color: var(--muted); }
   .cta .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 4px; }
-  .button {
-    display: inline-block; background: var(--accent); color: var(--accent-ink);
-    font-weight: 600; text-decoration: none; padding: 11px 18px; border-radius: 6px; font-size: 0.98rem;
-  }
+  .button { display: inline-block; background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; padding: 11px 18px; border-radius: 6px; font-size: 0.98rem; }
   .button:hover { filter: brightness(1.06); }
   .cta .mail { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.9rem; }
-
-  footer.wrap {
-    border-top: 1px solid var(--line); padding-top: 22px; padding-bottom: 40px;
-    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.78rem; color: var(--muted);
-  }
+  footer.wrap { border-top: 1px solid var(--line); padding-top: 22px; padding-bottom: 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.78rem; color: var(--muted); }
   footer a { color: var(--muted); }
   footer a:hover { color: var(--accent); }
 </style>
 </head>
 <body>
-
 <header class="wrap">
   <div class="who">Hemang Nagar <span>· Washington, DC</span></div>
-  <nav aria-label="Site">
-    <a href="#work">Work</a>
-    <a href="#engage">Engage</a>
-    <a href="https://github.com/hemangnagar">GitHub</a>
-    <a href="https://x.com/hnagar_dev">X</a>
-  </nav>
+  <nav aria-label="Site"><a href="#work">Work</a><a href="#engage">Engage</a><a href="https://github.com/hemangnagar">GitHub</a><a href="https://x.com/hnagar_dev">X</a></nav>
 </header>
-
 <main class="wrap">
   <section aria-labelledby="thesis">
     <p class="eyebrow">Governed data systems</p>
@@ -202,7 +126,6 @@
     <p class="lede">I build data platforms where every model output passes a deterministic gate before it touches a number anyone acts on — product matches, parser repairs, written summaries alike.</p>
     <p class="lede">Standards-first: data contracts that tests enforce, lineage that is emitted on every run, provenance from any user-facing figure back to the raw bytes it came from.</p>
   </section>
-
   <section aria-labelledby="gate">
     <h2 id="gate">What a gate looks like</h2>
     <p>Models are allowed to be wrong. The pipeline is not. So a model never writes to the trusted layer; it proposes, and a deterministic check decides. Here is one gate from a system I run every week — the one that repairs a parser after an upstream site changes its payload.</p>
@@ -215,41 +138,29 @@
     </div>
     <p class="caption">The same shape governs entity matching (verdicts cached once, read forever, humans review the low-confidence tail) and narration (any number not in the precomputed fact pack is a hard reject).</p>
   </section>
-
   <section id="work" aria-labelledby="work-h">
     <h2 id="work-h">Work in the open</h2>
     <p>Four public projects, four different domains, one habit: every important model output or number a person acts on has a checkable boundary.</p>
-
     <div class="project">
       <div class="body">
         <h3><a href="/decision-gate/">Decision Gate</a> <span class="tag">adversarial AI · deterministic gates</span></h3>
-        <p>A model-agnostic adversarial decision system that challenges a proposed decision, identifies load-bearing assumptions, stops when further analysis has low value, and forces an ACT / WAIT / ABANDON call. Builder and adversary models populate the ledger; a deterministic sufficiency gate owns the final action. Closed reviews reopen only on declared triggers, and later outcomes score the original reasoning.</p>
+        <p>A model-agnostic adversarial decision system that converts AI-generated claims and challenges into an auditable decision. Builder and adversary models populate a ledger; fixed policy maps unresolved FATAL issues to ABANDON, BLOCKING issues to WAIT, and everything else to ACT with accepted risk. The matched rule and reasons are preserved with the decision.</p>
         <div class="facts">
           <span><b>bounded</b> adversarial review</span>
-          <span><b>ACT / WAIT / ABANDON</b> deterministic gate</span>
-          <span><b>LiteLLM</b> cross-provider runner</span>
-          <span><a href="https://github.com/hemangnagar/decision_gate">source</a> · <a href="/decision-gate/">30-second demo</a></span>
+          <span><b>deterministic</b> ACT / WAIT / ABANDON</span>
+          <span><b>controlled</b> reopen + outcome scoring</span>
+          <span><a href="https://github.com/hemangnagar/decision_gate">source</a> · <a href="/decision-gate/">worked decision</a></span>
         </div>
       </div>
     </div>
-
     <div class="project two">
       <div class="body">
         <h3><a href="https://github.com/hemangnagar/grocery_optimizer">grocery_optimizer</a> <span class="tag">data pipeline · LLM gates</span></h3>
         <p>A weekly grocery-price pipeline for the DC metro that picks the one store that wins a household's whole list. Bronze/silver/gold on DuckDB; five chains with five different acquisition patterns; LLMs at three gated judgment points; a phone-first verdict app. Runs on a $300 mini PC with no Spark, no orchestrator, no vector store.</p>
-        <div class="facts">
-          <span><b>MIT</b> licensed</span>
-          <span><b>ODCS v3</b> contract, enforced by tests</span>
-          <span><b>OpenLineage</b> event per run</span>
-          <span>CI on <b>Windows + Linux</b></span>
-        </div>
+        <div class="facts"><span><b>MIT</b> licensed</span><span><b>ODCS v3</b> contract, enforced by tests</span><span><b>OpenLineage</b> event per run</span><span>CI on <b>Windows + Linux</b></span></div>
       </div>
-      <div class="shots">
-        <figure><img src="assets/grocery-verdict-light.png" alt="The verdict app: Harris Teeter wins this week at $123.17, covering all 26 items; other stores ranked with coverage flags." width="780" height="1688" loading="lazy"><figcaption>flexible · store brands OK</figcaption></figure>
-        <figure><img src="assets/grocery-verdict-exact.png" alt="The same list in exact-brands mode: Whole Foods becomes the only full-coverage store at $169.27." width="780" height="1688" loading="lazy"><figcaption>exact brands · the modes disagree</figcaption></figure>
-      </div>
+      <div class="shots"><figure><img src="assets/grocery-verdict-light.png" alt="The verdict app: Harris Teeter wins this week at $123.17, covering all 26 items; other stores ranked with coverage flags." width="780" height="1688" loading="lazy"><figcaption>flexible · store brands OK</figcaption></figure><figure><img src="assets/grocery-verdict-exact.png" alt="The same list in exact-brands mode: Whole Foods becomes the only full-coverage store at $169.27." width="780" height="1688" loading="lazy"><figcaption>exact brands · the modes disagree</figcaption></figure></div>
     </div>
-
     <div class="project tracer">
       <div class="body">
         <h3><a href="https://github.com/hemangnagar/bitcoin-fifo-taint-tracer">bitcoin-fifo-taint-tracer</a> <span class="tag">provenance · finance</span></h3>
@@ -267,60 +178,20 @@ Escaped taint   : 11.30000000 BTC (tracked)</span>
   <span class="ok">[PASS]</span> Taint conservation (nothing dropped)
 <span class="ok">RESULT: ALL CHECKS PASSED</span></pre>
     </div>
-
-    <div class="project">
-      <div class="body">
-        <h3><a href="https://github.com/hemangnagar/sanbuddy">Chat Buddy</a> <span class="tag">assistive · free for families</span></h3>
-        <p>A texting companion that helps kids with communication challenges practice conversation around the things they love. Built as a parent, given away free: a parent setup wizard, a PIN-protected dashboard with full transcripts, and an installable PWA for an iPad. The model talks through a server-side proxy so the key never reaches the browser, and the bot keeps pointing the child back toward real people.</p>
-      </div>
-    </div>
-
-    <div class="project">
-      <div class="body">
-        <h3>Standards I work in</h3>
-        <p>Open Data Contract Standard (ODCS), OpenLineage, FHIR R4B, DataHub, Great Expectations — and the unglamorous discipline underneath them: raw preservation before parsing, canonical units, provenance keys on every row, and refusals that explain themselves.</p>
-      </div>
-    </div>
+    <div class="project"><div class="body"><h3><a href="https://github.com/hemangnagar/sanbuddy">Chat Buddy</a> <span class="tag">assistive · free for families</span></h3><p>A texting companion that helps kids with communication challenges practice conversation around the things they love. Built as a parent, given away free: a parent setup wizard, a PIN-protected dashboard with full transcripts, and an installable PWA for an iPad. The model talks through a server-side proxy so the key never reaches the browser, and the bot keeps pointing the child back toward real people.</p></div></div>
+    <div class="project"><div class="body"><h3>Standards I work in</h3><p>Open Data Contract Standard (ODCS), OpenLineage, FHIR R4B, DataHub, Great Expectations — and the unglamorous discipline underneath them: raw preservation before parsing, canonical units, provenance keys on every row, and refusals that explain themselves.</p></div></div>
   </section>
-
   <section id="engage" aria-labelledby="engage-h">
     <h2 id="engage-h">A first engagement</h2>
     <p>Fixed scope, fixed fee, written deliverables. Most relationships start with the first one.</p>
     <div class="offers">
-      <div class="offer">
-        <h3>Governance readiness assessment <span class="scope">2–3 WEEKS</span></h3>
-        <p>For teams putting models into data pipelines and wondering what could go wrong quietly.</p>
-        <ul>
-          <li>An inventory of every point where model output reaches a decision, and whether a gate stands in front of it</li>
-          <li>Data-contract and lineage gaps against ODCS and OpenLineage, with the provenance you can and cannot currently prove</li>
-          <li>A prioritized remediation plan your own engineers can execute</li>
-        </ul>
-      </div>
-      <div class="offer">
-        <h3>Contracts and lineage, implemented <span class="scope">4–8 WEEKS</span></h3>
-        <p>Data contracts that fail the build when the schema drifts, lineage emitted on every run, and provenance keys from the trusted layer back to raw.</p>
-      </div>
-      <div class="offer">
-        <h3>LLM-in-the-pipeline design review <span class="scope">1–2 WEEKS</span></h3>
-        <p>Where models belong in your pipeline and where they don't: verdict caching for deterministic replay, evaluation gates, human-review queues, and the audit trail that lets you defend a number.</p>
-      </div>
+      <div class="offer"><h3>Governance readiness assessment <span class="scope">2–3 WEEKS</span></h3><p>For teams putting models into data pipelines and wondering what could go wrong quietly.</p><ul><li>An inventory of every point where model output reaches a decision, and whether a gate stands in front of it</li><li>Data-contract and lineage gaps against ODCS and OpenLineage, with the provenance you can and cannot currently prove</li><li>A prioritized remediation plan your own engineers can execute</li></ul></div>
+      <div class="offer"><h3>Contracts and lineage, implemented <span class="scope">4–8 WEEKS</span></h3><p>Data contracts that fail the build when the schema drifts, lineage emitted on every run, and provenance keys from the trusted layer back to raw.</p></div>
+      <div class="offer"><h3>LLM-in-the-pipeline design review <span class="scope">1–2 WEEKS</span></h3><p>Where models belong in your pipeline and where they don't: verdict caching for deterministic replay, evaluation gates, human-review queues, and the audit trail that lets you defend a number.</p></div>
     </div>
   </section>
-
-  <section class="cta" aria-labelledby="cta-h">
-    <h2 id="cta-h">Start with a 20-minute conversation</h2>
-    <p>Tell me what your pipeline does and where a model touches it. I'll tell you honestly whether a first engagement makes sense — and if it does, what it would cost.</p>
-    <div class="actions">
-      <a class="button" href="mailto:hi@hemangnagar.dev?subject=20-minute%20conversation">Email hi@hemangnagar.dev</a>
-      <span class="mail"><a href="https://github.com/hemangnagar">github.com/hemangnagar</a> · <a href="https://x.com/hnagar_dev">@hnagar_dev</a></span>
-    </div>
-  </section>
+  <section class="cta" aria-labelledby="cta-h"><h2 id="cta-h">Start with a 20-minute conversation</h2><p>Tell me what your pipeline does and where a model touches it. I'll tell you honestly whether a first engagement makes sense — and if it does, what it would cost.</p><div class="actions"><a class="button" href="mailto:hi@hemangnagar.dev?subject=20-minute%20conversation">Email hi@hemangnagar.dev</a><span class="mail"><a href="https://github.com/hemangnagar">github.com/hemangnagar</a> · <a href="https://x.com/hnagar_dev">@hnagar_dev</a></span></div></section>
 </main>
-
-<footer class="wrap">
-  <span>© 2026 Hemang Nagar</span>
-  <span>The code is open. The data is the moat.</span>
-</footer>
-
+<footer class="wrap"><span>© 2026 Hemang Nagar</span><span>The code is open. The data is the moat.</span></footer>
 </body>
 </html>
