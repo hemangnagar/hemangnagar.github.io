@@ -23,7 +23,10 @@ USAGE:
   python promote.py thread.txt --send     # actually posts the thread
   python promote.py thread.txt --send --delay 5   # seconds between tweets
 
-The free API tier allows ~500 posts/month — far more than a launch needs.
+NOTE (Sept 2026): posting through the API now draws on a paid credit balance.
+With no credits the API answers 402 "credits depleted" and nothing is posted.
+For a single thread, posting by hand is free: use the dry run to get the text,
+then post tweet 1 and reply to it with each following tweet.
 """
 
 from __future__ import annotations
@@ -124,7 +127,10 @@ def post_tweet(text: str, reply_to: str | None) -> str:
             return json.load(resp)["data"]["id"]
     except urllib.error.HTTPError as err:
         detail = err.read().decode(errors="replace")[:400]
-        sys.exit(f"X API refused tweet ({err.code}): {detail}")
+        hint = ""
+        if err.code == 402:
+            hint = "\nYour X developer account has no posting credits. Nothing after this tweet was posted.\nPost the remaining tweets by hand as replies (dry run prints them), or add credits in the developer console."
+        sys.exit(f"X API refused tweet ({err.code}): {detail}{hint}")
 
 
 def main() -> None:
