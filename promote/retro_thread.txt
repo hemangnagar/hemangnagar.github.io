@@ -1,0 +1,27 @@
+# /retro launch thread — post with: python promote.py retro_thread.txt --send
+# Image: retro-flow.png (regenerate in the retro repo with `python docs/build_diagram.py --png`
+#   for IBM Plex fonts, then copy docs/retro-flow.png here). Tweets are separated by --- lines.
+
+1/ Every AI-coding setup has memory files — CLAUDE.md, skills, STATE.md — and none of them has a writer. Nothing ever asks: what did this project teach us that the next one should inherit?
+
+I built /retro to be that writer. The whole mechanism, one picture. 🧵
+@media retro-flow.png
+---
+2/ It runs at milestones, not every session. Three local inputs — behavioral signal from learned-behavior, git since the last retro, session transcripts — feed 4 fixed questions. Answers are drafted from the evidence; I reply agree / edit / skip.
+---
+3/ Every lesson is scoped from a closed menu: project | stack | global | discard.
+
+Only stack + global cross projects. That one rule is what stops a global CLAUDE.md from rotting into project trivia.
+---
+4/ The playbook is capped at 25 lines and loaded into every session, every project. A new lesson must displace a weaker one or it's rejected.
+
+Rejection is a designed outcome — the damper that keeps "self-improvement" from compounding noise.
+---
+5/ vs continuous memory (Weaviate's Engram etc.): they capture every task and sort at read time via search. retro captures at milestones and sorts at write time via a budget.
+
+The bet: an agent reads 25 curated lines more faithfully than it searches 5,000 auto-memories.
+---
+6/ Dogfooding so far: two retros in, the tool found 3 real bugs in itself (shallow-clone HEAD~N, blocked tag pushes, transcript paths) and produced 6 lessons I'd actually have written down.
+
+Stdlib Python, two markdown files, no vector DB. MIT:
+https://github.com/hemangnagar/retro
