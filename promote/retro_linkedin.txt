@@ -1,0 +1,24 @@
+# LinkedIn post — paste as-is. Attach retro-flow.png (the flow diagram). Put the links in the FIRST COMMENT, not the post body.
+
+
+Every AI coding setup I have seen has memory files with no writer.
+
+CLAUDE.md, skills, state files: they are storage. Nothing in the workflow ever asks what a project taught us that the next one should inherit, and nothing removes the rules that stopped earning their place. So the global file grows, and at some point the model treats it as background noise. I watched this happen to my own setup, and I could not name a single line I would have removed, because nobody had ever been asked to decide.
+
+So I built the writer. It is a retrospective ritual for Claude Code called /retro, and it is deliberately small: stdlib Python, two markdown files, no vector database. Three rules do all the work.
+
+It runs at milestones, not every session. A release tag, a merge to main, a project wrapped up. Four fixed questions, the same every time: what was the goal and did it change, what took longer than expected, what did we get wrong first, and which recurring failures had a real cause. The answers are drafted from git history, session transcripts, and the behavioral signal learned-behavior records. I reply agree, edit, or skip.
+
+Every lesson is then scoped from a closed menu: project, stack, global, or discard. Project lessons stay with the repo. Only stack and global lessons cross projects. That one rule is what keeps a global file from filling up with project trivia.
+
+The cross-project playbook is capped at 25 lines and loads into every session. A new lesson has to displace a weaker one, judged by confidence and by how often it has proved useful since, or it is rejected. Rejection is a designed outcome. It is the damper that keeps "self-improvement" from compounding noise as fast as insight.
+
+Two findings from running it on my own repos rather than describing it. The tool found three real bugs in itself in its first two runs, and the scope classifier turned out shallow: it never suggested "stack" unless the technology was named in the sentence. The human override caught it, which is the design, but it is the part that would need to get smarter if this ever became a product. The playbook sits at nine of twenty-five slots, so the eviction rule has not been tested under pressure yet. A month of real use will tell.
+
+One thing I did not expect: the same two gates showed up this week in a Google paper on self-evolving agents (Procedural Graphs). Their agent commits a self-edit only if it survives held-out validation, and keeps rejected edits on file so the same change is never proposed twice. retro does both at human scale, with a person at the gate instead of a validation set.
+
+Open source, MIT. This is the pattern I build for clients: models propose, rules dispose, every output traces to something that can be checked.
+
+# --- first comment ---
+Code and the flow diagram: https://github.com/hemangnagar/retro
+The Google paper: https://arxiv.org/abs/2609.09153
