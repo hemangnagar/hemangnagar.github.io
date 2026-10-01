@@ -1,0 +1,734 @@
+<title>Counter-UAS Demo Runbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+
+<style>
+  :root {
+    --ground:      #EEF1F4;
+    --surface:     #FFFFFF;
+    --surface-2:   #E4E9ED;
+    --line:        #C9D2DA;
+    --line-soft:   #DDE4EA;
+    --ink:         #101820;
+    --ink-2:       #46545F;
+    --ink-3:       #6C7A86;
+    --accent:      #1B5A87;
+    --accent-soft: #DCE9F2;
+    --release:     #256D4F;
+    --release-bg:  #DDEDE5;
+    --mask:        #9A6510;
+    --mask-bg:     #F5E8D2;
+    --withhold:    #93353B;
+    --withhold-bg: #F2DEDF;
+    --console-bg:  #10181F;
+    --console-ink: #C7D4DE;
+    --console-dim: #6B7D8C;
+
+    --step: clamp(1.05rem, 0.98rem + 0.3vw, 1.18rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0D1218;
+      --surface:     #151C24;
+      --surface-2:   #1D2731;
+      --line:        #2C3945;
+      --line-soft:   #222D38;
+      --ink:         #E4EAEF;
+      --ink-2:       #A3B1BD;
+      --ink-3:       #798794;
+      --accent:      #74AEDA;
+      --accent-soft: #1A2E3E;
+      --release:     #6FC79E;
+      --release-bg:  #16302A;
+      --mask:        #DFAA57;
+      --mask-bg:     #33280F;
+      --withhold:    #DE8A8F;
+      --withhold-bg: #351C1E;
+      --console-bg:  #080D12;
+      --console-ink: #BECCD7;
+      --console-dim: #5D6E7C;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #0D1218;
+    --surface:     #151C24;
+    --surface-2:   #1D2731;
+    --line:        #2C3945;
+    --line-soft:   #222D38;
+    --ink:         #E4EAEF;
+    --ink-2:       #A3B1BD;
+    --ink-3:       #798794;
+    --accent:      #74AEDA;
+    --accent-soft: #1A2E3E;
+    --release:     #6FC79E;
+    --release-bg:  #16302A;
+    --mask:        #DFAA57;
+    --mask-bg:     #33280F;
+    --withhold:    #DE8A8F;
+    --withhold-bg: #351C1E;
+    --console-bg:  #080D12;
+    --console-ink: #BECCD7;
+    --console-dim: #5D6E7C;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: var(--step);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 54rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+  .eyebrow {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: .72rem; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  h1 {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 700; font-size: clamp(2rem, 1.5rem + 2.2vw, 3rem);
+    line-height: 1.08; letter-spacing: -.02em;
+    margin: .5rem 0 .75rem; text-wrap: balance;
+  }
+
+  h2 {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 600; font-size: clamp(1.35rem, 1.15rem + .8vw, 1.75rem);
+    line-height: 1.2; letter-spacing: -.01em;
+    margin: 0 0 .4rem; text-wrap: balance;
+  }
+
+  h3 {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 600; font-size: 1.05rem; letter-spacing: -.005em;
+    margin: 0 0 .5rem;
+  }
+
+  p { margin: 0 0 1rem; }
+  .lede { font-size: 1.2rem; color: var(--ink-2); line-height: 1.55; max-width: 42rem; }
+  .muted { color: var(--ink-2); }
+  strong { font-weight: 600; color: var(--ink); }
+  a { color: var(--accent); }
+
+  header.page {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 1.75rem; margin-bottom: 2.5rem;
+  }
+
+  .filerow {
+    display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem;
+  }
+  .file {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .78rem; padding: .35rem .6rem;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 3px; color: var(--ink-2);
+  }
+  .file b { color: var(--ink); font-weight: 600; }
+
+  /* ---- acts ---- */
+  .act { margin: 3.5rem 0 0; }
+  .act-head {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding-bottom: .75rem; margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .act-num {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 700; font-size: 2.6rem; line-height: 1;
+    color: var(--accent); letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .act-head .sub { font-size: .95rem; color: var(--ink-3); margin: .2rem 0 0; }
+
+  /* ---- steps ---- */
+  .step {
+    display: grid; grid-template-columns: 2.25rem 1fr; gap: 0 1rem;
+    margin-bottom: 2rem;
+  }
+  .step-n {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .8rem; font-weight: 600; color: var(--ink-3);
+    padding-top: .28rem; font-variant-numeric: tabular-nums;
+    border-top: 2px solid var(--line); text-align: right;
+  }
+  .step-body { border-top: 2px solid var(--line-soft); padding-top: .28rem; min-width: 0; }
+  .step-body > :last-child { margin-bottom: 0; }
+  .do {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 600; font-size: 1.02rem; line-height: 1.4;
+    margin: 0 0 .5rem; color: var(--ink);
+  }
+  .why {
+    font-size: .95rem; color: var(--ink-2);
+    border-left: 2px solid var(--accent); padding-left: .8rem; margin: .75rem 0 0;
+  }
+  .why em { font-style: italic; color: var(--ink); }
+
+  kbd {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .82em; background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: 3px;
+    padding: .08em .35em; color: var(--ink);
+  }
+  code {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .84em; color: var(--ink);
+    background: var(--surface-2); padding: .08em .3em; border-radius: 3px;
+  }
+
+  /* ---- console ---- */
+  .console {
+    background: var(--console-bg); color: var(--console-ink);
+    border-radius: 4px; padding: .9rem 1rem; margin: .75rem 0;
+    overflow-x: auto;
+  }
+  .console pre {
+    margin: 0; font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .78rem; line-height: 1.65; white-space: pre;
+  }
+  .console .lbl {
+    display: block; font-family: "Archivo", system-ui, sans-serif;
+    font-size: .64rem; font-weight: 600; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--console-dim); margin-bottom: .5rem;
+  }
+  .console .hi { color: #E8B04B; }
+  .console .ok { color: #79C7A0; }
+  .console .no { color: #E08F94; }
+  .console .dim { color: var(--console-dim); }
+
+  /* ---- chips ---- */
+  .chip {
+    display: inline-block; font-family: "Archivo", system-ui, sans-serif;
+    font-size: .66rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; padding: .2rem .5rem;
+    border-radius: 3px; vertical-align: .1em;
+  }
+  .chip.release  { background: var(--release-bg);  color: var(--release); }
+  .chip.mask     { background: var(--mask-bg);     color: var(--mask); }
+  .chip.withhold { background: var(--withhold-bg); color: var(--withhold); }
+  .chip.accent   { background: var(--accent-soft); color: var(--accent); }
+
+  /* ---- callout ---- */
+  .say {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0; padding: .9rem 1.1rem; margin: 1rem 0;
+  }
+  .say .lbl {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: .64rem; font-weight: 600; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: .35rem;
+  }
+  .say p { margin: 0; font-style: italic; font-size: 1.02rem; }
+  .say p + p { margin-top: .6rem; }
+
+  .warn {
+    background: var(--mask-bg); border-radius: 4px;
+    padding: .85rem 1.1rem; margin: 1.25rem 0; font-size: .95rem;
+    color: var(--ink);
+  }
+  .warn b { color: var(--mask); }
+
+  /* ---- tables ---- */
+  .tablewrap { overflow-x: auto; margin: 1.25rem 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td {
+    text-align: left; padding: .55rem .7rem;
+    border-bottom: 1px solid var(--line-soft); vertical-align: top;
+  }
+  th {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-3);
+    border-bottom: 1px solid var(--line);
+  }
+  td.num { font-family: "JetBrains Mono", ui-monospace, monospace;
+           font-variant-numeric: tabular-nums; font-size: .82rem; }
+  tbody tr:last-child td { border-bottom: none; }
+
+  ul, ol { margin: 0 0 1rem; padding-left: 1.15rem; }
+  li { margin-bottom: .45rem; }
+
+  hr.rule { border: none; border-top: 1px solid var(--line); margin: 3rem 0 0; }
+
+  .grid2 { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 40rem) { .grid2 { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 4px; padding: 1rem 1.15rem;
+  }
+  .card h3 { margin-bottom: .3rem; }
+  .card p:last-child { margin-bottom: 0; }
+  .card .big {
+    font-family: "Archivo", system-ui, sans-serif; font-weight: 700;
+    font-size: 1.9rem; line-height: 1; letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums; margin: .35rem 0 .2rem;
+  }
+</style>
+
+<div class="wrap">
+
+<header class="page">
+  <span class="eyebrow">Demo runbook · governed data platform</span>
+  <h1>Counter-UAS: what the platform refuses, and what it permits</h1>
+  <p class="lede">Two files, twenty minutes. The first one the platform reads and then
+  refuses to govern, naming exactly what is missing. The second one it governs three
+  different ways depending on who is asking. Every figure here was captured from the
+  deployed build &mdash; including the ones that make the platform look less clever than
+  a pitch would prefer.</p>
+  <div class="filerow">
+    <span class="file"><b>counter_uas_remote_id.f3411</b> · binary radio capture · 4.5 KB</span>
+    <span class="file"><b>counter_uas_detections.csv</b> · enriched detection record</span>
+  </div>
+</header>
+
+<section>
+  <h2>The story in one paragraph</h2>
+  <p>A ground sensor network watches for drones over an airport. It hears their radio
+  broadcasts and it paints them on radar. When a drone is registered, its broadcast
+  identifier can be resolved through the civil aviation registry to <strong>a named person
+  at a home address</strong> — and if that person is American, U.S. law requires their
+  identity be protected. The demo shows a platform that knows the difference between a
+  raw sensor feed and an analyst's finished record, and refuses to pretend the first one
+  can carry obligations it has no field for.</p>
+
+  <div class="warn">
+    <b>Before you start.</b> Open <code>http://127.0.0.1:8092</code> and log in.
+    Do <em>not</em> select a local model from the analyst dropdown while presenting over the
+    public tunnel — it takes about 394 seconds and Cloudflare cuts the response at 100.
+    The hosted default is already correct.
+  </div>
+</section>
+
+<!-- ============================= ACT ONE ============================= -->
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">01</span>
+    <div>
+      <h2>The file it will not govern</h2>
+      <p class="sub">The raw radio capture · <code>counter_uas_remote_id.f3411</code></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">01</div>
+    <div class="step-body">
+      <p class="do">On the <strong>Run</strong> tab, under <kbd>1 · Dataset</kbd>, choose
+      <code>counter_uas_remote_id.f3411</code>.</p>
+      <p>This is binary. Not a spreadsheet, not an export — the actual ASTM F3411 Remote ID
+      messages a receiver hears off the air. Open it in a text editor beforehand if you want
+      the room to see that it is unreadable.</p>
+      <div class="console">
+        <span class="lbl">What appears under the file picker</span>
+<pre>18 columns · 591 records · <span class="hi">astm_f3411</span> · 591 packets</pre>
+      </div>
+      <p class="why">The platform worked out the format from the bytes, not the file
+      extension. <em>Rename it to .csv and it still reads as Remote ID</em> — on the input
+      path of a governance platform, a filename is a claim by whoever named it, and a claim
+      is not evidence.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">02</div>
+    <div class="step-body">
+      <p class="do">Open the line that reads
+      <kbd>4 profile(s) cannot govern this file</kbd>.</p>
+      <div class="console">
+        <span class="lbl">Counter-UAS Detections — ground sensor network</span>
+<pre><span class="no">✗</span> 'Classification markings' cannot run on this dataset:
+    missing element: <span class="hi">security_classification</span>
+<span class="no">✗</span> 'U.S. Persons controls' cannot run on this dataset:
+    missing element: <span class="hi">us_person</span>
+<span class="no">✗</span> 'Declassification review' cannot run on this dataset:
+    missing element: <span class="hi">security_classification or creation_date</span>
+
+<span class="dim">remedy: remove it, or supply the missing element</span></pre>
+      </div>
+      <p class="why">This is the moment the demo exists for. The platform read the file
+      perfectly and then <em>refused to govern it</em> — and it did so before touching a
+      single record, because whether a control can run is a property of the columns, not of
+      any row.</p>
+
+      <div class="say">
+        <span class="lbl">What to say</span>
+        <p>“Remote ID broadcasts a registration number. It does not broadcast a name, it does
+        not carry a classification, and there is no field anywhere in the standard that says
+        whether the operator is a U.S. person. So the platform will not run the U.S. Persons
+        control on it. It will not skip the control quietly and hand you a clean-looking
+        output — it stops and tells you which field it needed.”</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">03</div>
+    <div class="step-body">
+      <p class="do">Under <kbd>2 · Profile</kbd>, select
+      <strong>Counter-UAS Remote ID capture — raw radio</strong>.</p>
+      <p>It shows <span class="chip accent">unapproved</span> and an approval box appears.
+      Type your name and press <kbd>Approve as named person</kbd>.</p>
+      <div class="console">
+        <span class="lbl">If you try to run first</span>
+<pre><span class="no">✗</span> profile 'counter-uas-remote-id' is a draft and has not been
+  approved. A profile must be approved by a named person before
+  it can govern a run.</pre>
+      </div>
+      <p class="why">Worth 15 seconds out loud: the fingerprint is
+      <code>f14ef6429e2a0f36</code> before approval and <em>identical</em> after. What was
+      reviewed and what runs hash the same — approval records a decision, it does not modify
+      the thing decided on.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">04</div>
+    <div class="step-body">
+      <p class="do">Press <kbd>4 · Run</kbd>.</p>
+      <div class="console">
+        <span class="lbl">Result</span>
+<pre><span class="ok">PROMOTED</span> · 591 packs · identifier column: uas_id
+
+  lineage      591/591
+  pii_detect   591/591
+
+  _pii_tags: uas_id:<span class="hi">DEVICE_ID</span>
+             operator_latitude:<span class="hi">LOCATION</span>
+             operator_longitude:<span class="hi">LOCATION</span>
+             operator_altitude_m:<span class="hi">LOCATION</span></pre>
+      </div>
+      <p class="why">The capture is not ungovernable — it is governed by the profile written
+      for what it actually contains. Lineage is stamped on every record whether anyone asked
+      for it or not.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">05</div>
+    <div class="step-body">
+      <p class="do">Click into a record and show the four coordinate columns.</p>
+      <div class="console">
+        <span class="lbl">One record, four decimal degrees</span>
+<pre>ua_latitude         26.9091      <span class="dim">← aircraft</span>
+ua_longitude       -97.23268     <span class="dim">← aircraft</span>
+operator_latitude   26.6554      <span class="hi">← a person, standing somewhere</span>
+operator_longitude -97.13521     <span class="hi">← a person, standing somewhere</span></pre>
+      </div>
+      <p class="why">Two of these are where a drone is flying. Two are where a person is
+      standing. Read the values alone and <em>nothing separates them</em> — same encoding,
+      same units, overlapping ranges, four bytes apart in one broadcast burst.</p>
+
+      <div class="console">
+        <span class="lbl">What the machine proposed &middot; claude-opus-5</span>
+<pre>ua_latitude        location of a vehicle or platform   <span class="hi">0.85</span>
+ua_longitude       location of a vehicle or platform   <span class="hi">0.85</span>
+operator_latitude  <span class="ok">location of a person</span>                <span class="hi">0.85</span>
+operator_longitude <span class="ok">location of a person</span>                <span class="hi">0.85</span></pre>
+      </div>
+
+      <p>The model gets it right, and you should say so. Claiming otherwise invites the
+      obvious rebuttal &mdash; the column is called <code>operator_latitude</code>. The
+      interesting part is <em>how</em> it gets it right, and why that is still not enough.</p>
+
+      <div class="say">
+        <span class="lbl">What to say</span>
+        <p>&ldquo;It is reading the label, not the data. Rename these to <code>field_07</code>
+        and <code>field_11</code> and every bit of that confidence evaporates &mdash; nothing
+        in the numbers themselves says which one is a person.&rdquo;</p>
+        <p>&ldquo;And it can only propose in words we gave it. Until this morning our
+        vocabulary had a single term, &lsquo;geographic location&rsquo;, for all four &mdash;
+        so the model returned the same answer for a drone and a human at 0.95. Not fooled;
+        it had no way to say what it could see. Somebody had to decide that &lsquo;location
+        of a person&rsquo; is a thing this platform recognises.&rdquo;</p>
+        <p>&ldquo;So: a suggestion at 0.85, drawn from a label, inside a vocabulary a person
+        wrote. Getting it wrong publishes somebody&rsquo;s home position or deletes the flight
+        track the system exists to produce. A machine reading is not permitted to write that
+        declaration here at any confidence &mdash; a named person commits it, and their name
+        is on the run.&rdquo;</p>
+      </div>
+
+      <p class="why">This is the honest version of human-in-the-loop, and it is far more
+      defensible than &ldquo;machines can&rsquo;t do this&rdquo;. The machine did well.
+      <em>The consequences of the residual error are asymmetric and severe</em>, so the
+      commitment stays with a person who can be asked why.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= ACT TWO ============================= -->
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">02</span>
+    <div>
+      <h2>The file it governs three ways</h2>
+      <p class="sub">The enriched detection record · <code>counter_uas_detections.csv</code></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">06</div>
+    <div class="step-body">
+      <p class="do">Choose <code>counter_uas_detections.csv</code> under
+      <kbd>1 · Dataset</kbd>.</p>
+      <div class="console">
+        <span class="lbl">What appears</span>
+<pre>27 columns · 2,000 records · <span class="hi">CSV</span></pre>
+      </div>
+      <p>Same drones, same afternoon. An analyst has since joined the registry, made a
+      classification call, and recorded whether there is a lawful basis for holding the
+      identity.</p>
+      <p class="why">Nine of the twenty-seven columns did not come off the antenna. They are
+      <em>judgements somebody made afterwards</em> — which is the point of the two acts.
+      Governance obligations attach at enrichment, not at the sensor.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">07</div>
+    <div class="step-body">
+      <p class="do">Open the profile dropdown and read it aloud before selecting.</p>
+      <div class="console">
+        <span class="lbl">The picker, ranked</span>
+<pre><span class="ok">✓</span> Counter-UAS Detections    <span class="dim">— describes</span> 100.0% <span class="dim">of columns</span>
+<span class="ok">✓</span> UAV / ISR Track Data      <span class="dim">— describes</span>  11.1% <span class="dim">of columns</span>
+<span class="ok">✓</span> Telecom CDR               <span class="dim">— describes</span>   0.0% <span class="dim">of columns</span>
+<span class="no">✗</span> Federal Records           <span class="dim">— cannot govern this file</span></pre>
+      </div>
+      <p class="why">The telecom profile <em>can</em> run on drone data — it just describes
+      none of it and would apply almost nothing. Ranking on coverage keeps “able” from
+      reading as “appropriate”. Select <strong>Counter-UAS Detections</strong> and approve it
+      the same way as before.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">08</div>
+    <div class="step-body">
+      <p class="do">Leave <kbd>3 · Recipient authority</kbd> unticked. Run.</p>
+      <p class="muted" style="font-size:.95rem">This is the airport security desk. Cleared to
+      see the air picture; not cleared for U.S. Persons information.</p>
+      <div class="console">
+        <span class="lbl">Result · unauthorised recipient</span>
+<pre><span class="ok">PROMOTED</span> · 2,000 released · 0 withheld
+   <span class="hi">MASK 456</span>   <span class="dim">RELEASE 1,544</span>
+
+  DET-00000000
+    drone position    26.90910, -97.23268   <span class="dim">← kept</span>
+    operator name     <span class="hi">[U.S. PERSON]</span>
+    operator address  <span class="hi">[U.S. PERSON]</span>
+    operator position <span class="hi">[U.S. PERSON], [U.S. PERSON]</span>
+    reporting officer Sgt Vasquez           <span class="dim">← kept</span>
+
+    reason  U.S. Persons information; recipient not
+            USPER-authorised</pre>
+      </div>
+      <p class="why">Two things survived on purpose. The <em>drone's</em> position, because a
+      machine is not a protected person and minimising it would destroy the track. And the
+      <em>reporting officer</em>, because §2.3 protects the subject of collection, not the
+      government employee who filed the report — masking them would protect nobody and
+      destroy accountability.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">09</div>
+    <div class="step-body">
+      <p class="do">Tick <kbd>Recipient is USPER-authorised</kbd>. Run again.</p>
+      <div class="console">
+        <span class="lbl">Result · authorised recipient</span>
+<pre><span class="ok">PROMOTED</span> · 1,911 released · <span class="no">89 withheld</span>
+
+  DET-00000000
+    operator name     Nils Vasquez
+    operator address  786 Pecan Ave
+    operator position 26.65540, -97.13521
+
+    basis   'counterintelligence'
+    reason  authorised recipient; retention basis
+            'counterintelligence'</pre>
+      </div>
+      <p class="why">Note the record count <em>fell</em>. 89 records went from masked to
+      withheld entirely — and that is the subtlest and best part of the whole demo.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">10</div>
+    <div class="step-body">
+      <p class="do">Stop on those 89 and explain them.</p>
+      <div class="say">
+        <span class="lbl">What to say</span>
+        <p>“The clearance was not enough. Under E.O. 12333 §2.3 you need <em>authority</em> and
+        you need a <em>lawful basis for retaining the information</em>. These 89 detections
+        involve U.S. persons and nobody recorded a reason for holding their identity — so an
+        authorised recipient gets less than the unauthorised one did. Not a masked name. No
+        record at all.”</p>
+        <p>“Most systems treat permission as binary. This is what the statute actually says.”</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= THE TABLE ============================= -->
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">03</span>
+    <div>
+      <h2>The slide to leave up</h2>
+      <p class="sub">One corpus, three answers</p>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Who is asking</th>
+          <th>Disposition</th>
+          <th class="num">Records</th>
+          <th>What they see of the operator</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Anyone — drone is foreign or unregistered</td>
+          <td><span class="chip release">Release</span></td>
+          <td class="num">1,544</td>
+          <td>Nothing to protect; full record</td>
+        </tr>
+        <tr>
+          <td>Airport security desk — not authorised</td>
+          <td><span class="chip mask">Mask</span></td>
+          <td class="num">456</td>
+          <td>Name, address and position all <code>[U.S. PERSON]</code></td>
+        </tr>
+        <tr>
+          <td>Federal partner — authorised, basis stated</td>
+          <td><span class="chip release">Release</span></td>
+          <td class="num">1,911</td>
+          <td>Full identity, and the reason is recorded</td>
+        </tr>
+        <tr>
+          <td>Federal partner — authorised, <strong>no basis</strong></td>
+          <td><span class="chip withhold">Withhold</span></td>
+          <td class="num">89</td>
+          <td>Nothing. The record does not leave.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="muted" style="font-size:.95rem">Throughout all four, the drone's own position is
+  never touched and the reporting officer is never masked.</p>
+</section>
+
+<!-- ============================= OBJECTIONS ============================= -->
+<hr class="rule">
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">04</span>
+    <div>
+      <h2>Questions you will get</h2>
+      <p class="sub">And short answers that are true</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>“Can it do this without sending our data to Anthropic?”</h3>
+      <p class="muted">Yes, and it is measured. A local model via Ollama scored 17 of 17
+      columns on our telecom corpus with nothing leaving the machine. It takes about 6.5
+      minutes per reading on a CPU with no GPU, so it is a real option with a real cost —
+      not a checkbox.</p>
+    </div>
+    <div class="card">
+      <h3>“What stops the AI getting it wrong?”</h3>
+      <p class="muted">Nothing rests on it being right. The model only ever proposes
+      meanings &mdash; it cannot mark a field required, write a personal-data declaration,
+      raise a profile&rsquo;s authority, approve anything, or choose which profile governs a
+      run. Each of those is enforced in code with a test behind it. It is often correct;
+      it is never load-bearing.</p>
+    </div>
+    <div class="card">
+      <h3>“Is this a catalogue? We already have one.”</h3>
+      <p class="muted">No — it is a data plane. It enforces on data as it passes through, then
+      publishes what it enforced to your catalogue. It emits OpenLineage to DataHub rather
+      than replacing it.</p>
+    </div>
+    <div class="card">
+      <h3>“How long to add our data type?”</h3>
+      <p class="muted">Counter-UAS was added in a day, and the drone use case before it needed
+      no Python at all — one vocabulary entry and two mapping rules, both plain JSON files
+      reviewed as a diff.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= IF IT BREAKS ============================= -->
+<hr class="rule">
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">05</span>
+    <div>
+      <h2>If something goes wrong</h2>
+      <p class="sub">The three things most likely to</p>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Profile is greyed out in the picker</td>
+          <td>Refused for this file, or not yet approved</td>
+          <td>Read the refusal panel — it names the missing element. If it says
+              <em>unapproved</em>, select it and use the approve box.</td>
+        </tr>
+        <tr>
+          <td>Page hangs, then a Cloudflare error</td>
+          <td>A local model was picked over the tunnel</td>
+          <td>Reload, choose <code>claude-opus-5</code>. Local models need
+              <code>127.0.0.1:8092</code>.</td>
+        </tr>
+        <tr>
+          <td>Demo URL is dead</td>
+          <td>The tunnel container restarted and the hostname changed</td>
+          <td><code>docker compose logs tunnel | grep trycloudflare</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="muted" style="font-size:.95rem">Every figure on this page was captured from the
+  deployed container, not estimated. If a number on screen differs from a number here, trust
+  the screen and tell me.</p>
+</section>
+
+
+<hr class="rule">
+<footer style="margin-top:2rem;font-size:.85rem;color:var(--ink-3);">
+  <p><strong>Provenance.</strong> Every figure on this page was captured on 2026-08-19 by
+  running the demo inside the deployed container at commit <code>a7569e8</code> &mdash; none of
+  them are estimates. They will drift as the corpora and profiles change: record counts come
+  from the seeded generators in <code>tools/make_sample_data.py</code>, and the
+  model-proposed concepts come from a live reading and can move between runs.
+  <strong>If a number on screen disagrees with a number here, the screen is right.</strong>
+  Regenerate these figures by re-running the steps, never by editing them to match.</p>
+  <p>Opens standalone in any browser.</p>
+</footer>
+</div>

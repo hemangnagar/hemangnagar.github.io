@@ -1,0 +1,839 @@
+<title>SAPIENT Demo Runbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+
+<style>
+  :root {
+    --ground:      #EEF1F4;
+    --surface:     #FFFFFF;
+    --surface-2:   #E4E9ED;
+    --line:        #C9D2DA;
+    --line-soft:   #DDE4EA;
+    --ink:         #101820;
+    --ink-2:       #46545F;
+    --ink-3:       #6C7A86;
+    --accent:      #1B5A87;
+    --accent-soft: #DCE9F2;
+    --release:     #256D4F;
+    --release-bg:  #DDEDE5;
+    --mask:        #9A6510;
+    --mask-bg:     #F5E8D2;
+    --withhold:    #93353B;
+    --withhold-bg: #F2DEDF;
+    --console-bg:  #10181F;
+    --console-ink: #C7D4DE;
+    --console-dim: #6B7D8C;
+
+    --step: clamp(1.05rem, 0.98rem + 0.3vw, 1.18rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0D1218;
+      --surface:     #151C24;
+      --surface-2:   #1D2731;
+      --line:        #2C3945;
+      --line-soft:   #222D38;
+      --ink:         #E4EAEF;
+      --ink-2:       #A3B1BD;
+      --ink-3:       #798794;
+      --accent:      #74AEDA;
+      --accent-soft: #1A2E3E;
+      --release:     #6FC79E;
+      --release-bg:  #16302A;
+      --mask:        #DFAA57;
+      --mask-bg:     #33280F;
+      --withhold:    #DE8A8F;
+      --withhold-bg: #351C1E;
+      --console-bg:  #080D12;
+      --console-ink: #BECCD7;
+      --console-dim: #5D6E7C;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #0D1218;
+    --surface:     #151C24;
+    --surface-2:   #1D2731;
+    --line:        #2C3945;
+    --line-soft:   #222D38;
+    --ink:         #E4EAEF;
+    --ink-2:       #A3B1BD;
+    --ink-3:       #798794;
+    --accent:      #74AEDA;
+    --accent-soft: #1A2E3E;
+    --release:     #6FC79E;
+    --release-bg:  #16302A;
+    --mask:        #DFAA57;
+    --mask-bg:     #33280F;
+    --withhold:    #DE8A8F;
+    --withhold-bg: #351C1E;
+    --console-bg:  #080D12;
+    --console-ink: #BECCD7;
+    --console-dim: #5D6E7C;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: var(--step);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 54rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+  .eyebrow {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: .72rem; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  h1 {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 700; font-size: clamp(2rem, 1.5rem + 2.2vw, 3rem);
+    line-height: 1.08; letter-spacing: -.02em;
+    margin: .5rem 0 .75rem; text-wrap: balance;
+  }
+
+  h2 {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 600; font-size: clamp(1.35rem, 1.15rem + .8vw, 1.75rem);
+    line-height: 1.2; letter-spacing: -.01em;
+    margin: 0 0 .4rem; text-wrap: balance;
+  }
+
+  h3 {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 600; font-size: 1.05rem; letter-spacing: -.005em;
+    margin: 0 0 .5rem;
+  }
+
+  p { margin: 0 0 1rem; }
+  .lede { font-size: 1.2rem; color: var(--ink-2); line-height: 1.55; max-width: 42rem; }
+  .muted { color: var(--ink-2); }
+  strong { font-weight: 600; color: var(--ink); }
+  a { color: var(--accent); }
+
+  header.page {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 1.75rem; margin-bottom: 2.5rem;
+  }
+
+  .filerow {
+    display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem;
+  }
+  .file {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .78rem; padding: .35rem .6rem;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 3px; color: var(--ink-2);
+  }
+  .file b { color: var(--ink); font-weight: 600; }
+
+  /* ---- acts ---- */
+  .act { margin: 3.5rem 0 0; }
+  .act-head {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding-bottom: .75rem; margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .act-num {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 700; font-size: 2.6rem; line-height: 1;
+    color: var(--accent); letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .act-head .sub { font-size: .95rem; color: var(--ink-3); margin: .2rem 0 0; }
+
+  /* ---- steps ---- */
+  .step {
+    display: grid; grid-template-columns: 2.25rem 1fr; gap: 0 1rem;
+    margin-bottom: 2rem;
+  }
+  .step-n {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .8rem; font-weight: 600; color: var(--ink-3);
+    padding-top: .28rem; font-variant-numeric: tabular-nums;
+    border-top: 2px solid var(--line); text-align: right;
+  }
+  .step-body { border-top: 2px solid var(--line-soft); padding-top: .28rem; min-width: 0; }
+  .step-body > :last-child { margin-bottom: 0; }
+  .do {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 600; font-size: 1.02rem; line-height: 1.4;
+    margin: 0 0 .5rem; color: var(--ink);
+  }
+  .why {
+    font-size: .95rem; color: var(--ink-2);
+    border-left: 2px solid var(--accent); padding-left: .8rem; margin: .75rem 0 0;
+  }
+  .why em { font-style: italic; color: var(--ink); }
+
+  kbd {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .82em; background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: 3px;
+    padding: .08em .35em; color: var(--ink);
+  }
+  code {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .84em; color: var(--ink);
+    background: var(--surface-2); padding: .08em .3em; border-radius: 3px;
+  }
+
+  /* ---- console ---- */
+  .console {
+    background: var(--console-bg); color: var(--console-ink);
+    border-radius: 4px; padding: .9rem 1rem; margin: .75rem 0;
+    overflow-x: auto;
+  }
+  .console pre {
+    margin: 0; font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: .78rem; line-height: 1.65; white-space: pre;
+  }
+  .console .lbl {
+    display: block; font-family: "Archivo", system-ui, sans-serif;
+    font-size: .64rem; font-weight: 600; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--console-dim); margin-bottom: .5rem;
+  }
+  .console .hi { color: #E8B04B; }
+  .console .ok { color: #79C7A0; }
+  .console .no { color: #E08F94; }
+  .console .dim { color: var(--console-dim); }
+
+  /* ---- chips ---- */
+  .chip {
+    display: inline-block; font-family: "Archivo", system-ui, sans-serif;
+    font-size: .66rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; padding: .2rem .5rem;
+    border-radius: 3px; vertical-align: .1em;
+  }
+  .chip.release  { background: var(--release-bg);  color: var(--release); }
+  .chip.mask     { background: var(--mask-bg);     color: var(--mask); }
+  .chip.withhold { background: var(--withhold-bg); color: var(--withhold); }
+  .chip.accent   { background: var(--accent-soft); color: var(--accent); }
+
+  /* ---- callout ---- */
+  .say {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0; padding: .9rem 1.1rem; margin: 1rem 0;
+  }
+  .say .lbl {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: .64rem; font-weight: 600; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: .35rem;
+  }
+  .say p { margin: 0; font-style: italic; font-size: 1.02rem; }
+  .say p + p { margin-top: .6rem; }
+
+  .warn {
+    background: var(--mask-bg); border-radius: 4px;
+    padding: .85rem 1.1rem; margin: 1.25rem 0; font-size: .95rem;
+    color: var(--ink);
+  }
+  .warn b { color: var(--mask); }
+
+  /* ---- tables ---- */
+  .tablewrap { overflow-x: auto; margin: 1.25rem 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td {
+    text-align: left; padding: .55rem .7rem;
+    border-bottom: 1px solid var(--line-soft); vertical-align: top;
+  }
+  th {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-3);
+    border-bottom: 1px solid var(--line);
+  }
+  td.num { font-family: "JetBrains Mono", ui-monospace, monospace;
+           font-variant-numeric: tabular-nums; font-size: .82rem; }
+  tbody tr:last-child td { border-bottom: none; }
+
+  ul, ol { margin: 0 0 1rem; padding-left: 1.15rem; }
+  li { margin-bottom: .45rem; }
+
+  hr.rule { border: none; border-top: 1px solid var(--line); margin: 3rem 0 0; }
+
+  .grid2 { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 40rem) { .grid2 { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 4px; padding: 1rem 1.15rem;
+  }
+  .card h3 { margin-bottom: .3rem; }
+  .card p:last-child { margin-bottom: 0; }
+  .card .big {
+    font-family: "Archivo", system-ui, sans-serif; font-weight: 700;
+    font-size: 1.9rem; line-height: 1; letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums; margin: .35rem 0 .2rem;
+  }
+</style>
+<div class="wrap">
+
+<header class="page">
+  <span class="eyebrow">Demo runbook · governed data platform</span>
+  <h1>SAPIENT: reading the standard the sensors speak, and writing it back</h1>
+  <p class="lede">Twenty minutes, three files. A capture in the UK MOD's open sensor standard;
+  the enriched record an analyst made from it; and the same governed corpus projected
+  <em>back into that standard</em>, once per recipient, so a fusion node consumes what it is
+  entitled to with no translation step in front of it. Every figure here was captured from the
+  deployed container on 2026-08-20.</p>
+  <div class="filerow">
+    <span class="file"><b>counter_uas_sapient.bin</b> · SAPIENT capture · 556 KB</span>
+    <span class="file"><b>counter_uas_detections.csv</b> · the enriched record</span>
+    <span class="file"><b>two .bin files you make on stage</b> · the point of the whole thing</span>
+  </div>
+</header>
+
+<section>
+  <h2>The story in one paragraph</h2>
+  <p><strong>BSI Flex 335 — SAPIENT</strong> is Dstl's open standard for networks of autonomous
+  sensors: edge nodes register with a fusion node and then report what they detect. It is freely
+  published, its <code>.proto</code> files and reference middleware are Apache-2.0, and
+  <strong>NATO is adopting it as the counter-UAS interoperability standard</strong>. So the
+  interesting question is not whether this platform can read a drone detection — it is where a
+  governance platform <em>sits</em> in a sensor network. The answer this demo gives: between the
+  sensors and the fusion node, speaking the standard in both directions, deciding what each
+  recipient receives rather than handing over a file and trusting them to redact it.</p>
+
+  <div class="warn">
+    <b>Before you start.</b> Open <code>http://127.0.0.1:8092</code> and log in. The two
+    counter-UAS profiles ship <em>unapproved on purpose</em> — approving one live is a good
+    thirty seconds, not a fault. Do <em>not</em> pick a local model from the analyst dropdown
+    while presenting over the public tunnel: it takes about 394 seconds and Cloudflare cuts the
+    response at 100.
+  </div>
+</section>
+
+<!-- ============================= ACT ONE ============================= -->
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">01</span>
+    <div>
+      <h2>What the sensors actually speak</h2>
+      <p class="sub">The capture · <code>counter_uas_sapient.bin</code></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">01</div>
+    <div class="step-body">
+      <p class="do">On the <strong>Run</strong> tab, under <kbd>1 · Dataset</kbd>, choose
+      <code>counter_uas_sapient.bin</code>.</p>
+      <div class="console">
+        <span class="lbl">What appears under the file picker</span>
+<pre>21 columns · 2,000 records · <span class="hi">sapient_bsi_flex_335_v2_0</span>
+ · 2,012 messages · 2,000 detection reports
+ · <span class="hi">12 registration (not governed)</span></pre>
+      </div>
+      <p class="why">Three things in one line. The format was decided <em>from the bytes</em> —
+      rename the file <code>notes.csv</code> and it still reads as SAPIENT, because on the input
+      path of a governance platform a filename is a claim by whoever typed it. The capture is a
+      conversation, and 12 of its messages are nodes registering with the fusion node: those
+      describe the network rather than an observation of the world, so they are counted and
+      <em>not</em> turned into governed records. And 2,000 detection reports went in without
+      anybody converting anything to a spreadsheet first.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">02</div>
+    <div class="step-body">
+      <p class="do">Say where the field names came from, because this is the part that is
+      different from every other format the platform reads.</p>
+      <div class="console">
+        <span class="lbl">One detection report, as decoded</span>
+<pre>timestamp                    2026-03-02T06:11:51Z
+node_id                      018f3a2c-1f00-7a10-8000-000000000032
+object_id                    CEJZ05XHT5GMEJ146S6JR410DD
+<span class="hi">location_x</span>                   -97.23268    <span class="dim">← longitude</span>
+<span class="hi">location_y</span>                    26.9091     <span class="dim">← latitude</span>
+location_z                   158.496
+location_coordinate_system   LOCATION_COORDINATE_SYSTEM_LAT_LNG_DEG_M
+location_datum               LOCATION_DATUM_WGS84_E
+detection_confidence         0.96
+object_info_sensor_modality  RF
+<span class="hi">object_info_cooperative</span>      true      <span class="dim">← it identified itself</span>
+<span class="hi">object_info_id_type</span>          remote_id_serial
+classification               Air:0.81
+behaviour                    Approaching:0.83
+signal_0_centre_frequency    2436999936
+id                           1596F6090228</pre>
+      </div>
+      <p class="why">Four of those columns are not fields in the standard at all.
+      <code>object_info</code> is a repeated <code>{type, value}</code> pair — SAPIENT's
+      declared extension point, whose vocabulary each node registers up front — and the
+      reader turns the <em>type</em> into the column name. So a sensor saying
+      <code>type: "cooperative", value: "true"</code> arrives as a governable column with
+      nothing written in Python. That is how a use case adds a field to this platform.</p>
+
+      <div class="say">
+        <span class="lbl">What to say</span>
+        <p>“The other two binary formats we read needed somebody to sit down with a
+        specification and type out a JSON table of what each tag means. That table is a place
+        errors live silently. SAPIENT ships its own schema — so we vendored the
+        <code>.proto</code> files verbatim, Crown copyright notice and all, and the decoder runs
+        off a descriptor compiled from them. There is no hand-written field table here to drift
+        out of date, and no generated code in the tree either. Upgrading to the next BSI Flex
+        version is dropping in new <code>.proto</code> files.”</p>
+        <p>“<code>location_x</code> is longitude and <code>location_y</code> is latitude
+        <em>per the standard's own comment</em>, and the enum underneath says which convention
+        is in force. We did not rename them to something friendlier on the way in. Renaming is
+        interpretation dressed as decoding — and interpretation is the profile author's job,
+        which is the next thing you will see.”</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">03</div>
+    <div class="step-body">
+      <p class="do">Under <kbd>2 · Profile</kbd>, read the ranked picker before selecting.</p>
+      <div class="console">
+        <span class="lbl">The picker</span>
+<pre><span class="ok">✓</span> Counter-UAS SAPIENT capture — sensor network <span class="dim">(unapproved)</span>
+                                <span class="dim">— describes</span> <span class="hi">100.0%</span> <span class="dim">of columns</span>
+<span class="ok">✓</span> DCSA applicant vetting          <span class="dim">— describes</span> 0.0% <span class="dim">of columns</span>
+<span class="ok">✓</span> Counter-UAS Remote ID capture   <span class="dim">— describes</span> 0.0% <span class="dim">of columns</span>
+<span class="ok">✓</span> Telecom CDR                     <span class="dim">— describes</span> 0.0% <span class="dim">of columns</span>
+
+<span class="no">✗</span> 5 profile(s) cannot govern this file</pre>
+      </div>
+      <p class="why">A vetting profile <em>can</em> run on a drone capture — it would apply
+      lineage and a detection pass and describe none of it. Ranking on coverage is how “able”
+      is kept from reading as “appropriate”. Select the SAPIENT profile, which shows
+      <span class="chip accent">unapproved</span>, type your name, and press
+      <kbd>Approve as named person</kbd>. Its fingerprint is <code>3df3cd15a681cd36</code>
+      before approval and identical after: approval records a decision, it does not modify the
+      thing decided on.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">04</div>
+    <div class="step-body">
+      <p class="do">Press <kbd>4 · Run</kbd>. Then stop on the second line for a moment.</p>
+      <div class="console">
+        <span class="lbl">Result</span>
+<pre><span class="ok">PROMOTED</span> · 2,000 records · 0 quarantined · composite 100.0 · 0.42 s
+
+  lineage      2,000/2,000   <span class="dim">stamped whether anyone asked or not</span>
+  pii_detect   <span class="hi">    0</span>/2,000   <span class="dim">ran on every record, tagged nothing</span></pre>
+      </div>
+      <div class="say">
+        <span class="lbl">What to say</span>
+        <p>“Personal-data detection ran across two thousand detection reports and found
+        nothing. Not because it was switched off — it ran on every record. There is nothing
+        personal in this format to find. A SAPIENT DetectionReport carries position, confidence,
+        classification, behaviour, RF signal. It carries no operator name, no home address, no
+        classification marking, no U.S. Persons determination and no retention basis.”</p>
+        <p>“That is now three sensing standards in a row — MISB ST 0601 for full-motion video
+        metadata, ASTM Remote ID off the air, and SAPIENT. <strong>Sensing standards carry
+        observation, not entitlement.</strong> Which tells you where a governance platform's
+        obligations actually begin, and it is not at the sensor.”</p>
+      </div>
+      <p class="why">One thread does run back to a person: <code>id</code> — the field BSI Flex
+      335 documents as <em>“ID of the object being reported (e.g. the tail number of
+      aircraft)”</em> — carrying the Remote ID serial an RF node heard on <strong>591 of the
+      2,000</strong> reports. <code>object_info_cooperative</code> splits the corpus on exactly
+      that line: 591 aircraft identified themselves and 1,409 were painted by radar and said
+      nothing. What the sensor does <em>not</em> report is who the serial belongs to; that needs
+      a registry, and that join is enrichment. It is pseudonymous
+      — it becomes identifying only through a civil aviation registry this platform does not
+      hold — so the profile leaves it <em>undeclared</em> rather than asserting an answer that
+      is jurisdiction-dependent. Silence means “nobody has said”, so the detector keeps looking
+      at it. Remember this field; it carries the whole of Act Three.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= ACT TWO ============================= -->
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">02</span>
+    <div>
+      <h2>What it will not govern, and why that is the finding</h2>
+      <p class="sub">Same file, one click</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">05</div>
+    <div class="step-body">
+      <p class="do">Open the line that reads
+      <kbd>5 profile(s) cannot govern this file</kbd>.</p>
+      <div class="console">
+        <span class="lbl">Counter-UAS Detections — ground sensor network</span>
+<pre><span class="no">✗</span> 'Classification markings' cannot run on this dataset:
+    missing element: <span class="hi">security_classification</span>
+<span class="no">✗</span> 'U.S. Persons controls' cannot run on this dataset:
+    missing element: <span class="hi">us_person</span>
+<span class="no">✗</span> 'Declassification review' cannot run on this dataset:
+    missing element: <span class="hi">security_classification or creation_date</span>
+
+<span class="dim">remedy: remove it, or supply the missing element</span></pre>
+      </div>
+      <p class="why">The profile that governs the <em>enriched</em> record is refused on this
+      one, by name, with the element each refusal turns on — and the answer arrives before a
+      single record is touched, because whether a control can run is a property of the columns,
+      not of any row. It does not quietly skip §2.3 and hand you a clean-looking output.</p>
+
+      <div class="say">
+        <span class="lbl">What to say</span>
+        <p>“A container that cannot carry the flag must not be allowed to quietly retire the
+        control. If this platform ran the U.S. Persons control here it would report success on
+        two thousand records and protect nobody, because there is no field in the standard
+        saying who is a U.S. person. <strong>Governance obligations attach at enrichment, not
+        at the sensor</strong> — and that generalises a long way past drones.”</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= ACT THREE ============================= -->
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">03</span>
+    <div>
+      <h2>Govern the enriched record, then write the standard back out</h2>
+      <p class="sub"><code>counter_uas_detections.csv</code> · and two captures you make on stage</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">06</div>
+    <div class="step-body">
+      <p class="do">Choose <code>counter_uas_detections.csv</code>, select
+      <strong>Counter-UAS Detections — ground sensor network</strong>, approve it.</p>
+      <div class="console">
+        <span class="lbl">What appears</span>
+<pre>27 columns · 2,000 records · <span class="hi">CSV</span></pre>
+      </div>
+      <p class="why">Same drones, same afternoon. An analyst has since joined the registry, made
+      a classification call, and recorded whether a lawful basis exists for holding the
+      identity. Nine of the twenty-seven columns did not come off any antenna — they are
+      judgements somebody made afterwards. That is the whole difference between Act One and
+      Act Three.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">07</div>
+    <div class="step-body">
+      <p class="do">Leave <kbd>3 · Recipient authority</kbd> unticked and run. This is the
+      airport security desk: cleared for the air picture, not for U.S. Persons information.</p>
+      <div class="console">
+        <span class="lbl">Result · unauthorised recipient</span>
+<pre><span class="ok">PROMOTED</span> · 2,000 records · 0 withheld · composite 100.0 · 0.43 s
+
+  lineage          2,000/2,000
+  classification   2,000/2,000
+  pii_detect       2,000/2,000
+  <span class="hi">usper</span>            2,000/2,000   changed 5 columns:
+       remote_id_serial · operator_latitude · operator_longitude
+       operator_name    · operator_address
+  declass_review       0/2,000</pre>
+      </div>
+      <p class="why">The drone's own position is untouched — a machine is not a protected
+      person, and minimising it would destroy the track the system exists to produce. So is
+      <code>reporting_officer</code>: §2.3 protects the subject of collection, not the
+      government employee who filed the report.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">08</div>
+    <div class="step-body">
+      <p class="do">Click the <kbd>Emission</kbd> node and press
+      <kbd>SAPIENT DetectionReport (BSI Flex 335 v2.0)</kbd>. Save the file.</p>
+      <div class="console">
+        <span class="lbl">What you get, and what the panel says</span>
+<pre>emission_sapient_detections_….bin   <span class="hi">513,596 bytes</span>
+
+<span class="dim">Specification not held — the records are emitted and
+labelled non-conformant, not withheld.</span></pre>
+      </div>
+      <p class="why">Read that disclaimer out. The platform does not hold the BSI Flex 335 ICD,
+      so it does not claim conformance to it — but it <em>does</em> validate every record's
+      mandatory fields against the <code>is_mandatory</code> annotations carried in the
+      standard's own <code>.proto</code> files, rather than against a list maintained here that
+      could drift. That check earned itself the day it was written: it caught that
+      <code>report_id</code> was unset on every record.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">09</div>
+    <div class="step-body">
+      <p class="do">Tick <kbd>Recipient is USPER-authorised</kbd>, run again, and emit again.</p>
+      <div class="console">
+        <span class="lbl">Result · authorised recipient</span>
+<pre><span class="ok">PROMOTED</span> · 2,000 records · <span class="no">89 withheld</span>
+  <span class="hi">usper</span>   2,000/2,000   changed 0 columns
+
+emission_sapient_detections_….bin   <span class="hi">489,589 bytes</span></pre>
+      </div>
+      <p class="why">Nothing was masked for this recipient — and the file got
+      <em>smaller</em>, because 89 detections left it entirely. Under E.O. 12333 §2.3 you need
+      authority <em>and</em> a lawful basis for retaining the information. Those 89 involve U.S.
+      persons and nobody recorded a reason for holding their identity, so the authorised
+      recipient receives less than the unauthorised one did. Not a masked name — no record.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">10</div>
+    <div class="step-body">
+      <p class="do">The round trip. Feed each downloaded <code>.bin</code> straight back into
+      <kbd>1 · Dataset</kbd>.</p>
+      <div class="console">
+        <span class="lbl">The unauthorised recipient's capture, read back by the platform</span>
+<pre>9 columns · <span class="hi">2,000 records</span> · sapient_bsi_flex_335_v2_0
+ · 2,000 messages · 2,000 detection reports</pre>
+      </div>
+      <div class="console">
+        <span class="lbl">The authorised recipient's capture, read back</span>
+<pre>9 columns · <span class="hi">1,911 records</span> · sapient_bsi_flex_335_v2_0
+ · 1,911 messages · 1,911 detection reports</pre>
+      </div>
+      <p>Then put the same detection side by side. It is the first record in both files.</p>
+      <div class="console">
+        <span class="lbl">DET-00000000 · one detection, two recipients</span>
+<pre>report_id   EPB3A4T7YKAYVW4KEDR3PRN2Z2   <span class="dim">← identical in both</span>
+object_id   DET-00000000                 <span class="dim">← identical in both</span>
+location_x  -97.23268                    <span class="dim">← identical in both</span>
+location_y   26.9091                     <span class="dim">← identical in both</span>
+
+id          <span class="hi">[U.S. PERSON]</span>    <span class="dim">airport security desk</span>
+id          <span class="ok">1596F6090228</span>     <span class="dim">federal partner, authorised</span></pre>
+      </div>
+      <div class="say">
+        <span class="lbl">What to say</span>
+        <p>“That is our own reader, running the standard's own schema, accepting a file we
+        produced. It is not a SAPIENT-flavoured export — a fusion node would take it.”</p>
+        <p>“The serial is the field carrying the entitlement. It is pseudonymous, but it
+        resolves to a named person through the registry, and it is the field that reaches a
+        SAPIENT emission — so the profile puts it in the minimisation set, and an unauthorised
+        fusion node does not get a handle on the operator.”</p>
+        <p>“And the message id is the same in both files. Message ids derive from the profile
+        fingerprint and the row's position, not from a clock, so re-emitting one governed corpus
+        produces identical bytes. Two runs of a release set cannot differ for reasons that are
+        not governed.”</p>
+      </div>
+      <p class="why">Across the two captures: <strong>456 serials minimised and 135 in the
+      clear</strong> for the security desk; <strong>none minimised and 502 in the clear</strong>
+      for the federal partner. 1,409 detections carry no serial at all in either — those are
+      drones nobody heard a Remote ID broadcast from.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= THE TABLE ============================= -->
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">04</span>
+    <div>
+      <h2>The slide to leave up</h2>
+      <p class="sub">One corpus, one standard, two entitlements</p>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Recipient</th>
+          <th class="num">Detections</th>
+          <th class="num">Serial in the clear</th>
+          <th>What the fusion node receives</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Airport security desk — not authorised</td>
+          <td class="num">2,000</td>
+          <td class="num">135</td>
+          <td><span class="chip mask">Mask</span> 456 serials as <code>[U.S. PERSON]</code>;
+              full air picture</td>
+        </tr>
+        <tr>
+          <td>Federal partner — authorised, basis stated</td>
+          <td class="num">1,911</td>
+          <td class="num">502</td>
+          <td><span class="chip release">Release</span> every serial, reason recorded</td>
+        </tr>
+        <tr>
+          <td>Federal partner — authorised, <strong>no basis</strong></td>
+          <td class="num">89</td>
+          <td class="num">—</td>
+          <td><span class="chip withhold">Withhold</span> the detection does not leave</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="muted" style="font-size:.95rem">Both files are valid BSI Flex 335 v2.0 captures, and
+  the platform reads either of them straight back. The aircraft's position is never touched in
+  either.</p>
+</section>
+
+<!-- ============================= APPENDIX ============================= -->
+<hr class="rule">
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">05</span>
+    <div>
+      <h2>One upload, every release</h2>
+      <p class="sub">Optional · a terminal beat, because the button is not wired for this yet</p>
+    </div>
+  </div>
+
+  <p>Steps 07–09 produce each recipient's capture with two runs. The platform can also produce
+  <em>every</em> release from one upload as a single archive with a manifest — but the UI's
+  <kbd>Produce the release set</kbd> button is currently hardcoded to the governed CSV, so a
+  SAPIENT release set is an API call today. Say so if you show it.</p>
+
+  <div class="console">
+    <span class="lbl">POST /api/release</span>
+<pre>releases = [
+  {"name": "Airport security desk", "target": "sapient_detections"},
+  {"name": "Federal partner",       "target": "sapient_detections",
+   "usper_authorised": true}
+]
+
+<span class="dim">→ releases_0.1_….zip · 183,761 bytes</span>
+   manifest.json
+   airport_security_desk_emission_sapient_detections_….bin   <span class="hi">2,000</span> records
+   federal_partner_emission_sapient_detections_….bin         <span class="hi">1,911</span> records</pre>
+  </div>
+
+  <p class="why">The manifest reports each release's authority, the controls applied, and that
+  mandatory-field validation passed — with <code>conformant: false</code> stated plainly. It
+  also says what it <em>cannot</em> tell you: the two releases hold different record counts, so
+  no per-record comparison is possible. An honest “no answer” rather than a misleading diff. The
+  pipeline runs once per <em>distinct authority</em>, not once per release, so two releases
+  cannot disagree about what was governed.</p>
+</section>
+
+<!-- ============================= OBJECTIONS ============================= -->
+<hr class="rule">
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">06</span>
+    <div>
+      <h2>Questions you will get</h2>
+      <p class="sub">And short answers that are true</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>“Is this really SAPIENT, or your idea of it?”</h3>
+      <p class="muted">The standard's <code>.proto</code> files are in the repository verbatim
+      with their Crown copyright and Apache-2.0 notice, and decoding runs through a descriptor
+      compiled from them — no hand-typed field table, no generated code in the tree. A test
+      holds the descriptor to its sources, so a <code>.proto</code> change without a rebuild
+      fails the suite rather than the deployment.</p>
+    </div>
+    <div class="card">
+      <h3>“You built a drone corpus last week and only then found the standard.”</h3>
+      <p class="muted">Yes — and it is written down. Tuesday's counter-UAS CSV is a hand-rolled
+      version of a SAPIENT DetectionReport and nobody looked first. It is recorded in
+      <code>docs/alternatives-considered.md</code> beside the same mistake made with ODCS. The
+      rule that came out of it is: research the standard before designing a format. Conceding
+      those two is what makes the rest of that document worth reading.</p>
+    </div>
+    <div class="card">
+      <h3>“Can it subscribe to our fusion node?”</h3>
+      <p class="muted">Not today. The platform reads uploads, and a capture of length-delimited
+      messages is the same shape as any other file. Live SAPIENT is TCP to the middleware and is
+      separate work — it would not need Kafka, which is ruled out here by name for the laptop
+      requirement, because SAPIENT already ships a broker.</p>
+    </div>
+    <div class="card">
+      <h3>“Why does it say non-conformant?”</h3>
+      <p class="muted">Because we do not hold the ICD, and claiming conformance to a document
+      you do not hold is how this goes wrong quietly. What is claimed is what was checked:
+      structurally valid, every mandatory field verified against the standard's own annotations.
+      A missing specification is not a reason to withhold governed data — it is a reason to
+      label it accurately.</p>
+    </div>
+    <div class="card">
+      <h3>“How much of this was code?”</h3>
+      <p class="muted">The profile governing the capture is a JSON file. The emission target —
+      which column maps to which field of the standard, and the coordinate-system constants — is
+      a JSON file. What stays code is the walker that turns bytes into values, and what a
+      control does to a record. A target naming a format nothing implements is refused by name
+      at load, with the refusal saying where the behaviour would go.</p>
+    </div>
+    <div class="card">
+      <h3>“What stops the AI getting it wrong?”</h3>
+      <p class="muted">Nothing rests on it being right. A machine reading only ever proposes
+      meanings — it cannot mark a field required, write a personal-data declaration, raise a
+      profile's authority, approve anything, or choose which profile governs a run. Each is
+      enforced in code with a test behind it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= IF IT BREAKS ============================= -->
+<hr class="rule">
+<section class="act">
+  <div class="act-head">
+    <span class="act-num">07</span>
+    <div>
+      <h2>If something goes wrong</h2>
+      <p class="sub">The four things most likely to</p>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>The <code>.bin</code> upload is refused, or the rail shows nothing</td>
+          <td>The container was built without the <code>sapient</code> extra, so there is no
+              protobuf runtime to decode with</td>
+          <td><code>docker compose up -d --build gdp</code> — rebuild <em>only</em> the gdp
+              service. Rebuilding the tunnel changes the public hostname.</td>
+        </tr>
+        <tr>
+          <td>“no detection reports in this capture”</td>
+          <td>The file holds only the registration handshake, not the traffic</td>
+          <td>The refusal names what it did find. Use
+              <code>counter_uas_sapient.bin</code>.</td>
+        </tr>
+        <tr>
+          <td>Profile greyed out in the picker</td>
+          <td>Refused for this file, or not yet approved</td>
+          <td>Read the refusal panel — it names every missing element. If it says
+              <em>unapproved</em>, select it and use the approve box.</td>
+        </tr>
+        <tr>
+          <td>Demo URL is dead</td>
+          <td>The tunnel container restarted and the hostname changed</td>
+          <td><code>docker compose logs tunnel | grep trycloudflare</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="muted" style="font-size:.95rem">Every figure on this page was captured from the
+  deployed container on 2026-08-20, not estimated. A profile named <code>telco</code> sits in
+  the picker from an earlier upload and is unrelated to this demo. If a number on screen differs
+  from a number here, trust the screen and tell me.</p>
+</section>
+
+</div>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Governed Data Platform — demos — Hemang Nagar</title>
+<meta name="description" content="Replayable demos of a governed data platform: profile-driven governance for data in motion, one source released three ways by authority, and the IEF chain drawn in space and time.">
+<meta property="og:title" content="Governed Data Platform — demos">
+<meta property="og:description" content="The platform enforces standards and policy on data as it passes through, then publishes what it enforced. Seven self-contained replays of real engine runs over synthetic data.">
+<meta property="og:url" content="https://hemangnagar.dev/governed-data/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@hnagar_dev">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316213A'/%3E%3Cpath d='M8 22V10h3v4.5h10V10h3v12h-3v-5H11v5z' fill='%23E8964A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #F4F5F7; --card: #FFFFFF; --ink: #16213A; --muted: #5B6478; --line: #D9DDE5;
+    --accent: #B4560A; --accent-ink: #FFFFFF; --accent-soft: #FBEBD9;
+    --ledger: #1A2236; --ledger-ink: #E7EAF0; --ledger-muted: #8C97AD; --ledger-accent: #E8964A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10141D; --card: #171C28; --ink: #E7EAF0; --muted: #97A0B3; --line: #2A3142;
+      --accent: #E8964A; --accent-ink: #1A1206; --accent-soft: #2E2116;
+      --ledger: #0B0E15; --ledger-ink: #E7EAF0; --ledger-muted: #7E889C; --ledger-accent: #E8964A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #10141D; --card: #171C28; --ink: #E7EAF0; --muted: #97A0B3; --line: #2A3142;
+    --accent: #E8964A; --accent-ink: #1A1206; --accent-soft: #2E2116;
+    --ledger: #0B0E15; --ledger-ink: #E7EAF0; --ledger-muted: #7E889C; --ledger-accent: #E8964A;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .wrap { max-width: 840px; margin: 0 auto; padding: 0 22px; }
+  main.wrap { display: flex; flex-direction: column; gap: 60px; padding-bottom: 96px; }
+  header.wrap { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 26px; padding-bottom: 52px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+  header a { color: var(--muted); text-decoration: none; }
+  header a:hover { color: var(--accent); }
+  .eyebrow { font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
+  h1 { font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif; font-weight: 800; font-size: clamp(2.1rem, 5.6vw, 3.4rem); line-height: 1.04; letter-spacing: -0.028em; margin: 0 0 24px; text-wrap: balance; }
+  h1 .seal { color: var(--accent); }
+  h2 { font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.015em; line-height: 1.2; margin: 0 0 16px; text-wrap: balance; }
+  .lede { font-size: 1.18rem; line-height: 1.5; max-width: 34em; margin: 0; }
+  .lede + .lede { margin-top: 14px; color: var(--muted); font-size: 1.02rem; }
+  p { margin: 0; max-width: 38em; }
+  p + p { margin-top: 12px; }
+  .note { color: var(--muted); font-size: 0.95rem; }
+  .demo { border-top: 1px solid var(--line); padding: 22px 0 8px; display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .demo:last-child { border-bottom: 1px solid var(--line); padding-bottom: 22px; }
+  .demo h3 { margin: 0; font-size: 1.1rem; font-weight: 600; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .demo h3 a { color: var(--ink); text-decoration: none; }
+  .demo h3 a:hover { color: var(--accent); }
+  .demo h3 .tag { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .demo p { color: var(--muted); font-size: 0.97rem; }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 2px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .facts b { color: var(--ink); font-weight: 500; }
+  .button { display: inline-block; background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; padding: 10px 16px; border-radius: 6px; font-size: 0.95rem; }
+  .button:hover { filter: brightness(1.06); }
+  .button.quiet { background: transparent; color: var(--accent); border: 1px solid var(--line); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 6px; }
+  .ledger { background: var(--ledger); color: var(--ledger-ink); border-radius: 6px; padding: 20px 22px 18px; margin-top: 22px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.8rem; line-height: 1.55; overflow-x: auto; }
+  .ledger table { border-collapse: collapse; width: 100%; min-width: 420px; }
+  .ledger th, .ledger td { text-align: left; padding: 8px 14px 8px 0; vertical-align: top; }
+  .ledger th { color: var(--ledger-muted); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.7rem; }
+  .ledger tr + tr td { border-top: 1px solid rgba(255,255,255,0.09); }
+  .ledger .k { color: var(--ledger-accent); font-weight: 500; }
+  .ledger .dim { color: var(--ledger-muted); }
+  .keys { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px 20px; margin-top: 10px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.8rem; color: var(--muted); }
+  .keys kbd { display: inline-block; border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; color: var(--ink); font-family: inherit; background: var(--card); }
+  footer.wrap { border-top: 1px solid var(--line); padding-top: 22px; padding-bottom: 40px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.8rem; color: var(--muted); }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<header class="wrap"><a href="/">← Hemang Nagar</a><a href="/#work">Work in the open</a></header>
+<main class="wrap">
+
+<section aria-labelledby="thesis">
+  <p class="eyebrow">Governed Data Platform · replayable demos</p>
+  <h1 id="thesis">Profile-driven governance <span class="seal">for data in motion.</span></h1>
+  <p class="lede">A data plane, not a catalog. A profile declares what a dataset must contain, which controls apply to it and under what condition. The platform enforces that as the data passes through, then publishes what it enforced. Lineage is applied to every run and cannot be switched off; a machine may propose a profile, but only a named person approves one.</p>
+  <p class="lede">Everything below replays captured engine runs over synthetic data. Each page is one self-contained file: no server, no login, no model call, nothing leaves your browser. Open them in a desktop browser.</p>
+</section>
+
+<section aria-labelledby="start">
+  <h2 id="start">Start here: one source, three releases</h2>
+  <p>The same governed corpus rarely has one audience. The platform decides what each recipient receives; it does not hand over a file and trust the recipient to redact it. This scene replays two real runs as records in space, with the chain they pass through as structure, recipient authority as the split, and time as the scrubber.</p>
+  <div class="demo">
+    <h3><a href="/governed-data/governed-data-4d.html">Governed Data, in Four Dimensions</a> <span class="tag">3D + time · two acts</span></h3>
+    <p><b>Act 1.</b> 2,000 telecom call detail records enter, pass the quality gate, go through the ordered controls and split into three releases: an internal analyst, a carrier under §222, and an agency holding a warrant. Follow one record and watch its subscriber number and cell identifier change by recipient.</p>
+    <p><b>Act 2.</b> 2,000 counter-UAS detections, each tied to where its operator is standing. An uncleared desk sees identities minimised and every aircraft intact; a cleared partner with a recorded retention basis sees identity in full; and detections with no basis are withheld from the cleared partner entirely.</p>
+    <div class="facts"><span><b>2,000</b> records per act</span><span><b>456</b> minimised · <b>89</b> withheld</span><span>WebGL preferred · <b>falls back</b> without it</span></div>
+    <div class="actions"><a class="button" href="/governed-data/governed-data-4d.html">Open the 4D scene</a></div>
+  </div>
+  <div class="ledger" role="figure" aria-label="What each recipient receives from the telecom release set">
+    <table>
+      <thead><tr><th>release</th><th>served_msisdn</th><th>cell_identifier</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Unauthorised</td><td>*******0180</td><td>[COARSENED]</td></tr>
+        <tr><td class="k">CPNI authorised (§222)</td><td>18135550180</td><td>[COARSENED]</td></tr>
+        <tr><td class="k">Warrant on file</td><td>18135550180</td><td>15942</td></tr>
+      </tbody>
+    </table>
+    <p class="dim" style="margin-top:12px">Measured on the shipped seed. §222 authority unlocks the subscriber number and does not uncoarsen cell-site location, because those are separate authorities under §222 and <i>Carpenter</i>.</p>
+  </div>
+  <div class="keys" aria-label="Controls for the 4D scene">
+    <span><kbd>drag</kbd> orbit · <kbd>wheel</kbd> zoom</span>
+    <span><kbd>space</kbd> play / pause</span>
+    <span><kbd>←</kbd> <kbd>→</kbd> step beats</span>
+    <span><kbd>1</kbd> <kbd>2</kbd> switch acts</span>
+    <span><kbd>R</kbd> reset · <kbd>F</kbd> full screen</span>
+  </div>
+</section>
+
+<section aria-labelledby="ief">
+  <h2 id="ief">IEF walkthroughs: a use case established, then files flowing through it</h2>
+  <p>Three use cases, each in two phases. <b>Phase 1</b> establishes the use case: a model proposes the dataset kind and a concept per column, the composer maps those proposals to structure suggestions, and a reviewer commits the Wrapper, Transactional and Semantic definitions and their controls. <b>Phase 2</b> processes files through those definitions: quality checks, quarantine branches, the controls that apply, and the output. Each includes a clean file, a file with record-level defects, and a file missing a required column.</p>
+  <p class="note">Every walkthrough has a flat version and a 3D + time version with the same 122 steps and the same captured evidence. Select <b>Play both phases</b>. Click a field to follow its value from physical source to semantic declaration; click a layer to inspect it.</p>
+
+  <div class="demo">
+    <h3><a href="/governed-data/ief/ief-telecom-disclosure-demo.html">Telecom records disclosure</a> <span class="tag">§222 · Carpenter</span></h3>
+    <p>Synthetic call detail records. Subscriber masking and reduced cell-site precision, every control on its own line. The 4D version adds two recipient chapters: the same 2,000 governed records released to three recipients, and a manifest of what each authority unlocked.</p>
+    <div class="facts"><span><b>1,800</b> promoted · <b>200</b> quarantined in the defect case</span></div>
+    <div class="actions"><a class="button quiet" href="/governed-data/ief/ief-telecom-disclosure-demo.html">Walkthrough</a><a class="button quiet" href="/governed-data/ief-4d/ief-telecom-disclosure-4d-demo.html">3D + time, with recipient chapters</a></div>
+  </div>
+  <div class="demo">
+    <h3><a href="/governed-data/ief/ief-federal-records-demo.html">Federal records transfer</a> <span class="tag">retention · E.O. 13526 · §2.3</span></h3>
+    <p>Electronic records with retention, personal-data handling, classification marking and a NARA-mapped target. The 4D version adds §2.3 by recipient: the uncleared desk receives every record with creators minimised; the cleared partner receives fewer and has the rest withheld entirely, because clearance without a recorded retention basis is not entitlement.</p>
+    <div class="facts"><span><b>1,544</b> promoted · <b>456</b> quarantined in the defect case</span><span><b>1,418</b> withheld from the cleared partner</span></div>
+    <div class="actions"><a class="button quiet" href="/governed-data/ief/ief-federal-records-demo.html">Walkthrough</a><a class="button quiet" href="/governed-data/ief-4d/ief-federal-records-4d-demo.html">3D + time, with recipient chapters</a></div>
+  </div>
+  <div class="demo">
+    <h3><a href="/governed-data/ief/ief-applicant-vetting-demo.html">Applicant vetting exchange</a> <span class="tag">declared PII · typed redaction</span></h3>
+    <p>Applicant records with declared field meanings. Typed redaction of personal fields while the employer field is preserved, which is the point: a declaration says what a column is, so the control knows what to leave alone.</p>
+    <div class="facts"><span><b>49</b> promoted · <b>1</b> quarantined in the defect case</span></div>
+    <div class="actions"><a class="button quiet" href="/governed-data/ief/ief-applicant-vetting-demo.html">Walkthrough</a><a class="button quiet" href="/governed-data/ief-4d/ief-applicant-vetting-4d-demo.html">3D + time</a></div>
+  </div>
+</section>
+
+<section aria-labelledby="runbooks">
+  <h2 id="runbooks">Runbooks for the live platform</h2>
+  <p>These two documents script demos against the running platform, which reads real uploads: a MISB ST 0601 KLV stream, an ASTM F3411 Remote ID capture, a SAPIENT (BSI Flex 335) capture. They are not playable here, but every figure in them came off the deployed container rather than being estimated, including the ones that make the platform look less clever than it is.</p>
+  <div class="demo">
+    <h3><a href="/governed-data/runbooks/sapient-demo-runbook.html">SAPIENT demo runbook</a> <span class="tag">BSI Flex 335 · three acts</span></h3>
+    <p>A sensor capture read through the standard's own schema and governed; the enriched record governed three ways by recipient; and the governed corpus written back out as SAPIENT per recipient, then fed straight back in through the front door.</p>
+  </div>
+  <div class="demo">
+    <h3><a href="/governed-data/runbooks/counter-uas-demo-runbook.html">Counter-UAS demo runbook</a> <span class="tag">ASTM F3411 · two acts</span></h3>
+    <p>The raw radio capture the platform reads and then refuses to govern, naming each missing element; then the enriched record it governs three ways. The finding: governance obligations attach at enrichment, not at the sensor.</p>
+  </div>
+</section>
+
+<section aria-labelledby="honest">
+  <h2 id="honest">What these replays are, and are not</h2>
+  <p>Model responses and setup decisions in the walkthroughs are illustrated, not fetched: nothing here calls a model or changes a profile's approval state. Runtime counts and field changes replay captured engine runs over the platform's shipped samples and controlled defect variants; they say what the engine did, not how fast it did it. Every count is held to the repository by a test, so a replay that drifts from the shipped seeds fails the build.</p>
+</section>
+
+</main>
+<footer class="wrap">Governed Data Platform · demos · built by <a href="/">Hemang Nagar</a> · three.js is used under the MIT licence; see <a href="/governed-data/ief-4d/THIRD_PARTY_LICENSES.txt">third-party licences</a></footer>
+</body>
+</html>
