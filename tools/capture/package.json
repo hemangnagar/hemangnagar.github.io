@@ -1,0 +1,16 @@
+{
+  "name": "hemangnagar-dev-capture",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reproducible screenshot captures for hemangnagar.dev (Playwright + headless Chromium + sharp).",
+  "type": "module",
+  "scripts": {
+    "clis": "bash run-clis.sh",
+    "capture": "node capture.mjs",
+    "site": "node capture.mjs site"
+  },
+  "dependencies": {
+    "playwright": "1.56.1",
+    "sharp": "0.34.3"
+  }
+}

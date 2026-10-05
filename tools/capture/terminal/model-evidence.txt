@@ -1,0 +1,15 @@
+$ node dist/run-evidence.mjs dist/examples/bundle-v2.json dist/examples/policy-v2.json
+Example bundle: two views reduced by an adapter · split test · contract 2.0 · engine 2.0.0
+view            n       gate       value    95% interval       target    result
+span            300     accuracy   98.0%    96.7% – 99.3%      ≥ 95.0%   pass
+                        precision  98.0%    96.0% – 100.0%     ≥ 95.0%   pass
+                        recall     98.0%    95.3% – 100.0%     ≥ 95.0%   pass
+                        fpr        2.0%     0.0% – 4.0%        ≤ 5.0%    pass
+                runs 4 · cluster bootstrap, 30 clusters · stability on accuracy (spread 0.67 pp)
+                performance pass · stability pass · reproducibility pass · overall PASS
+document        200     recall     98.5%    92.0% – 99.7%      ≥ 90.0%   pass
+                        fpr        1.5%     0.4% – 5.3%        ≤ 10.0%   pass
+                runs 4 · Wilson · stability on recall (spread 1.49 pp)
+                performance pass · stability pass · reproducibility pass · overall PASS
+OVERALL PASS · required views: span, document
+# exit 0  (0 pass · 1 fail · 2 insufficient evidence · 3 input error)
