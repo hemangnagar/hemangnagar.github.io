@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /promote/
+
+Sitemap: https://hemangnagar.dev/sitemap.xml

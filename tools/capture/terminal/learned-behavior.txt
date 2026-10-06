@@ -1,0 +1,9 @@
+$ pip install learned-behavior
+Successfully installed learned-behavior-0.2.0
+$ learned-behavior init-db
+Initialized shared learning DB at ~/.local/share/learned-behavior/learning.db
+$ learned-behavior learn --workspace "$PWD" --title "Use sh, not bash, on vapor images" --rule "laravelphp/vapor has no bash; use sh -c"
+Saved approved lesson for ~
+$ learned-behavior advice --workspace "$PWD" --output claude-json   # the UserPromptSubmit hook
+{"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "Relevant lessons from the shared learning DB:\n- Use sh, not bash, on vapor images: laravelphp/vapor has no bash; use sh -c"}}
+

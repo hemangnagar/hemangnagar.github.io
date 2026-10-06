@@ -1,21 +1,46 @@
 <!doctype html>
+<!-- INCLUDE_CLEARANCE=false -->
+<!-- The comment above is a switch: change its value to true and the "TS/SCI cleared" chip appears in the hero
+     proof strip (the script at the end of <body> reads it). Default off. TODO: Hemang decides -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hemang Nagar</title>
-<meta name="description" content="Hemang Nagar builds governed data systems: platforms where every model output passes a deterministic gate before it touches a number anyone acts on. Data contracts, lineage, LLMs behind gates. Washington, DC.">
-<meta property="og:title" content="Hemang Nagar — governed data systems">
-<meta property="og:description" content="The LLM proposes. The pipeline disposes. Data contracts, lineage, and LLMs behind deterministic gates.">
+<title>Hemang Nagar — data & AI engineering, Washington, DC</title>
+<meta name="description" content="I build data platforms where every model output passes a deterministic gate before it touches a number anyone acts on. Twenty years of production data systems, from 3-billion-record-a-day fraud pipelines to governed LLM workflows, and a shelf of open-source projects that show exactly how.">
+<link rel="canonical" href="https://hemangnagar.dev/">
+<meta property="og:title" content="Hemang Nagar — The LLM proposes. The pipeline disposes.">
+<meta property="og:description" content="Data platforms where every model output passes a deterministic gate. Twenty years of production data systems, from 3B-record-a-day fraud pipelines to governed LLM workflows. Available for consulting and senior roles.">
 <meta property="og:url" content="https://hemangnagar.dev/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://hemangnagar.dev/assets/decision-gate-abandon.png">
+<meta property="og:image" content="https://hemangnagar.dev/assets/og-hero.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@hnagar_dev">
+<meta name="twitter:image" content="https://hemangnagar.dev/assets/og-hero.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316213A'/%3E%3Cpath d='M8 22V10h3v4.5h10V10h3v12h-3v-5H11v5z' fill='%23E8964A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- Google Fonts, loaded without blocking first paint; display=swap keeps text visible while they arrive -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Hemang Nagar",
+  "jobTitle": "Data & AI engineer",
+  "url": "https://hemangnagar.dev/",
+  "email": "mailto:hi@hemangnagar.dev",
+  "address": { "@type": "PostalAddress", "addressLocality": "Washington", "addressRegion": "DC", "addressCountry": "US" },
+  "sameAs": [
+    "https://github.com/hemangnagar",
+    "https://www.linkedin.com/in/hemangnagar/",
+    "https://x.com/hnagar_dev"
+  ]
+}
+</script>
 <style>
   :root {
     --ground: #F4F5F7;
@@ -30,183 +55,506 @@
     --ledger-ink: #E7EAF0;
     --ledger-muted: #8C97AD;
     --ledger-accent: #E8964A;
+    --shadow: 0 10px 30px rgba(22, 33, 58, 0.10);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --ground: #10141D; --card: #171C28; --ink: #E7EAF0; --muted: #97A0B3;
       --line: #2A3142; --accent: #E8964A; --accent-ink: #1A1206; --accent-soft: #2E2116;
       --ledger: #0B0E15; --ledger-ink: #E7EAF0; --ledger-muted: #7E889C; --ledger-accent: #E8964A;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
     }
   }
   :root[data-theme="dark"] {
     --ground: #10141D; --card: #171C28; --ink: #E7EAF0; --muted: #97A0B3;
     --line: #2A3142; --accent: #E8964A; --accent-ink: #1A1206; --accent-soft: #2E2116;
     --ledger: #0B0E15; --ledger-ink: #E7EAF0; --ledger-muted: #7E889C; --ledger-accent: #E8964A;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body { margin: 0; background: var(--ground); color: var(--ink); font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
   a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .wrap { max-width: 840px; margin: 0 auto; padding: 0 22px; }
-  main.wrap { display: flex; flex-direction: column; gap: 72px; padding-bottom: 96px; }
-  header.wrap { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 26px; padding-bottom: 60px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.82rem; }
-  header .who { color: var(--ink); font-weight: 500; letter-spacing: 0.02em; }
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  img { max-width: 100%; height: auto; display: block; }
+  [hidden] { display: none !important; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .wide { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+  main { display: flex; flex-direction: column; gap: 88px; padding-bottom: 96px; }
+  @media (max-width: 719px) { main { gap: 64px; } }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--card); color: var(--ink); padding: 8px 12px; border-radius: 6px; z-index: 100; }
+  .skip:focus { left: 12px; }
+
+  /* header */
+  header.wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px 16px; padding-top: 22px; padding-bottom: 36px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+  header .who { color: var(--ink); font-weight: 500; letter-spacing: 0.02em; text-decoration: none; }
   header .who span { color: var(--muted); font-weight: 400; }
-  header nav { display: flex; gap: 18px; }
-  header nav a { color: var(--muted); text-decoration: none; }
+  header nav { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  header nav a { color: var(--muted); text-decoration: none; padding: 4px 0; }
   header nav a:hover { color: var(--accent); }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center; padding-top: 12px; }
   .eyebrow { font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
-  h1 { font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif; font-weight: 800; font-size: clamp(2.4rem, 6.2vw, 4.1rem); line-height: 1.02; letter-spacing: -0.028em; margin: 0 0 26px; text-wrap: balance; max-width: 15ch; }
+  h1 { font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif; font-weight: 800; font-size: clamp(2.3rem, 5.4vw, 3.9rem); line-height: 1.02; letter-spacing: -0.028em; margin: 0 0 22px; text-wrap: balance; max-width: 15ch; }
   h1 .seal { color: var(--accent); }
-  .lede { font-size: 1.22rem; line-height: 1.5; max-width: 34em; margin: 0; }
-  .lede + .lede { margin-top: 14px; color: var(--muted); font-size: 1.05rem; }
-  h2 { font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif; font-weight: 800; font-size: 1.55rem; letter-spacing: -0.015em; line-height: 1.2; margin: 0 0 18px; text-wrap: balance; }
-  p { margin: 0; max-width: 36em; }
+  .lede { font-size: 1.18rem; line-height: 1.5; max-width: 36em; margin: 0; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px; }
+  .button { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; padding: 12px 20px; border-radius: 6px; font-size: 0.98rem; border: 1px solid transparent; }
+  .button:hover { filter: brightness(1.06); }
+  .button.quiet { background: transparent; color: var(--accent); border-color: var(--line); }
+  .button.quiet:hover { background: var(--accent-soft); filter: none; }
+  .proof { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 0; padding: 0; list-style: none; }
+  .chip { display: inline-flex; align-items: center; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.02em; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .chip.accent { color: var(--accent-ink); border-color: var(--accent); background: var(--accent); }
+  .hero-visual { display: none; }
+  @media (min-width: 1024px) {
+    .hero { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; }
+    .hero-visual { display: block; position: relative; aspect-ratio: 1.15; }
+    .hero-visual picture { position: absolute; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(22, 33, 58, 0.22); background: var(--ledger); }
+    .hero-visual .back { left: 0; top: 8%; width: 76%; }
+    .hero-visual .front { right: 0; bottom: 4%; width: 80%; z-index: 1; box-shadow: 0 30px 70px rgba(22, 33, 58, 0.30); }
+  }
+
+  /* section headings */
+  h2 { font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif; font-weight: 800; font-size: clamp(1.5rem, 2.6vw, 1.9rem); letter-spacing: -0.015em; line-height: 1.2; margin: 0 0 14px; text-wrap: balance; }
+  .intro { color: var(--muted); max-width: 44em; margin: 0 0 28px; }
+  p { margin: 0; }
   p + p { margin-top: 12px; }
-  section > p { color: var(--ink); }
-  .ledger { background: var(--ledger); color: var(--ledger-ink); border-radius: 6px; padding: 22px 24px 20px; margin-top: 26px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.86rem; line-height: 1.55; overflow-x: auto; }
-  .ledger .row { display: grid; grid-template-columns: 8.5ch 1fr; gap: 18px; padding: 12px 0; }
+
+  /* services */
+  .offers { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 820px) { .offers { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .offer { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 24px 24px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .offer .scope { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .offer h3 { margin: 0; font-size: 1.12rem; font-weight: 600; line-height: 1.3; }
+  .offer p { color: var(--muted); font-size: 0.95rem; }
+  .offer ul { margin: 0; padding-left: 18px; color: var(--ink); font-size: 0.92rem; }
+  .offer li + li { margin-top: 4px; }
+  .offer .start { margin-top: auto; padding-top: 10px; font-weight: 600; text-decoration: none; font-size: 0.95rem; }
+  .offer .start:hover { text-decoration: underline; }
+  .band { margin-top: 22px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 18px 0; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: baseline; justify-content: space-between; }
+  .band p { color: var(--ink); font-size: 1rem; }
+  .band .links { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.84rem; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+
+  /* featured work */
+  .features { display: flex; flex-direction: column; gap: 72px; margin-top: 8px; }
+  .feature { display: grid; grid-template-columns: 1fr; gap: 22px 56px; align-items: center; }
+  .feature .media { min-width: 0; }
+  .feature .body { min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+  .feature .num { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+  .feature h3 { margin: 0; font-family: "Archivo", "IBM Plex Sans", system-ui, sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.015em; line-height: 1.15; }
+  .feature h3 a { color: var(--ink); text-decoration: none; }
+  .feature h3 a:hover { color: var(--accent); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .tags .chip { color: var(--muted); font-size: 0.7rem; padding: 3px 9px; }
+  .feature p { color: var(--ink); font-size: 1rem; max-width: 40em; }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 0; padding: 0; list-style: none; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.86rem; margin-top: 4px; }
+  .links a { font-weight: 500; }
+  .shot { border-radius: 10px; border: 1px solid var(--line); box-shadow: var(--shadow); overflow: hidden; background: var(--card); }
+  .shot img { width: 100%; }
+  .shot.ink { background: var(--ledger); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+  .two.stack { grid-template-columns: 1fr; }
+  figure { margin: 0; }
+  figcaption { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; color: var(--muted); margin-top: 8px; letter-spacing: 0.02em; }
+  .swap { display: grid; cursor: pointer; border-radius: 10px; }
+  .swap > picture { grid-area: 1 / 1; }
+  .swap .alt { opacity: 0; transition: opacity .35s ease; }
+  .swap:hover .alt, .swap:focus-visible .alt, .swap.on .alt { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .swap .alt { transition: none; } }
+  .tablet { border-radius: 22px; border: 6px solid var(--ledger); box-shadow: var(--shadow); overflow: hidden; background: var(--ledger); }
+  .badge { height: 20px; width: auto; display: inline-block; vertical-align: middle; }
+  @media (min-width: 900px) {
+    .feature { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .feature:nth-child(even) .media { order: 2; }
+    .feature:nth-child(even) .body { order: 1; }
+    .feature.balanced { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  @media (max-width: 899px) { .feature .media { order: 0; } .feature .body { order: 1; } }
+
+  /* ledger */
+  .ledger { background: var(--ledger); color: var(--ledger-ink); border-radius: 10px; padding: 22px 24px 20px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.84rem; line-height: 1.55; overflow-x: auto; }
+  .ledger .row { display: grid; grid-template-columns: 9ch 1fr; gap: 18px; padding: 12px 0; }
   .ledger .row + .row { border-top: 1px solid rgba(255,255,255,0.09); }
   .ledger .k { color: var(--ledger-accent); font-weight: 500; letter-spacing: 0.06em; }
   .ledger .v { color: var(--ledger-ink); }
-  .ledger .v .dim { color: var(--ledger-muted); }
-  .ledger .verdict { display: grid; grid-template-columns: 8.5ch 1fr; gap: 18px; padding-top: 14px; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.09); }
-  .ledger .verdict .k { color: var(--ledger-muted); }
-  .ledger .pass { color: var(--ledger-accent); font-weight: 500; }
-  .caption { color: var(--muted); font-size: 0.9rem; margin-top: 12px; max-width: 40em; }
-  .facts { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 4px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .facts b { color: var(--ink); font-weight: 500; }
-  .project { border-top: 1px solid var(--line); padding: 26px 0 8px; display: grid; grid-template-columns: 1fr; gap: 16px; }
-  .project h3 { margin: 0; font-size: 1.12rem; font-weight: 600; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  .project h3 a { color: var(--ink); text-decoration: none; }
-  .project h3 a:hover { color: var(--accent); }
-  .project h3 .tag { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-  .project p { color: var(--muted); font-size: 0.98rem; }
-  .project .body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
-  .shots.one { grid-template-columns: 1fr; }
-  .shots figure { margin: 0; }
-  .shots img { width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(22, 33, 58, 0.10); }
-  .shots figcaption { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; color: var(--muted); margin-top: 8px; letter-spacing: 0.02em; }
-  .check { background: var(--ledger); color: var(--ledger-ink); border-radius: 6px; padding: 16px 18px; font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace; font-size: 0.72rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; min-width: 0; }
-  .check .ok { color: var(--ledger-accent); font-weight: 500; }
-  .check .dim { color: var(--ledger-muted); }
-  @media (min-width: 720px) { .project.two { grid-template-columns: minmax(0, 1fr) 300px; gap: 16px 36px; align-items: start; } .project.two .shots { grid-template-columns: 1fr 1fr; }
-    .project.two .shots.one { grid-template-columns: 1fr; } .project.tracer { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 36px; align-items: start; } }
-  .offers { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 8px; }
-  .offer { border-top: 1px solid var(--line); padding: 20px 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
-  .offer:last-child { border-bottom: 1px solid var(--line); }
-  .offer h3 { margin: 0; font-size: 1.1rem; font-weight: 600; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  .offer h3 .scope { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.06em; color: var(--muted); }
-  .offer p { color: var(--muted); font-size: 0.98rem; }
-  .offer ul { margin: 6px 0 0; padding-left: 18px; color: var(--ink); font-size: 0.96rem; }
-  .offer li + li { margin-top: 4px; }
-  @media (min-width: 680px) { .offer { grid-template-columns: 220px minmax(0, 1fr); gap: 8px 32px; } .offer h3 { flex-direction: column; align-items: flex-start; gap: 6px; } .offer p { grid-column: 2; } .offer ul { grid-column: 2; } }
-  .cta { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .ledger .dim { color: var(--ledger-muted); }
+  .ledger .ok { color: var(--ledger-accent); font-weight: 500; }
+  .ledger pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+  .ledger .cmd { color: var(--ledger-accent); }
+  .ledger .cmd::before { content: "$ "; color: var(--ledger-muted); }
+
+  /* Mobius case study */
+  .case { background: var(--ledger); color: var(--ledger-ink); border-radius: 12px; padding: 36px 32px 32px; }
+  .case h2 { color: var(--ledger-ink); }
+  .case .eyebrow { color: var(--ledger-muted); }
+  .case .intro { color: var(--ledger-muted); }
+  .steps { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 10px; }
+  .step { padding: 22px 0; border-top: 1px solid rgba(255,255,255,0.10); }
+  .step .k { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ledger-accent); font-weight: 500; margin-bottom: 10px; }
+  .step p { color: var(--ledger-ink); font-size: 0.98rem; max-width: 34em; }
+  .step ul { margin: 8px 0 0; padding-left: 18px; color: var(--ledger-ink); font-size: 0.96rem; }
+  .step li + li { margin-top: 6px; }
+  .step b { color: var(--ledger-accent); font-weight: 500; font-variant-numeric: tabular-nums; }
+  @media (min-width: 820px) {
+    .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 32px; }
+    .step { padding: 24px 0 8px; }
+  }
+  .case .stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; padding: 20px 0 0; list-style: none; border-top: 1px solid rgba(255,255,255,0.10); }
+  .case .chip { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); color: var(--ledger-ink); }
+
+  /* standards */
+  .standards p { max-width: 46em; }
+  .standards .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
+  .standards .chip { text-decoration: none; }
+  .standards a.chip:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* contact */
+  .cta { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 30px 28px 28px; display: flex; flex-direction: column; gap: 14px; }
   .cta h2 { margin: 0; }
-  .cta p { color: var(--muted); }
-  .cta .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 4px; }
-  .button { display: inline-block; background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; padding: 11px 18px; border-radius: 6px; font-size: 0.98rem; }
-  .button:hover { filter: brightness(1.06); }
-  .cta .mail { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.9rem; }
+  .cta p { color: var(--muted); max-width: 40em; }
+  .cta .actions { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-top: 4px; }
+  .cta .mail { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 6px 14px; }
   footer.wrap { border-top: 1px solid var(--line); padding-top: 22px; padding-bottom: 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.78rem; color: var(--muted); }
   footer a { color: var(--muted); }
   footer a:hover { color: var(--accent); }
+
+  /* sticky CTA */
+  .sticky { position: fixed; right: 18px; bottom: 18px; z-index: 50; box-shadow: 0 10px 30px rgba(22, 33, 58, 0.25); transform: translateY(20px); opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+  .sticky.show { transform: none; opacity: 1; pointer-events: auto; }
+  @media (prefers-reduced-motion: reduce) { .sticky { transition: none; } }
+  @media (max-width: 719px) { .sticky { right: 12px; bottom: 12px; padding: 11px 16px; } }
+
+  /* scroll-in */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+    .js .reveal.in { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="wrap">
-  <div class="who">Hemang Nagar <span>· Washington, DC</span></div>
-  <nav aria-label="Site"><a href="/governed-data/">Governed Data</a> <a href="/decision-gate/">Decision Gate</a> <a href="/edshield/">Ed Shield</a> <a href="#work">Work</a><a href="#engage">Engage</a><a href="https://github.com/hemangnagar">GitHub</a><a href="https://x.com/hnagar_dev">X</a><a href="https://www.linkedin.com/in/hemangnagar/">LinkedIn</a></nav>
+  <a class="who" href="/">Hemang Nagar <span>· Washington, DC</span></a>
+  <nav aria-label="Site"><a href="#work">Work</a><a href="#scale">At scale</a><a href="#engage">Services</a><a href="#contact">Contact</a><a href="https://github.com/hemangnagar">GitHub</a><a href="https://x.com/hnagar_dev">X</a><a href="https://www.linkedin.com/in/hemangnagar/">LinkedIn</a></nav>
 </header>
-<main class="wrap">
-  <section aria-labelledby="thesis">
-    <p class="eyebrow">Governed data systems</p>
-    <h1 id="thesis">The LLM proposes. <span class="seal">The pipeline disposes.</span></h1>
-    <p class="lede">I build data platforms where every model output passes a deterministic gate before it touches a number anyone acts on — product matches, parser repairs, written summaries, and the decision itself.</p>
-    <p class="lede">Standards-first: data contracts that tests enforce, lineage that is emitted on every run, provenance from any user-facing figure back to the raw bytes it came from.</p>
+<main id="main">
+  <section class="wrap hero" id="hero" aria-labelledby="thesis">
+    <div>
+      <p class="eyebrow">Washington, DC · data &amp; AI engineering</p>
+      <h1 id="thesis">The LLM proposes. <span class="seal">The pipeline disposes.</span></h1>
+      <p class="lede">I build data platforms where every model output passes a deterministic gate before it touches a number anyone acts on. Twenty years of production data systems — from 3-billion-record-a-day fraud pipelines to governed LLM workflows — and a shelf of open-source projects that show exactly how.</p>
+      <div class="ctas">
+        <a class="button" href="mailto:hi@hemangnagar.dev?subject=20-minute%20call">Book a 20-minute call</a>
+        <a class="button quiet" href="#work">See the work ↓</a>
+      </div>
+      <ul class="proof" aria-label="Proof points">
+        <li class="chip">3B+ CDRs/day in production</li>
+        <li class="chip">10+ open-source repos</li>
+        <li class="chip">ODCS · OpenLineage · FHIR R4B</li>
+        <li class="chip">Java · Python · Scala · Spark</li>
+        <li class="chip accent">Available for consulting &amp; senior roles</li>
+        <li class="chip" id="clearance" hidden>TS/SCI cleared</li>
+      </ul>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <picture class="back">
+        <source media="(max-width: 1023px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        <source type="image/webp" srcset="assets/ai-evidence-record.webp">
+        <img src="assets/ai-evidence-record.png" width="2560" height="1096" alt="" decoding="async">
+      </picture>
+      <picture class="front">
+        <source media="(max-width: 1023px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        <source type="image/webp" srcset="assets/governed-data-ief-4d.webp">
+        <img src="assets/governed-data-ief-4d.png" width="2560" height="1600" alt="" decoding="async" fetchpriority="high">
+      </picture>
+    </div>
   </section>
-  <section aria-labelledby="gate">
-    <h2 id="gate">What a gate looks like</h2>
-    <p>Models are allowed to be wrong. The pipeline is not. So a model never writes to the trusted layer; it proposes, and a deterministic check decides. Here is one gate from a system I run every week — the one that repairs a parser after an upstream site changes its payload.</p>
-    <div class="ledger" role="figure" aria-label="A parser-repair gate, step by step">
-      <div class="row"><span class="k">DETECT</span><span class="v">A raw payload the current parser cannot read — it raises, or returns zero records while carrying structure the last known-good payload never had.</span></div>
-      <div class="row"><span class="k">PROPOSE</span><span class="v">An agent reads the old parser, a structural diff of old vs. new payload, and a sample — and proposes a replacement <span class="dim">parse(raw)</span>.</span></div>
-      <div class="row"><span class="k">GATE</span><span class="v">The patch must reproduce the current parser <span class="dim">byte-for-byte</span> on the last known-good raw file, and emit schema-exact, non-empty records on the drifted one. No imports. No I/O.</span></div>
-      <div class="row"><span class="k">DISPOSE</span><span class="v">Pass: promoted, content-addressed, with the original kept as fallback. Fail: recorded and rejected — the agent never retries the same drift silently.</span></div>
-      <div class="verdict"><span class="k">RESULT</span><span class="v"><span class="pass">Every run replays identically.</span> <span class="dim">The model wrote the code; the gate decided whether it ships.</span></span></div>
-    </div>
-    <p class="caption">The same shape governs entity matching (verdicts cached once, read forever, humans review the low-confidence tail) and narration (any number not in the precomputed fact pack is a hard reject).</p>
-  </section>
-  <section id="work" aria-labelledby="work-h">
-    <h2 id="work-h">Work in the open</h2>
-    <p>Five public projects, five different domains, one habit: every important model output or number a person acts on has a checkable boundary.</p>
-    <div class="project">
-      <div class="body">
-        <h3><a href="/governed-data/">Governed Data Platform</a> <span class="tag">data in motion · profiles · lineage</span></h3>
-        <p>Profile-driven governance for data as it passes through: a data plane, not a catalog. A profile declares what a dataset must contain and which controls apply; the platform enforces it, applies lineage to every run without exception, and publishes what it enforced. One upload becomes a release set, with each recipient receiving the projection their authority entitles them to. A machine may propose a profile; only a named person approves one. Seven self-contained replays of real engine runs, including one source released three ways and the IEF chain drawn in space and time.</p>
-        <div class="facts">
-          <span><b>ODCS</b>-shaped profiles · <b>OpenLineage</b> on every run</span>
-          <span><b>§222</b> · <b>Carpenter</b> · <b>E.O. 13526</b> · <b>§2.3</b></span>
-          <span><b>KLV</b> · <b>Remote ID</b> · <b>SAPIENT</b> read by their bytes</span>
-          <span><a href="/governed-data/">replayable demos</a></span>
-        </div>
-      </div>
-    </div>
-    <div class="project two">
-      <div class="body">
-        <h3><a href="/decision-gate/">Decision Gate</a> <span class="tag">adversarial AI · deterministic gates</span></h3>
-        <p>Two models argue about a decision; a fixed rule decides. The Builder states what must be true, the Adversary attacks each claim and rates the damage, and three lines of code return ACT, WAIT, or ABANDON with the rule that fired and what would flip it. No model chooses the action. Four unedited live runs are annotated in the repo: one ABANDON whose framing was wrong, and three WAITs that each come with the measured path to ACT, nine conditions for the Spark-to-DuckDB migration alone. The findings that don't flatter it are published too.</p>
-        <div class="facts">
-          <span><b>deterministic</b> ACT / WAIT / ABANDON</span>
-          <span><b>4</b> live ledgers · <b>92</b> challenges</span>
-          <span><b>controlled</b> reopen + outcome scoring</span>
-          <span><a href="https://github.com/hemangnagar/decision_gate">source</a> · <a href="/decision-gate/">worked decisions</a></span>
-        </div>
-      </div>
-      <div class="shots one"><figure><img src="assets/decision-gate-abandon.png" alt="The gate on the hospital-messaging run: ABANDON, triggered by CH-001, pagers are the out-of-band channel; resolving it would return WAIT." width="1752" height="1186" loading="lazy"><figcaption>ledger 003 · one FATAL · resolve it and the answer is still WAIT</figcaption></figure></div>
-    </div>
-    <div class="project two">
-      <div class="body">
-        <h3><a href="https://github.com/hemangnagar/grocery_optimizer">grocery_optimizer</a> <span class="tag">data pipeline · LLM gates</span></h3>
-        <p>A weekly grocery-price pipeline for the DC metro that picks the one store that wins a household's whole list. Bronze/silver/gold on DuckDB; five chains with five different acquisition patterns; LLMs at three gated judgment points; a phone-first verdict app. Runs on a $300 mini PC with no Spark, no orchestrator, no vector store.</p>
-        <div class="facts"><span><b>MIT</b> licensed</span><span><b>ODCS v3</b> contract, enforced by tests</span><span><b>OpenLineage</b> event per run</span><span>CI on <b>Windows + Linux</b></span></div>
-      </div>
-      <div class="shots"><figure><img src="assets/grocery-verdict-light.png" alt="The verdict app: Harris Teeter wins this week at $123.17, covering all 26 items; other stores ranked with coverage flags." width="780" height="1688" loading="lazy"><figcaption>flexible · store brands OK</figcaption></figure><figure><img src="assets/grocery-verdict-exact.png" alt="The same list in exact-brands mode: Whole Foods becomes the only full-coverage store at $169.27." width="780" height="1688" loading="lazy"><figcaption>exact brands · the modes disagree</figcaption></figure></div>
-    </div>
-    <div class="project tracer">
-      <div class="body">
-        <h3><a href="https://github.com/hemangnagar/bitcoin-fifo-taint-tracer">bitcoin-fifo-taint-tracer</a> <span class="tag">provenance · finance</span></h3>
-        <p>A deterministic, offline Bitcoin taint-tracing engine that reproduces the 2021 Colonial Pipeline ransom flow from the FBI seizure affidavit — and independently lands on the address the FBI seized. Taint is tracked as positional satoshi intervals, not a scalar, so change, dust, and fees fall out of arithmetic instead of heuristics. Value is conserved to the satoshi: what escaped is flagged, never dropped.</p>
-        <p>Byte-identical output given the same inputs, a validation harness that fails the build if the court-documented result isn't reproduced, and no cloud dependency — pure Python standard library.</p>
-      </div>
-      <pre class="check" aria-label="Validation harness output"><span class="dim">Subject Address : bc1qq2euq8pw950klpjcawuy4uj39ym43hs6cfsegq
-Seized (tainted): 63.70000000 BTC
-Escaped taint   : 11.30000000 BTC (tracked)</span>
 
-  <span class="ok">[PASS]</span> Subject Address matches seized address
-  <span class="ok">[PASS]</span> Seized amount at Subject Address
-  <span class="ok">[PASS]</span> Hop 3 developer cut flagged tainted-but-escaped
-  <span class="ok">[PASS]</span> 85/15 split reconciles to pre-fork taint
-  <span class="ok">[PASS]</span> Taint conservation (nothing dropped)
-<span class="ok">RESULT: ALL CHECKS PASSED</span></pre>
-    </div>
-    <div class="project"><div class="body"><h3><a href="https://github.com/hemangnagar/sanbuddy">Chat Buddy</a> <span class="tag">assistive · free for families</span></h3><p>A texting companion that helps kids with communication challenges practice conversation around the things they love. Built as a parent, given away free: a parent setup wizard, a PIN-protected dashboard with full transcripts, and an installable PWA for an iPad. The model talks through a server-side proxy so the key never reaches the browser, and the bot keeps pointing the child back toward real people.</p></div></div>
-    <div class="project"><div class="body"><h3>Standards I work in</h3><p>Open Data Contract Standard (ODCS), OpenLineage, FHIR R4B, DataHub, Great Expectations — and the unglamorous discipline underneath them: raw preservation before parsing, canonical units, provenance keys on every row, and refusals that explain themselves.</p></div></div>
-  </section>
-  <section id="engage" aria-labelledby="engage-h">
+  <section class="wrap reveal" id="engage" aria-labelledby="engage-h">
     <h2 id="engage-h">A first engagement</h2>
-    <p>Fixed scope, fixed fee, written deliverables. Most relationships start with the first one.</p>
+    <p class="intro">Fixed scope, fixed fee, written deliverables. Most relationships start with the first one.</p>
     <div class="offers">
-      <div class="offer"><h3>Governance readiness assessment <span class="scope">2–3 WEEKS</span></h3><p>For teams putting models into data pipelines and wondering what could go wrong quietly.</p><ul><li>An inventory of every point where model output reaches a decision, and whether a gate stands in front of it</li><li>Data-contract and lineage gaps against ODCS and OpenLineage, with the provenance you can and cannot currently prove</li><li>A prioritized remediation plan your own engineers can execute</li></ul></div>
-      <div class="offer"><h3>Contracts and lineage, implemented <span class="scope">4–8 WEEKS</span></h3><p>Data contracts that fail the build when the schema drifts, lineage emitted on every run, and provenance keys from the trusted layer back to raw.</p></div>
-      <div class="offer"><h3>LLM-in-the-pipeline design review <span class="scope">1–2 WEEKS</span></h3><p>Where models belong in your pipeline and where they don't: verdict caching for deterministic replay, evaluation gates, human-review queues, and the audit trail that lets you defend a number.</p></div>
+      <div class="offer">
+        <span class="scope">2–3 weeks</span>
+        <h3>Governance readiness assessment</h3>
+        <p>For teams putting models into data pipelines and wondering what could go wrong quietly.</p>
+        <ul><li>An inventory of every point where model output reaches a decision, and whether a gate stands in front of it</li><li>Data-contract and lineage gaps against ODCS and OpenLineage, with the provenance you can and cannot currently prove</li><li>A prioritized remediation plan your own engineers can execute</li></ul>
+        <a class="start" href="mailto:hi@hemangnagar.dev?subject=Governance%20readiness%20assessment">Start with this →</a>
+      </div>
+      <div class="offer">
+        <span class="scope">4–8 weeks</span>
+        <h3>Contracts and lineage, implemented</h3>
+        <p>Data contracts that fail the build when the schema drifts, lineage emitted on every run, and provenance keys from the trusted layer back to raw.</p>
+        <a class="start" href="mailto:hi@hemangnagar.dev?subject=Contracts%20and%20lineage%2C%20implemented">Start with this →</a>
+      </div>
+      <div class="offer">
+        <span class="scope">1–2 weeks</span>
+        <h3>LLM-in-the-pipeline design review</h3>
+        <p>Where models belong in your pipeline and where they don't: verdict caching for deterministic replay, evaluation gates, human-review queues, and the audit trail that lets you defend a number.</p>
+        <a class="start" href="mailto:hi@hemangnagar.dev?subject=LLM-in-the-pipeline%20design%20review">Start with this →</a>
+      </div>
+    </div>
+    <div class="band" id="hiring">
+      <p><strong>For hiring managers:</strong> also open to senior and director-level roles in data platforms and applied AI.</p>
+      <div class="links">
+        <a href="https://www.linkedin.com/in/hemangnagar/">LinkedIn</a>
+        <!-- TODO: Hemang supplies assets/hemang-nagar-resume.pdf; add <a href="assets/hemang-nagar-resume.pdf">Résumé (PDF)</a> here once it is in the repo -->
+      </div>
     </div>
   </section>
-  <section class="cta" aria-labelledby="cta-h"><h2 id="cta-h">Start with a 20-minute conversation</h2><p>Tell me what your pipeline does and where a model touches it. I'll tell you honestly whether a first engagement makes sense — and if it does, what it would cost.</p><div class="actions"><a class="button" href="mailto:hi@hemangnagar.dev?subject=20-minute%20conversation">Email hi@hemangnagar.dev</a><span class="mail"><a href="https://github.com/hemangnagar">github.com/hemangnagar</a> · <a href="https://x.com/hnagar_dev">@hnagar_dev</a></span></div></section>
+
+  <section class="wide" id="work" aria-labelledby="work-h">
+    <div class="wrap" style="padding:0">
+      <h2 id="work-h">Work in the open</h2>
+      <p class="intro">Eight projects, ordered by how much they had to get right. One habit runs through all of them: every model output or number a person acts on has a checkable boundary.</p>
+    </div>
+    <div class="features">
+
+      <article class="feature reveal" aria-labelledby="p1">
+        <div class="media">
+          <div class="swap shot ink" tabindex="0" role="button" aria-pressed="false" aria-label="Toggle between the IEF chain in four dimensions and the one-source-three-releases replay">
+            <picture>
+              <source type="image/webp" srcset="assets/governed-data-ief-4d.webp">
+              <img src="assets/governed-data-ief-4d.png" width="2560" height="1600" loading="lazy" decoding="async" alt="The IEF chain drawn in space and time: the telecom records disclosure walkthrough in Phase 2, where a 2,000-row file flows through the established Wrapper, Transactional and Semantic elements, the quality gate, subscriber masking and location coarsening to the exchange output.">
+            </picture>
+            <picture class="alt">
+              <source type="image/webp" srcset="assets/governed-data-4d.webp">
+              <img src="assets/governed-data-4d.png" width="2560" height="1600" loading="lazy" decoding="async" alt="Governed data in four dimensions, Act 1 beat 6 of 9: a stream of 2,000 call detail records splits into three releases for an internal analyst, a carrier under §222 and an agency with a warrant, with a side table showing the same record's subscriber number and cell identifier masked, coarsened or in the clear by recipient.">
+            </picture>
+          </div>
+          <figcaption>IEF chain in 4D · hover or tap for one source released three ways</figcaption>
+        </div>
+        <div class="body">
+          <span class="num">01 · Governed Data Platform</span>
+          <h3 id="p1"><a href="/governed-data/">Governed Data Platform</a></h3>
+          <ul class="tags"><li class="chip">data in motion</li><li class="chip">profiles</li><li class="chip">lineage on every run</li><li class="chip">release sets by authority</li></ul>
+          <p>Profile-driven governance for data as it passes through: a data plane, not a catalog. A profile declares what a dataset must contain and which controls apply; the platform enforces it, applies lineage to every run without exception, and publishes what it enforced. One upload becomes a release set, with each recipient receiving the projection their authority entitles them to. A machine may propose a profile; only a named person approves one.</p>
+          <ul class="facts"><li class="chip">ODCS-shaped profiles · OpenLineage on every run</li><li class="chip">§222 · Carpenter · E.O. 13526 · §2.3</li><li class="chip">KLV · Remote ID · SAPIENT read by their bytes</li></ul>
+          <div class="links"><a href="/governed-data/">Live demo →</a><a href="/governed-data/#runbooks">Runbooks →</a></div>
+        </div>
+      </article>
+
+      <article class="feature reveal" aria-labelledby="p2">
+        <div class="media">
+          <div class="two stack">
+            <figure class="shot ink"><picture><source type="image/webp" srcset="assets/ai-evidence-record.webp"><img src="assets/ai-evidence-record.png" width="2560" height="1096" loading="lazy" decoding="async" alt="Terminal session with the aiev command: run-demo writes a 96-event ledger, verify reports OK, ask shows record AE:AIEV-001-1042:3 promoted without a review, and after a one-byte tamper verify reports BROKEN at seq 16."></picture><figcaption>aiev · the record an inspector would ask about, then a tampered ledger caught</figcaption></figure>
+            <figure class="shot ink"><picture><source type="image/webp" srcset="assets/model-evidence.webp"><img src="assets/model-evidence.png" width="2560" height="960" loading="lazy" decoding="async" alt="Terminal output of model-evidence's run-evidence command: a table of two views, span and document, with accuracy, precision, recall and false-positive-rate gates, their 95% intervals and targets, stability and reproducibility results, and the line OVERALL PASS."></picture><figcaption>model-evidence · gates, intervals and the seed-stability verdict</figcaption></figure>
+          </div>
+        </div>
+        <div class="body">
+          <span class="num">02 · AI Evidence Record + Model Evidence</span>
+          <h3 id="p2"><a href="https://github.com/hemangnagar/ai-evidence-record">AI Evidence Record + Model Evidence</a></h3>
+          <ul class="tags"><li class="chip">clinical trials</li><li class="chip">tamper-evident ledger</li><li class="chip">classifier acceptance</li></ul>
+          <p>A tamper-evident ledger that sits beside a clinical trial's data systems. Every AI-generated output is quarantined until a credentialed human signs it; seven rules scan the ledger for what an inspector would find, and a per-study AI Evidence Datasheet cites the clause each row satisfies. Edit one byte and verification names the broken sequence number. Model Evidence is the companion judge: give it a classifier's predictions and a policy and it returns Pass, Fail or Insufficient evidence, with exit codes CI can gate on.</p>
+          <ul class="facts"><li class="chip">SHA-256 hash chain · 7 exception rules</li><li class="chip">21 CFR Part 11 · ICH E6(R3) · ALCOA+</li><li class="chip">Pass / Fail / Insufficient · CI exit codes</li></ul>
+          <div class="links"><a href="https://github.com/hemangnagar/ai-evidence-record">Source · ai-evidence-record</a><a href="https://github.com/hemangnagar/model-evidence">Source · model-evidence</a></div>
+        </div>
+      </article>
+
+      <article class="feature reveal balanced" aria-labelledby="p3">
+        <div class="media">
+          <div class="two stack">
+            <figure class="shot"><picture><source type="image/webp" srcset="assets/edshield-demo.webp"><img src="assets/edshield-demo.png" width="2560" height="1600" loading="lazy" decoding="async" alt="The edshield browser demo: a synthetic reflection essay on the left, and on the right the same essay with the student's name, school, personal URL, a friend's name, email, phone number, student ID and street address replaced by labelled placeholders, done in 42 ms on the device with rules only."></picture><figcaption>edshield demo · rules only, nothing sent anywhere</figcaption></figure>
+            <figure class="shot ink"><img src="assets/edshield-evidence-agent-loop.svg" width="2000" height="1670" loading="lazy" decoding="async" alt="Diagram of the edshield agent loop: two AI agents propose changes to the filter, every try runs through edshield and the measurement bench, a fixed judge gives the verdict, guardrails keep the loop honest, and a sealed test plus human review gate any release."><figcaption>edshield-evidence · the bounded experiment loop</figcaption></figure>
+          </div>
+        </div>
+        <div class="body">
+          <span class="num">03 · edshield + edshield-evidence</span>
+          <h3 id="p3"><a href="https://github.com/hemangnagar/edshield">edshield + edshield-evidence</a></h3>
+          <ul class="tags"><li class="chip">student privacy</li><li class="chip">on-device NER</li><li class="chip">protected bench</li></ul>
+          <p>A local-first student-privacy layer for AI in education. edshield detects and removes student PII from essays, tutoring transcripts and chat messages before the text reaches any language model, on a laptop CPU or inside a Chromebook browser, so no student text leaves the device. Rules handle the identifiers where regex plus validation wins; a PIILO-trained DeBERTa model is the authority on names. edshield-evidence is the protected bench: it measures what still survives in the final output and hands the rows to a fixed judge for the verdict.</p>
+          <ul class="facts"><li class="chip">Recall 1.000 · 0 of 165 missed on 680 held-out essays</li><li class="chip">FERPA · COPPA · research policies</li><li class="chip">Apache-2.0 · on PyPI · ONNX in the browser</li></ul>
+          <div class="links"><a href="https://github.com/hemangnagar/edshield">Source · edshield</a><a href="https://github.com/hemangnagar/edshield-evidence">Source · edshield-evidence</a><a href="/edshield/">Live demo →</a><!-- TODO: Hemang confirms /edshield/ resolves (the edshield repo's pages.yml deploys demo/ as a project site under this domain) --></div>
+        </div>
+      </article>
+
+      <article class="feature reveal" aria-labelledby="p4">
+        <div class="media">
+          <figure class="shot ink"><picture><source type="image/webp" srcset="assets/corpuscle.webp"><img src="assets/corpuscle.png" width="2560" height="1006" loading="lazy" decoding="async" alt="Terminal session: corpuscle keygen writes a key pair, corpuscle scan writes a signed bundle for a 14-document corpus and reports two policy findings for exact and near duplication, and corpuscle verify passes the signature, manifest schema, records hash, records count, Merkle root, statement subject and corpus files, ending with RESULT verified."></picture><figcaption>corpuscle · scan the fixture corpus, verify the signed bundle offline</figcaption></figure>
+        </div>
+        <div class="body">
+          <span class="num">04 · corpuscle</span>
+          <h3 id="p4"><a href="https://github.com/hemangnagar/corpuscle">corpuscle</a></h3>
+          <ul class="tags"><li class="chip">corpus datasheet</li><li class="chip">signed evidence</li><li class="chip">agents propose, core disposes</li></ul>
+          <p>An agentic corpus datasheet. Agents plan the scan, investigate the findings and brief the authorizing official, on top of a deterministic, signed measurement core. The core hashes every document, builds a Merkle root, measures duplication, gates findings against a versioned policy and signs the result as an in-toto statement. The bundle travels with the corpus and verifies offline with a directory, the bundle and a public key. An agent's investigation is recorded and signed beside the numbers, and nothing it proposes takes effect until a named approver accepts it.</p>
+          <ul class="facts"><li class="chip">Ed25519 · DSSE over an in-toto statement</li><li class="chip">97 metric IDs across ten families</li><li class="chip">Verifies offline: directory + bundle + public key</li></ul>
+          <div class="links"><a href="https://github.com/hemangnagar/corpuscle">Source →</a></div>
+        </div>
+      </article>
+
+      <article class="feature reveal" aria-labelledby="p5">
+        <div class="media">
+          <div class="two">
+            <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" type="image/webp" srcset="assets/grocery-verdict-dark.webp"><source media="(prefers-color-scheme: dark)" srcset="assets/grocery-verdict-dark.png"><source type="image/webp" srcset="assets/grocery-verdict-light.webp"><img src="assets/grocery-verdict-light.png" width="780" height="1688" loading="lazy" decoding="async" alt="The verdict app in flexible mode: Harris Teeter wins this week at $123.17, covering all 26 items; the other stores are ranked below with coverage flags and distance chips."></picture><figcaption>flexible · store brands OK</figcaption></figure>
+            <figure class="shot"><picture><source type="image/webp" srcset="assets/grocery-verdict-exact.webp"><img src="assets/grocery-verdict-exact.png" width="780" height="1688" loading="lazy" decoding="async" alt="The same list in exact-brands mode: Whole Foods becomes the only full-coverage store at $169.27."></picture><figcaption>exact brands · the modes disagree</figcaption></figure>
+          </div>
+        </div>
+        <div class="body">
+          <span class="num">05 · Grocery Basket Optimizer</span>
+          <h3 id="p5"><a href="https://github.com/hemangnagar/grocery_optimizer">Grocery Basket Optimizer</a></h3>
+          <ul class="tags"><li class="chip">data pipeline</li><li class="chip">LLM gates</li><li class="chip">DuckDB medallion</li></ul>
+          <p>A weekly grocery-price pipeline for the DC metro that picks the one store that wins a household's whole list. Bronze/silver/gold on DuckDB; five chains with five different acquisition patterns; LLMs at three gated judgment points; a phone-first verdict app. Runs on a $300 mini PC with no Spark, no orchestrator, no vector store.</p>
+          <ul class="facts"><li class="chip">ODCS v3 contract, enforced by tests</li><li class="chip">OpenLineage event per run</li><li class="chip">MIT · CI on Windows + Linux</li></ul>
+          <div class="links"><a href="https://github.com/hemangnagar/grocery_optimizer">Source →</a></div>
+        </div>
+      </article>
+
+      <article class="feature reveal" aria-labelledby="p6">
+        <div class="media">
+          <div class="two stack">
+            <figure class="shot"><picture><source type="image/webp" srcset="assets/rxguard-mfp.webp"><img src="assets/rxguard-mfp.png" width="2560" height="1600" loading="lazy" decoding="async" alt="RxGuard MFP Refund Ledger for a synthetic pharmacy: $68,227.18 floated across 78 claims awaiting payment, $19,463.50 past the 14-day standard, a 14-day median time to refund, 8 systematically short-paid claims, and a chart of working capital tied up in unpaid refunds over time."></picture><figcaption>MFP Refund Ledger · synthetic pharmacy, every amount sourced</figcaption></figure>
+            <figure class="shot"><picture><source type="image/webp" srcset="assets/rxguard-pharmacy-evidence.webp"><img src="assets/rxguard-pharmacy-evidence.png" width="2560" height="1600" loading="lazy" decoding="async" alt="The pharmacy and health-plan evidence one-pager: one engine, three possible markets, explaining that every figure traces to a source row, the same inputs give the same output every time, and the narrative cannot state a dollar that is not in the fact pack."></picture><figcaption>one engine, three markets · the evidence one-pager</figcaption></figure>
+          </div>
+        </div>
+        <div class="body">
+          <span class="num">06 · RxGuard</span>
+          <h3 id="p6"><a href="https://github.com/hemangnagar/rxguard">RxGuard</a></h3>
+          <ul class="tags"><li class="chip">pharmacy margin</li><li class="chip">FHIR R4B</li><li class="chip">gated explanations</li></ul>
+          <p>Evidence-first pharmacy margin and exception analysis. RxGuard joins what a payer returned, what the pharmacy paid and what changed later, then flags loss-making fills, unresolved reversals, rejected claims and incomplete audit packets. Every number carries a source reference; an explanation, whether written by the offline baseline or a model, cannot mention a dollar that is absent from the computed fact pack. The MFP Refund Ledger applies the same engine to Medicare's negotiated-price refunds: expected refund, received, variance and aging per fill, with a dispute-ready evidence pack.</p>
+          <ul class="facts"><li class="chip">FHIR R4B EOB · CARIN Blue Button Pharmacy EOB 2.2.0</li><li class="chip">6 reproducible scenarios · 47-fill MFP ledger</li><li class="chip">CycloneDX SBOM · MIT</li></ul>
+          <div class="links"><a href="https://github.com/hemangnagar/rxguard">Source →</a><a href="/rxguard-mfp/">Live demo · MFP ledger →</a><a href="/pharmacy-evidence/">Live demo · evidence one-pager →</a></div>
+        </div>
+      </article>
+
+      <article class="feature reveal balanced" aria-labelledby="p7">
+        <div class="media">
+          <div class="two stack">
+            <figure class="shot"><img src="assets/retro-flow.svg" width="1200" height="1090" loading="lazy" decoding="async" alt="How retro works: a milestone triggers a retro; git log, learned-behavior and session transcripts feed a four-question interview a person confirms; each lesson is scoped as project, stack, global or discard; project lessons go to learned-behavior, stack and global lessons pass a 25-slot budget into a playbook loaded every session, and retro.json plus a git tag record the rest."><figcaption>retro · milestone retrospectives with a curated playbook</figcaption></figure>
+            <figure>
+              <div class="ledger" role="figure" aria-label="learned-behavior: install and the first hook firing">
+<pre><span class="cmd">pip install learned-behavior</span>   <span class="dim">·</span> <img class="badge" src="https://img.shields.io/pypi/v/learned-behavior.svg" alt="learned-behavior on PyPI" width="80" height="20" loading="lazy">
+Successfully installed learned-behavior-0.2.0
+<span class="cmd">learned-behavior init-db</span>
+Initialized shared learning DB at ~/.local/share/learned-behavior/learning.db
+<span class="cmd">learned-behavior learn --workspace "$PWD" --title "Use sh, not bash, on vapor images" --rule "laravelphp/vapor has no bash; use sh -c"</span>
+Saved approved lesson for ~
+<span class="cmd">learned-behavior advice --workspace "$PWD" --output claude-json</span>   <span class="dim"># the UserPromptSubmit hook</span>
+<span class="ok">{"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "Relevant lessons from the shared learning DB:\n- Use sh, not bash, on vapor images: laravelphp/vapor has no bash; use sh -c"}}</span></pre>
+              </div>
+              <figcaption>learned-behavior · install, teach it one lesson, watch the hook surface it</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="body">
+          <span class="num">07 · retro + learned-behavior</span>
+          <h3 id="p7"><a href="https://github.com/hemangnagar/retro">retro + learned-behavior</a></h3>
+          <ul class="tags"><li class="chip">Claude Code skill</li><li class="chip">agent memory</li><li class="chip">no LLM in the loop</li></ul>
+          <p>Two tools that make an AI coding agent's lessons durable. learned-behavior observes what the agent does through Claude Code hooks, mines recurring failures and self-corrections into rules, surfaces them before the next task, and promotes or decays them on behavioral signal alone: one local SQLite file, nothing leaves the machine. retro is the curation layer above it: a structured retrospective at project milestones, human-gated, that scopes each lesson to project, stack or global and holds the cross-project playbook to a fixed budget.</p>
+          <ul class="facts"><li class="chip">25-slot playbook · a lesson must displace one to enter</li><li class="chip">5 Claude Code hooks · candidate → approved → dormant</li><li class="chip">MIT · Python 3.10+ · zero runtime dependencies</li></ul>
+          <div class="links"><a href="https://github.com/hemangnagar/retro">Source · retro</a><a href="https://github.com/hemangnagar/learned-behavior">Source · learned-behavior</a><a href="https://pypi.org/project/learned-behavior/">PyPI →</a></div>
+        </div>
+      </article>
+
+      <article class="feature reveal" aria-labelledby="p8">
+        <div class="media">
+          <div class="two">
+            <figure><div class="tablet"><picture><source type="image/webp" srcset="assets/sanbuddy-wizard.webp"><img src="assets/sanbuddy-wizard.png" width="1640" height="2360" loading="lazy" decoding="async" alt="Chat Buddy's parent setup wizard on a tablet, step 'What do they love?': favorite things filled in as dinosaurs, trains and Minecraft, a note that the child loves being asked which dinosaur is the fastest, and Back and Next buttons."></picture></div><figcaption>parent setup wizard · placeholder family</figcaption></figure>
+            <figure><div class="tablet"><picture><source type="image/webp" srcset="assets/sanbuddy-chat.webp"><img src="assets/sanbuddy-chat.png" width="1640" height="2360" loading="lazy" decoding="async" alt="Chat Buddy's chat view on a tablet: a buddy named Rocky with a dinosaur avatar asks Alex which dinosaur is their favorite and where a T. rex would live, the child answers in short texts, and quick-reply chips offer My mom, My friend and My teacher."></picture></div><figcaption>chat view · quick-reply chips, read-aloud, parent dashboard behind a PIN</figcaption></figure>
+          </div>
+        </div>
+        <div class="body">
+          <span class="num">08 · Chat Buddy</span>
+          <h3 id="p8"><a href="https://github.com/hemangnagar/sanbuddy">Chat Buddy</a></h3>
+          <ul class="tags"><li class="chip">assistive</li><li class="chip">free for families</li><li class="chip">installable PWA</li></ul>
+          <p>A texting companion that helps kids with communication challenges practice conversation around the things they love. Built as a parent, given away free: a parent setup wizard, a PIN-protected dashboard with full transcripts, and an installable PWA for an iPad. The model talks through a server-side proxy so the key never reaches the browser, and the bot keeps pointing the child back toward real people.</p>
+          <ul class="facts"><li class="chip">All data stays on the family's device</li><li class="chip">No accounts · no analytics · no telemetry</li><li class="chip">MIT · Next.js PWA</li></ul>
+          <div class="links"><a href="https://github.com/hemangnagar/sanbuddy">Source →</a></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="wrap reveal" id="scale" aria-labelledby="scale-h">
+    <div class="case">
+      <p class="eyebrow">Production at scale · Mobius</p>
+      <h2 id="scale-h">A fraud pipeline live since 2015, at 3 billion call records a day</h2>
+      <p class="intro">SIM-box call-bypass fraud detection for multiple mobile operators in West Africa, re-architected from an hourly batch into a streaming Hadoop/Spark pipeline, and still in production.</p>
+      <!-- TODO: Hemang confirms the customer wording "multiple mobile operators in West Africa"; no countries or carriers are named on purpose -->
+      <div class="steps">
+        <div class="step">
+          <div class="k">Problem</div>
+          <p>A Java SIM-box call-bypass fraud detector running as a two-server hourly batch. Detections lagged over an hour, customers' own analysts found misses after the fact, and multiple <b>$300K/year</b> accounts were about to churn to a competitor.</p>
+        </div>
+        <div class="step">
+          <div class="k">What I built</div>
+          <p>Re-architected it as a Hadoop/Spark pipeline scoring every <b>30-minute</b> CDR window against <b>24 hours</b> of per-MSISDN history with an inline rules engine, plus a redesigned Node.js UI where customers author their own detection rules. Per-customer deployments sized to volume; early namenode failures moved to an HA cluster.</p>
+        </div>
+        <div class="step">
+          <div class="k">Outcome</div>
+          <ul>
+            <li>Detection latency <b>1h+ → under 30 min</b></li>
+            <li>Largest deployment <b>28 nodes</b> at <b>3B+ voice CDRs/day</b>, later <b>50B+ SMS/day</b> (<b>1B+</b> per 30-minute window)</li>
+            <li>Same pipeline reused for A2P/OTP SMS bypass fraud</li>
+            <li>Live since <b>2015</b> and still in production; the at-risk accounts stayed</li>
+          </ul>
+        </div>
+      </div>
+      <ul class="stack" aria-label="Stack"><li class="chip">Hadoop</li><li class="chip">Spark</li><li class="chip">HBase + Phoenix</li><li class="chip">MongoDB</li><li class="chip">Node.js</li><li class="chip">AWS (S3, Lambda, EMR)</li></ul>
+    </div>
+  </section>
+
+  <section class="wrap standards reveal" aria-labelledby="standards-h">
+    <h2 id="standards-h">Standards I work in</h2>
+    <p>Open Data Contract Standard (ODCS), OpenLineage, FHIR R4B, DataHub, Great Expectations — and the unglamorous discipline underneath them: raw preservation before parsing, canonical units, provenance keys on every row, and refusals that explain themselves.</p>
+    <ul class="chips" aria-label="Specifications">
+      <li><a class="chip" href="https://bitol-io.github.io/open-data-contract-standard/">ODCS</a></li>
+      <li><a class="chip" href="https://openlineage.io/">OpenLineage</a></li>
+      <li><a class="chip" href="https://hl7.org/fhir/R4B/">FHIR R4B</a></li>
+      <li><a class="chip" href="https://datahubproject.io/">DataHub</a></li>
+      <li><a class="chip" href="https://greatexpectations.io/">Great Expectations</a></li>
+    </ul>
+  </section>
+
+  <section class="wrap reveal" id="contact" aria-labelledby="cta-h">
+    <div class="cta">
+      <h2 id="cta-h">Start with a 20-minute conversation</h2>
+      <p>Tell me what your pipeline does and where a model touches it. I'll tell you honestly whether a first engagement makes sense — and if it does, what it would cost.</p>
+      <div class="actions">
+        <a class="button" href="mailto:hi@hemangnagar.dev?subject=20-minute%20conversation">Email hi@hemangnagar.dev</a>
+        <span class="mail"><a href="https://github.com/hemangnagar">github.com/hemangnagar</a><a href="https://x.com/hnagar_dev">@hnagar_dev</a><a href="https://www.linkedin.com/in/hemangnagar/">linkedin.com/in/hemangnagar</a></span>
+      </div>
+    </div>
+  </section>
 </main>
 <footer class="wrap"><span>© 2026 Hemang Nagar</span><span>The code is open. The data is the moat.</span></footer>
+<a class="button sticky" id="sticky" href="#contact" aria-hidden="true" tabindex="-1">Let's talk</a>
+<script>
+(function () {
+  var d = document, html = d.documentElement;
+  html.classList.add("js");
+
+  // Hero proof strip: the clearance chip is shown only when the comment at the top of this file says INCLUDE_CLEARANCE=true.
+  for (var n = d.firstChild; n; n = n.nextSibling) {
+    if (n.nodeType === 8) { if (/^\s*INCLUDE_CLEARANCE=true\s*$/.test(n.data)) d.getElementById("clearance").hidden = false; break; }
+  }
+
+  // Sticky "Let's talk": appears once the hero has scrolled out.
+  var sticky = d.getElementById("sticky"), hero = d.getElementById("hero");
+  function setSticky(show) { sticky.classList.toggle("show", show); sticky.setAttribute("aria-hidden", show ? "false" : "true"); sticky.tabIndex = show ? 0 : -1; }
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { setSticky(!es[0].isIntersecting); }, { threshold: 0 }).observe(hero);
+  } else { setSticky(true); }
+
+  // Governed Data Platform: tap or keyboard toggles the two captures (hover does it in CSS).
+  d.querySelectorAll(".swap").forEach(function (el) {
+    function toggle() { var on = el.classList.toggle("on"); el.setAttribute("aria-pressed", on ? "true" : "false"); }
+    el.addEventListener("click", toggle);
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  });
+
+  // Scroll-in reveal; CSS only animates when prefers-reduced-motion is not set.
+  var reveals = d.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else { reveals.forEach(function (el) { el.classList.add("in"); }); }
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+$ aiev run-demo
+wrote demo/ledger.jsonl (96 events) and demo/data/*.csv
+coder stub-coder 1.1.0: 33 AI outputs, 30 reviewed, 31 promoted, 2 still in quarantine
+$ aiev verify
+OK: 96 events, head 59aea7fe899653c8…
+$ aiev ask --record AE:AIEV-001-1042:3
+Record AE:AIEV-001-1042:3: 2 events
+  seq   78  2026-09-14T10:56:24.000Z  ai_output    model stub-coder v1.1.0
+            proposed AEDECOD = 'Hypoaesthesia' (confidence 0.88); rationale: dictionary match on 'numbness'; inputs_hash 75143db99598…, prompt_hash e6f4591dff8f… -> QUARANTINED
+  seq   79  2026-09-14T10:57:09.000Z  promote      system aievidence-gate
+            wrote AEDECOD = 'Hypoaesthesia' to the dataset WITHOUT A REVIEW (forced)
+
+  AEDECOD: PROMOTED
+  * AEDECOD: PROMOTED WITHOUT REVIEW at seq 79. No human signed this value.
+$ aiev tamper --seq 16 --field payload.value --set "Migraine"
+DEMO ONLY: edited seq 16 in place (payload.value).
+now run `aiev verify`.
+$ aiev verify
+BROKEN at seq 16: stored hash does not match event content

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>og</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  html, body { margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #10141D; color: #E7EAF0; font-family: "IBM Plex Sans", system-ui, sans-serif; position: relative; }
+  .text { position: absolute; left: 64px; top: 64px; width: 600px; }
+  .eyebrow { font: 500 15px/1 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #97A0B3; margin: 0 0 26px; }
+  h1 { font: 800 62px/1.02 "Archivo", sans-serif; letter-spacing: -0.028em; margin: 0 0 24px; }
+  h1 span { color: #E8964A; }
+  p { font-size: 21px; line-height: 1.45; margin: 0; color: #C9CFDA; max-width: 30em; }
+  .chips { position: absolute; left: 64px; bottom: 56px; display: flex; gap: 10px; flex-wrap: wrap; width: 640px; }
+  .chip { font: 500 13.5px/1 "IBM Plex Mono", monospace; color: #E7EAF0; border: 1px solid #2A3142; background: #171C28; border-radius: 999px; padding: 9px 13px; white-space: nowrap; }
+  .chip.accent { color: #E8964A; border-color: #2E2116; background: #2E2116; }
+  .who { position: absolute; right: 64px; top: 64px; font: 500 15px/1 "IBM Plex Mono", monospace; color: #97A0B3; letter-spacing: 0.02em; }
+  .who b { color: #E7EAF0; font-weight: 500; }
+  .visual { position: absolute; left: 720px; top: 120px; width: 560px; height: 480px; }
+  .visual img { position: absolute; border-radius: 10px; border: 1px solid #2A3142; box-shadow: 0 30px 70px rgba(0,0,0,0.55); }
+  .visual .back { left: 0; top: 30px; width: 420px; }
+  .visual .front { left: 110px; top: 150px; width: 440px; }
+</style>
+</head>
+<body>
+  <div class="who"><b>Hemang Nagar</b> · hemangnagar.dev</div>
+  <div class="text">
+    <p class="eyebrow">Washington, DC · data &amp; AI engineering</p>
+    <h1>The LLM proposes. <span>The pipeline disposes.</span></h1>
+    <p>Data platforms where every model output passes a deterministic gate before it touches a number anyone acts on.</p>
+  </div>
+  <div class="chips">
+    <span class="chip">3B+ CDRs/day in production</span>
+    <span class="chip">10+ open-source repos</span>
+    <span class="chip">ODCS · OpenLineage · FHIR R4B</span>
+    <span class="chip accent">Available for consulting &amp; senior roles</span>
+  </div>
+  <div class="visual">
+    <img class="back" src="../../../assets/ai-evidence-record.png" alt="">
+    <img class="front" src="../../../assets/governed-data-ief-4d.png" alt="">
+  </div>
+</body>
+</html>

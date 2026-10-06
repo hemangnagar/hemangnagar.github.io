@@ -1,0 +1,16 @@
+$ corpuscle keygen --out keys
+wrote keys/dev.key.pem and keys/dev.pub.pem
+$ corpuscle scan tests/fixtures/sample_corpus --corpus-id sample --version-id v1 --key keys/dev.key.pem
+bundle written to tests/fixtures/sample_corpus/.corpuscle  root=d0ad149212ec3606…  docs=14
+policy corpuscle-default/0.1.0
+  FAIL         medium   DUP-001  duplication.exact    0.142857 fraction > 0.1
+  FAIL         high     DUP-002  duplication.near     0.285714 fraction > 0.1
+$ corpuscle verify tests/fixtures/sample_corpus --pub keys/dev.pub.pem
+PASS  signature
+PASS  manifest schema
+PASS  records hash
+PASS  records count
+PASS  merkle root
+PASS  statement subject
+PASS  corpus files match records
+RESULT  verified
