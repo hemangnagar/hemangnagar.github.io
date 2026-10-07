@@ -1,3 +1,4 @@
 exclude:
   - promote
   - tools
+  - docs
