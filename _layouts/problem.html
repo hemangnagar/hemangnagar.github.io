@@ -3,7 +3,7 @@ layout: base
 ---
 {%- assign proj = site.data.projects | where: "key", page.project | first -%}
 <article class="wrap article" itemscope itemtype="https://schema.org/TechArticle">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/problems/">Problems</a> › <span>{{ page.title }}</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › {% if page.section == "work" %}<a href="/#scale">Work</a>{% else %}<a href="/problems/">Problems</a>{% endif %} › <span>{{ page.title }}</span></nav>
   <p class="eyebrow">{{ proj.name }}{% if page.draft %} · draft{% endif %}</p>
   <h1>{{ page.title }}</h1>
   <p class="byline">By {% include about-url.html %}<a href="{{ about_url }}" rel="author">Hemang Nagar</a> · Published <time datetime="{{ page.datePublished | date: '%Y-%m-%d' }}">{{ page.datePublished | date: '%B %-d, %Y' }}</time> · Last updated <time datetime="{{ page.dateModified | date: '%Y-%m-%d' }}">{{ page.dateModified | date: '%B %-d, %Y' }}</time></p>
@@ -18,6 +18,9 @@ layout: base
         {%- endif -%}
       {%- endfor %}
       <li><a href="{{ proj.card }}">{{ proj.name }} on the home page</a></li>
+      {%- if proj.case and page.url != proj.case %}
+      <li><a href="{{ proj.case }}">Case study: {{ proj.name }}</a></li>
+      {%- endif %}
       {%- for r in proj.repos %}
       <li><a href="{{ r.url }}">Source · {{ r.name }}</a></li>
       {%- endfor %}
