@@ -29,6 +29,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": "https://hemangnagar.dev/#person",
   "name": "Hemang Nagar",
   "jobTitle": "Data & AI engineer",
   "url": "https://hemangnagar.dev/",
@@ -206,6 +207,8 @@
   }
   .case .stack { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; padding: 20px 0 0; list-style: none; border-top: 1px solid rgba(255,255,255,0.10); }
   .case .chip { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); color: var(--ledger-ink); }
+  .case .more { margin: 22px 0 0; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.9rem; }
+  .case .more a { color: var(--ledger-accent); }
 
   /* standards */
   .standards p { max-width: 46em; }
@@ -240,7 +243,7 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="wrap">
   <a class="who" href="/">Hemang Nagar <span>· Washington, DC</span></a>
-  <nav aria-label="Site"><a href="#work">Work</a><a href="#scale">At scale</a><a href="#engage">Services</a><a href="#contact">Contact</a><a href="assets/hemang-nagar-resume.pdf">Résumé</a><a href="https://github.com/hemangnagar">GitHub</a><a href="https://x.com/hnagar_dev">X</a><a href="https://www.linkedin.com/in/hemangnagar/">LinkedIn</a></nav>
+  <nav aria-label="Site"><a href="#work">Work</a><a href="/problems/">Problems</a><a href="#scale">At scale</a><a href="#engage">Services</a><a href="/about/">About</a><a href="#contact">Contact</a><a href="assets/hemang-nagar-resume.pdf">Résumé</a><a href="https://github.com/hemangnagar">GitHub</a><a href="https://x.com/hnagar_dev">X</a><a href="https://www.linkedin.com/in/hemangnagar/">LinkedIn</a></nav>
 </header>
 <main id="main">
   <section class="wrap hero" id="hero" aria-labelledby="thesis">
@@ -302,6 +305,7 @@
     <div class="band" id="hiring">
       <p><strong>For hiring managers:</strong> also open to senior and director-level roles in data platforms and applied AI.</p>
       <div class="links">
+        <a href="/about/">About</a>
         <a href="https://www.linkedin.com/in/hemangnagar/">LinkedIn</a>
         <a href="assets/hemang-nagar-resume.pdf">Résumé (PDF)</a>
       </div>
@@ -496,6 +500,7 @@ Saved approved lesson for ~
         </div>
       </div>
       <ul class="stack" aria-label="Stack"><li class="chip">Hadoop</li><li class="chip">Spark</li><li class="chip">HBase + Phoenix</li><li class="chip">MongoDB</li><li class="chip">Node.js</li><li class="chip">AWS (S3, Lambda, EMR)</li></ul>
+      <p class="more"><a href="/work/mobius-cdr-fraud-detection/">Read the full case study →</a></p>
     </div>
   </section>
 
