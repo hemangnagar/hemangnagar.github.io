@@ -1,0 +1,31 @@
+---
+layout: base
+---
+{%- assign proj = site.data.projects | where: "key", page.project | first -%}
+<article class="wrap article" itemscope itemtype="https://schema.org/TechArticle">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/problems/">Problems</a> › <span>{{ page.title }}</span></nav>
+  <p class="eyebrow">{{ proj.name }}{% if page.draft %} · draft{% endif %}</p>
+  <h1>{{ page.title }}</h1>
+  <p class="byline">By {% include about-url.html %}<a href="{{ about_url }}" rel="author">Hemang Nagar</a> · Published <time datetime="{{ page.datePublished | date: '%Y-%m-%d' }}">{{ page.datePublished | date: '%B %-d, %Y' }}</time> · Last updated <time datetime="{{ page.dateModified | date: '%Y-%m-%d' }}">{{ page.dateModified | date: '%B %-d, %Y' }}</time></p>
+  {{ content }}
+  <section class="related" aria-labelledby="related-h">
+    <h2 id="related-h">Related</h2>
+    <ul>
+      {%- for slug in page.related -%}
+        {%- assign rp = site.problems | where: "slug", slug | first -%}
+        {%- if rp and rp.draft != true %}
+      <li><a href="{{ rp.url }}">{{ rp.question }}</a></li>
+        {%- endif -%}
+      {%- endfor %}
+      <li><a href="{{ proj.card }}">{{ proj.name }} on the home page</a></li>
+      {%- for r in proj.repos %}
+      <li><a href="{{ r.url }}">Source · {{ r.name }}</a></li>
+      {%- endfor %}
+      {%- if proj.demo %}
+      <li><a href="{{ proj.demo }}">Live demo</a></li>
+      {%- endif %}
+    </ul>
+  </section>
+  <p class="cta-line">Working on something like this? <a href="mailto:hi@hemangnagar.dev?subject={{ page.title | url_encode }}">hi@hemangnagar.dev</a></p>
+</article>
+{% include jsonld-techarticle.html %}

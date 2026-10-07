@@ -1,0 +1,24 @@
+{%- assign full_title = page.title | append: " | Hemang Nagar" -%}
+{%- assign canonical = page.url | absolute_url -%}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ full_title }}</title>
+<meta name="description" content="{{ page.description | strip_newlines | strip }}">
+<link rel="canonical" href="{{ canonical }}">
+{%- if page.draft or page.noindex %}
+<meta name="robots" content="noindex">
+{%- endif %}
+<meta property="og:title" content="{{ full_title }}">
+<meta property="og:description" content="{{ page.description | strip_newlines | strip }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:type" content="{% if page.section == 'problems' or page.section == 'work' %}article{% else %}website{% endif %}">
+<meta property="og:image" content="{{ page.image | default: '/assets/og-hero.png' | absolute_url }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@hnagar_dev">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316213A'/%3E%3Cpath d='M8 22V10h3v4.5h10V10h3v12h-3v-5H11v5z' fill='%23E8964A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
+<link rel="stylesheet" href="/assets/site.css">
+{%- include jsonld-breadcrumb.html %}

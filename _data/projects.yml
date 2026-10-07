@@ -1,0 +1,117 @@
+# One entry per featured project, in the order of the home-page cards. This file feeds the
+# related-links block on problem pages, the SoftwareSourceCode JSON-LD, llms.txt and the sitemap.
+- key: governed-data-platform
+  name: Governed Data Platform
+  card: /#p1
+  problem: governance-on-data-in-motion
+  repos: []
+  demo: /governed-data/
+  summary: >-
+    Profile-driven governance for data in motion: a profile declares what a dataset must contain and which
+    controls apply; the platform enforces it, applies lineage to every run, and releases each recipient
+    the projection their authority entitles them to. Proof of concept; the repository is private.
+- key: model-evidence
+  name: AI Evidence Record + Model Evidence
+  card: /#p2
+  problem: prove-a-model-meets-criteria
+  repos:
+    - url: https://github.com/hemangnagar/model-evidence
+      name: model-evidence
+      language: JavaScript
+      license: null
+    - url: https://github.com/hemangnagar/ai-evidence-record
+      name: ai-evidence-record
+      language: Python
+      license: MIT
+  summary: >-
+    A task-blind judge that takes a classifier's predictions and a policy and returns Pass, Fail or
+    Insufficient evidence, with seed-stability and reproducibility axes and CI exit codes; its sibling
+    is a tamper-evident ledger for AI outputs in a regulated process.
+- key: edshield
+  name: edshield + edshield-evidence
+  card: /#p3
+  problem: student-pii-detection-local-first
+  repos:
+    - url: https://github.com/hemangnagar/edshield
+      name: edshield
+      language: Python
+      license: Apache-2.0
+    - url: https://github.com/hemangnagar/edshield-evidence
+      name: edshield-evidence
+      language: Python
+      license: Apache-2.0
+  demo: /edshield/
+  summary: >-
+    A local-first student-privacy layer that detects and removes student PII from essays, transcripts and
+    chat before the text reaches a language model, on a laptop CPU or in a Chromebook browser; a protected
+    bench measures what survives in the output and hands the rows to a fixed judge.
+- key: corpuscle
+  name: corpuscle
+  card: /#p4
+  problem: auditable-corpus-datasheet
+  repos:
+    - url: https://github.com/hemangnagar/corpuscle
+      name: corpuscle
+      language: Python
+      license: null
+  summary: >-
+    An agentic corpus datasheet: agents plan the scan and investigate findings on top of a deterministic,
+    signed measurement core, and the signed bundle travels with the corpus and verifies offline with a
+    directory, the bundle and a public key.
+- key: grocery-optimizer
+  name: Grocery Basket Optimizer
+  card: /#p5
+  problem: llm-proposes-pipeline-disposes
+  repos:
+    - url: https://github.com/hemangnagar/grocery_optimizer
+      name: grocery_optimizer
+      language: Python
+      license: MIT
+  summary: >-
+    A weekly grocery-price pipeline for the DC metro on DuckDB with LLMs at three gated judgment points;
+    the pipeline, not the model, writes the trusted layer, and every run replays identically from cached
+    verdicts.
+- key: rxguard
+  name: RxGuard
+  card: /#p6
+  problem: explainable-pharmacy-exception-checks
+  repos:
+    - url: https://github.com/hemangnagar/rxguard
+      name: rxguard
+      language: Python
+      license: MIT
+  demo: /rxguard-mfp/
+  summary: >-
+    Evidence-first pharmacy margin and exception analysis that flags loss-making fills, unresolved reversals,
+    rejected claims and incomplete audit packets, emits FHIR R4B ExplanationOfBenefit, and gates every
+    explanation so it cannot cite a dollar absent from the fact pack.
+- key: retro
+  name: retro + learned-behavior
+  card: /#p7
+  problem: carry-lessons-across-ai-coding-projects
+  repos:
+    - url: https://github.com/hemangnagar/retro
+      name: retro
+      language: Python
+      license: MIT
+    - url: https://github.com/hemangnagar/learned-behavior
+      name: learned-behavior
+      language: Python
+      license: MIT
+  summary: >-
+    A milestone retrospective skill for Claude Code that scopes each lesson to project, stack or global and
+    holds a cross-project playbook to a fixed budget, on top of learned-behavior, which mines rules from
+    agent hook events with no LLM in the loop.
+- key: chat-buddy
+  name: Chat Buddy
+  card: /#p8
+  problem: safe-chatbot-for-kids
+  repos:
+    - url: https://github.com/hemangnagar/sanbuddy
+      name: sanbuddy
+      language: TypeScript
+      license: MIT
+  summary: >-
+    A free texting companion that helps kids with communication challenges practice conversation around the
+    things they love: parent setup wizard, PIN-protected dashboard, installable PWA, all data on the
+    family's device.
