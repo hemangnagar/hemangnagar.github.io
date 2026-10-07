@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img" aria-label="Architecture of the Mobius fraud pipeline: CDR feeds land in HDFS in 30-minute windows; a Spark scoring job compares each window with 24 hours of per-subscriber history held in HBase with Phoenix; an inline rules engine applies customer-authored rules stored in MongoDB; detections flow to a Node.js UI for the operator's analysts. Deployments are sized per customer from 2 nodes at 30 million records a day to 28 nodes at more than 3 billion." font-family="IBM Plex Sans, Segoe UI, system-ui, sans-serif">
+  <rect width="1200" height="600" rx="12" fill="#1A2236"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8C97AD"/></marker>
+    <marker id="arr-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#E8964A"/></marker>
+  </defs>
+  <text x="40" y="44" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" letter-spacing="2" fill="#8C97AD">MOBIUS · SIM-BOX AND SMS BYPASS FRAUD DETECTION · SINCE 2015</text>
+  <text x="40" y="76" font-size="22" font-weight="700" fill="#E7EAF0">Every 30-minute window of CDRs, scored against 24 hours of per-subscriber history</text>
+
+  <!-- row 1: main flow -->
+  <g font-size="15" fill="#E7EAF0">
+    <rect x="40" y="130" width="190" height="104" rx="8" fill="#0B0E15" stroke="#2A3142"/>
+    <text x="56" y="160" font-weight="600">CDR feeds</text>
+    <text x="56" y="184" font-size="13" fill="#8C97AD">voice call detail records</text>
+    <text x="56" y="204" font-size="13" fill="#8C97AD">later SMS, A2P and OTP</text>
+
+    <rect x="280" y="130" width="190" height="104" rx="8" fill="#0B0E15" stroke="#2A3142"/>
+    <text x="296" y="160" font-weight="600">Landing · HDFS</text>
+    <text x="296" y="184" font-size="13" fill="#8C97AD">one file set per</text>
+    <text x="296" y="204" font-size="13" fill="#8C97AD">30-minute window</text>
+
+    <rect x="520" y="118" width="230" height="128" rx="8" fill="#0B0E15" stroke="#E8964A" stroke-width="1.6"/>
+    <text x="536" y="150" font-weight="600" fill="#E8964A">Spark scoring job</text>
+    <text x="536" y="174" font-size="13" fill="#8C97AD">joins the window with the</text>
+    <text x="536" y="194" font-size="13" fill="#8C97AD">previous 24 h per MSISDN,</text>
+    <text x="536" y="214" font-size="13" fill="#8C97AD">computes the features,</text>
+    <text x="536" y="234" font-size="13" fill="#8C97AD">runs the rules inline</text>
+
+    <rect x="800" y="130" width="170" height="104" rx="8" fill="#0B0E15" stroke="#2A3142"/>
+    <text x="816" y="160" font-weight="600">Detections</text>
+    <text x="816" y="184" font-size="13" fill="#8C97AD">per window, per rule,</text>
+    <text x="816" y="204" font-size="13" fill="#8C97AD">with the evidence</text>
+
+    <rect x="1010" y="130" width="150" height="104" rx="8" fill="#0B0E15" stroke="#2A3142"/>
+    <text x="1026" y="160" font-weight="600">Node.js UI</text>
+    <text x="1026" y="184" font-size="13" fill="#8C97AD">operator analysts</text>
+    <text x="1026" y="204" font-size="13" fill="#8C97AD">author the rules</text>
+  </g>
+  <g stroke="#8C97AD" stroke-width="2" fill="none">
+    <path d="M230 182 H272" marker-end="url(#arr)"/>
+    <path d="M470 182 H512" marker-end="url(#arr)"/>
+    <path d="M750 182 H792" marker-end="url(#arr)"/>
+    <path d="M970 182 H1002" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- row 2: state stores -->
+  <g font-size="15" fill="#E7EAF0">
+    <rect x="420" y="320" width="200" height="90" rx="8" fill="#0B0E15" stroke="#2A3142"/>
+    <text x="436" y="350" font-weight="600">History · HBase + Phoenix</text>
+    <text x="436" y="374" font-size="13" fill="#8C97AD">24 h of features per MSISDN,</text>
+    <text x="436" y="394" font-size="13" fill="#8C97AD">updated after each window</text>
+
+    <rect x="660" y="320" width="200" height="90" rx="8" fill="#0B0E15" stroke="#2A3142"/>
+    <text x="676" y="350" font-weight="600">Rules · MongoDB</text>
+    <text x="676" y="374" font-size="13" fill="#8C97AD">thresholds and patterns the</text>
+    <text x="676" y="394" font-size="13" fill="#8C97AD">customer edits in the UI</text>
+  </g>
+  <g stroke="#E8964A" stroke-width="2" fill="none">
+    <path d="M560 320 V256" marker-end="url(#arr-accent)"/>
+    <path d="M600 256 V312" marker-end="url(#arr-accent)"/>
+    <path d="M720 320 V256" marker-end="url(#arr-accent)"/>
+    <path d="M1085 234 V300 H868" marker-end="url(#arr-accent)" stroke-dasharray="5 5"/>
+  </g>
+  <text x="565" y="292" font-size="12" fill="#E8964A" font-family="IBM Plex Mono, ui-monospace, monospace">read · write</text>
+  <text x="735" y="292" font-size="12" fill="#E8964A" font-family="IBM Plex Mono, ui-monospace, monospace">read</text>
+  <text x="900" y="292" font-size="12" fill="#E8964A" font-family="IBM Plex Mono, ui-monospace, monospace">analysts publish rules</text>
+
+  <!-- footer band -->
+  <line x1="40" y1="460" x2="1160" y2="460" stroke="#2A3142"/>
+  <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13" fill="#8C97AD">
+    <text x="40" y="492" fill="#E8964A" letter-spacing="2">SIZED PER CUSTOMER</text>
+    <text x="40" y="518" fill="#E7EAF0">2 nodes · 30M CDRs/day</text>
+    <text x="40" y="542">→ 28 nodes · 3B+ voice CDRs/day · later 50B+ SMS/day (1B+ per window)</text>
+    <text x="700" y="492" fill="#E8964A" letter-spacing="2">OUTCOME</text>
+    <text x="700" y="518" fill="#E7EAF0">detection latency: over 1 h → under 30 min</text>
+    <text x="700" y="542">namenode moved to an HA cluster after early failures</text>
+  </g>
+</svg>

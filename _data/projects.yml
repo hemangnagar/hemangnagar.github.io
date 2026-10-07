@@ -115,3 +115,12 @@
     A free texting companion that helps kids with communication challenges practice conversation around the
     things they love: parent setup wizard, PIN-protected dashboard, installable PWA, all data on the
     family's device.
+- key: mobius
+  name: Mobius fraud pipeline
+  card: /#scale
+  case: /work/mobius-cdr-fraud-detection/
+  repos: []
+  summary: >-
+    Production SIM-box and SMS bypass fraud detection for mobile operators: a Hadoop/Spark pipeline that
+    scores every 30-minute window of call detail records against 24 hours of per-subscriber history,
+    live since 2015 at more than 3 billion voice records a day. Proprietary; no source is published.

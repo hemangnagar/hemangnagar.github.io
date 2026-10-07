@@ -4,7 +4,7 @@
 title: Enforce governance on data in motion
 question: How do you enforce data governance on data in motion, not after the fact?
 slug: governance-on-data-in-motion
-description: Declare what a dataset must contain and which controls apply in a profile, enforce it as the data passes through, apply lineage to every run, and release each recipient only what their authority entitles them to.
+description: "Declare what a dataset must contain and which controls apply in a profile, enforce it as data passes through, log lineage, and release by authority."
 project: governed-data-platform
 order: 1
 keywords: [profile-driven data governance, data governance on data in motion, release sets by authority, OpenLineage on every run, OMG IEF]
