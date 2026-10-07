@@ -1,0 +1,18 @@
+{%- comment -%} SoftwareSourceCode items for every project with a public repository. Used on pages that list the projects. {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Open-source projects by Hemang Nagar",
+  "itemListElement": [
+  {%- assign n = 0 -%}
+  {%- for p in site.data.projects -%}
+    {%- for r in p.repos -%}
+      {%- assign n = n | plus: 1 -%}
+      {%- if n > 1 %},{% endif %}
+    { "@type": "ListItem", "position": {{ n }}, "item": { "@type": "SoftwareSourceCode", "name": {{ r.name | jsonify }}, "codeRepository": "{{ r.url }}", "url": "{{ p.card | absolute_url }}", "author": { "@type": "Person", "@id": "https://hemangnagar.dev/#person", "name": "Hemang Nagar" }{% if r.language %}, "programmingLanguage": "{{ r.language }}"{% endif %}{% if r.license %}, "license": "https://spdx.org/licenses/{{ r.license }}.html"{% endif %}{% if p.problem %}, "subjectOf": "{{ '/problems/' | append: p.problem | append: '/' | absolute_url }}"{% endif %} } }
+    {%- endfor -%}
+  {%- endfor %}
+  ]
+}
+</script>

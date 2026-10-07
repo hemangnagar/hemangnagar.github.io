@@ -1,0 +1,25 @@
+{%- assign proj = site.data.projects | where: "key", page.project | first -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "@id": "{{ page.url | absolute_url }}#article",
+  "headline": {{ page.title | jsonify }},
+  "alternativeHeadline": {{ page.question | jsonify }},
+  "description": {{ page.description | strip_newlines | strip | jsonify }},
+  "inLanguage": "en",
+  "author": { "@type": "Person", "@id": "https://hemangnagar.dev/#person", "name": "Hemang Nagar", "url": "https://hemangnagar.dev/" },
+  "publisher": { "@type": "Person", "@id": "https://hemangnagar.dev/#person", "name": "Hemang Nagar" },
+  "datePublished": "{{ page.datePublished | date: '%Y-%m-%d' }}",
+  "dateModified": "{{ page.dateModified | date: '%Y-%m-%d' }}",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ page.url | absolute_url }}" },
+  "image": "{{ page.image | default: '/assets/og-hero.png' | absolute_url }}",
+  {%- if page.keywords %}
+  "keywords": {{ page.keywords | join: ", " | jsonify }},
+  {%- endif %}
+  "about": [
+    {%- if proj %}{ "@type": "SoftwareApplication", "name": {{ proj.name | jsonify }}, "url": "{{ proj.card | absolute_url }}" }{% endif -%}
+    {%- for r in proj.repos -%}, { "@type": "SoftwareSourceCode", "name": {{ r.name | jsonify }}, "codeRepository": "{{ r.url }}"{% if r.language %}, "programmingLanguage": "{{ r.language }}"{% endif %}{% if r.license %}, "license": "https://spdx.org/licenses/{{ r.license }}.html"{% endif %} }{%- endfor %}
+  ]
+}
+</script>

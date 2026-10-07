@@ -1,4 +1,32 @@
+# GitHub Pages builds this with its default Jekyll. index.html and the demo folders carry no
+# front matter, so Jekyll copies them unchanged; only the files under _problems/, problems/,
+# about/, services/ and work/ are rendered through _layouts/.
+title: Hemang Nagar
+url: https://hemangnagar.dev
+description: Data platforms where every model output passes a deterministic gate before it touches a number anyone acts on.
+author:
+  name: Hemang Nagar
+  email: hi@hemangnagar.dev
+timezone: America/New_York
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+collections:
+  problems:
+    output: true
+    permalink: /problems/:name/
+defaults:
+  - scope: { path: "", type: problems }
+    values: { layout: problem, section: problems }
 exclude:
   - promote
   - tools
   - docs
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - README.md
+  - .jekyll-cache

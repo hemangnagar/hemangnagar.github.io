@@ -1,0 +1,35 @@
+{%- comment -%} BreadcrumbList from the URL: Home › section › page. Only pages under the root get one. {%- endcomment -%}
+{%- if page.url != "/" -%}
+{%- assign parts = page.url | split: "/" -%}
+{%- assign crumbs = "" | split: "" -%}
+{%- assign path = "" -%}
+{%- for part in parts -%}
+  {%- if part != "" -%}
+    {%- assign path = path | append: "/" | append: part -%}
+    {%- assign crumbs = crumbs | push: path -%}
+  {%- endif -%}
+{%- endfor -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ '/' | absolute_url }}" }
+    {%- for c in crumbs -%}
+      {%- assign pos = forloop.index | plus: 1 -%}
+      {%- assign seg = c | split: "/" | last -%}
+      {%- if forloop.last -%}
+        {%- assign name = page.title -%}
+      {%- elsif seg == "problems" -%}
+        {%- assign name = "Problems" -%}
+      {%- elsif seg == "work" -%}
+        {%- assign name = "Work" -%}
+      {%- else -%}
+        {%- assign name = seg | capitalize -%}
+      {%- endif -%}
+    ,{ "@type": "ListItem", "position": {{ pos }}, "name": {{ name | jsonify }}, "item": "{{ c | append: '/' | absolute_url }}" }
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endif -%}
